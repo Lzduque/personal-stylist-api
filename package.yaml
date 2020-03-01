@@ -1,0 +1,49 @@
+name:                personal-stylist
+version:             0.1.0.0
+github:              "Lzduque/personal-stylist"
+license:             BSD3
+author:              "Leticia Zamolo Duque"
+maintainer:          "lzduque@hotmail.com"
+copyright:           "2020"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            personal
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/Lzduque/personal-stylist#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- aeson-1.4.6.0
+
+library:
+  source-dirs: src
+
+executables:
+  personal-stylist-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - personal-stylist
+
+tests:
+  personal-stylist-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - personal-stylist
