@@ -6,11 +6,13 @@ import qualified Data.ByteString.Lazy as B
 import Data.Aeson (FromJSON,ToJSON)
 import GHC.Generics (Generic)
 
+-- main function that is running everything
 main :: IO ()
 main = do
   str <- getJSON
   B.putStrLn str
 
+-- type of the input that it's being parsed
 data Requirements =
   Requirements { season       :: String
                 , style       :: String
@@ -18,13 +20,15 @@ data Requirements =
                 , numOutfits  :: Int
                 } deriving (Show,Generic)
 
+-- Aeson methods to parse
 instance FromJSON Requirements
 instance ToJSON Requirements
 
-
+-- importing a json file
 jsonFile :: FilePath
 jsonFile = "test-1.json"
 
+-- get the sjson nd trnsform in byte string
 getJSON :: IO B.ByteString
 getJSON = B.readFile jsonFile
 
@@ -44,4 +48,3 @@ getJSON = B.readFile jsonFile
 --            , "bodyType"   .= bodyType
 --            , "numOutfits" .= numOutfits
 --              ]
-
