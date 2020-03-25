@@ -48,3 +48,9 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - personal-stylist
+    - hspec
+
+default-extensions:
+  - OverloadedStrings
+  - DeriveGeneric
+  - DeriveAnyClass

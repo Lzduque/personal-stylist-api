@@ -1,6 +1,10 @@
 module Lib
-    ( someFunc
+    ( getJSON
     ) where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+import qualified Data.ByteString.Lazy as B
+
+-- get the json and transform in byte string
+getJSON :: FilePath -> IO B.ByteString
+getJSON filePath = B.readFile filePath
+
