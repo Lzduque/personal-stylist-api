@@ -15,6 +15,7 @@ import CapsuleWardrobe
   (CapsuleWardrobe(..)
   , Top(..)
   , Pants(..)
+  , Skirt(..)
   , Dress(..)
   , Overall(..)
   , Shoe(..)
@@ -28,15 +29,16 @@ import Data.Aeson (decode)
 
 autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual}
 
-aWCCW =
-  CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse]
-                  , pants = [SkinnyJeans]
-                  , skirts = []
-                  , dresses = []
-                  , overalls = [Cardigan, TrenchCoat, WinterCoat]
+testCW =
+  CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
+                  , pants = [SkinnyJeans, SkinnyJeans]
+                  , skirts = [Skirt, Skirt]
+                  , dresses = [Dress]
+                  , overalls = [Cardigan, TrenchCoat]
                   , shoes = [Boots, Bailarinas]
                   , purses = [Backpack]
                   }
+
 
 decodeJSON :: FilePath -> IO (Maybe Wish)
 decodeJSON filePath = do
@@ -71,7 +73,11 @@ main = hspec $ do
 
   describe "numOfOutfits" $ do
     it "returns the number of possible outfits if given a CapsuleWardrobe" $ do
-      numOfOutfits aWCCW `shouldBe` 9
+      numOfOutfits autumnWinterCasualCW `shouldBe` 12
+      numOfOutfits springSummerCasualCW `shouldBe` 12
+      numOfOutfits autumnWinterOfficeCW `shouldBe` 12
+      numOfOutfits springSummerOfficeCW `shouldBe` 12
+      numOfOutfits testCW `shouldBe` 34
 
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
