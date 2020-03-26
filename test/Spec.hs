@@ -70,7 +70,7 @@ main = hspec $ do
 
   describe "numOfOutfits" $ do
     it "returns the number of possible outfits if given a CapsuleWardrobe" $ do
-      numOfOutfits aWCCW `shouldBe` 36
+      numOfOutfits aWCCW `shouldBe` 18
 
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
