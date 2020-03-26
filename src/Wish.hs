@@ -1,7 +1,7 @@
 module Wish
   (Wish(..)
   , Style(..)
-  ,Season(..)
+  , Season(..)
   ) where
 
 import Data.Aeson (FromJSON,ToJSON)
