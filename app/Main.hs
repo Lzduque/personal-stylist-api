@@ -1,7 +1,18 @@
 module Main where
 
 import Lib (getJSON)
-import Wish (Wish(..))
+import Wish
+  (Wish(..)
+  , Style(..)
+  , Season(..)
+  )
+import CapsuleWardrobe
+  (CapsuleWardrobe(..)
+  , autumnWinterCasualCW
+  , springSummerCasualCW
+  , autumnWinterOfficeCW
+  , springSummerOfficeCW
+  )
 import Data.Aeson (decode)
 
 jsonFile = "test-1.json"
@@ -14,6 +25,5 @@ main = do
   case decodedStr of
     Just wish -> print wish
     Nothing -> print "nothing"
-
 
 

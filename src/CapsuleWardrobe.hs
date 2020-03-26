@@ -5,6 +5,10 @@ module CapsuleWardrobe
   , Overalls(..)
   , Shoes(..)
   , Purses(..)
+  , autumnWinterCasualCW
+  , springSummerCasualCW
+  , autumnWinterOfficeCW
+  , springSummerOfficeCW
   ) where
 
 import Data.Aeson (FromJSON,ToJSON)
