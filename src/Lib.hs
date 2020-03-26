@@ -1,7 +1,7 @@
 module Lib
     ( getJSON
     , chooseCapsule
-    , numOfOutfits
+    , countOutfits
     ) where
 import Wish
   ( Wish(..)
@@ -28,8 +28,8 @@ chooseCapsule Wish {season = SpringSummer, style = Casual} = springSummerCasualC
 chooseCapsule Wish {season = AutumnWinter, style = Office} = autumnWinterOfficeCW
 chooseCapsule Wish {season = SpringSummer, style = Office} = springSummerOfficeCW
 
-numOfOutfits :: CapsuleWardrobe -> Int
-numOfOutfits capsule = (numOfTops * numOfPants * numOfOveralls) + (numOfTops * numOfSkirts * numOfOveralls) + (numOfDresses * numOfOveralls) where
+countOutfits :: CapsuleWardrobe -> Int
+countOutfits capsule = (numOfTops * numOfPants * numOfOveralls) + (numOfTops * numOfSkirts * numOfOveralls) + (numOfDresses * numOfOveralls) where
     numOfTops = length . tops $ capsule
     numOfPants = length . pants $ capsule
     numOfSkirts = length . skirts $ capsule

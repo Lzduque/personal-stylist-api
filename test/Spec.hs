@@ -4,7 +4,7 @@ import Test.Hspec
 import Lib 
   (getJSON
   , chooseCapsule
-  , numOfOutfits
+  , countOutfits
   )
 import Wish
   ( Wish(..)
@@ -72,13 +72,13 @@ main = hspec $ do
     it "returns a CapsuleWardrobe if given a Wish" $ do
       chooseCapsule autumnWinterCasualWish `shouldBe` autumnWinterCasualCW
 
-  describe "numOfOutfits" $ do
+  describe "countOutfits" $ do
     it "returns the number of possible outfits if given a CapsuleWardrobe" $ do
-      numOfOutfits autumnWinterCasualCW `shouldBe` 12
-      numOfOutfits springSummerCasualCW `shouldBe` 12
-      numOfOutfits autumnWinterOfficeCW `shouldBe` 12
-      numOfOutfits springSummerOfficeCW `shouldBe` 12
-      numOfOutfits testCW `shouldBe` 34
+      countOutfits autumnWinterCasualCW `shouldBe` 12
+      countOutfits springSummerCasualCW `shouldBe` 12
+      countOutfits autumnWinterOfficeCW `shouldBe` 12
+      countOutfits springSummerOfficeCW `shouldBe` 12
+      countOutfits testCW `shouldBe` 34
 
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)

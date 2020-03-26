@@ -1,6 +1,6 @@
 module Main where
 
-import Lib (getJSON, chooseCapsule, numOfOutfits)
+import Lib (getJSON, chooseCapsule, countOutfits)
 import Wish
   (Wish(..)
   , Style(..)
@@ -25,7 +25,7 @@ main = do
   case decodedStr of
     Just wish -> do
       print . encode . chooseCapsule $ wish
-      print . numOfOutfits . chooseCapsule $ wish
+      print . countOutfits . chooseCapsule $ wish
     Nothing -> print "nothing"
 
 
