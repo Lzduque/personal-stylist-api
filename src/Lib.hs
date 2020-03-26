@@ -29,8 +29,9 @@ chooseCapsule wish
   | wish == Wish {season = SpringSummer, style = Office} = springSummerOfficeCW
 
 numOfOutfits :: CapsuleWardrobe -> Int
-numOfOutfits capsule = (numOfTops * numOfBottoms * numOfOveralls) + (numOfDresses * numOfOveralls) where
+numOfOutfits capsule = (numOfTops * numOfPants * numOfOveralls) + (numOfTops * numOfSkirts * numOfOveralls) + (numOfDresses * numOfOveralls) where
     numOfTops = length . tops $ capsule
-    numOfBottoms = length . bottoms $ capsule
+    numOfPants = length . pants $ capsule
+    numOfSkirts = length . skirts $ capsule
     numOfDresses = length . dresses $ capsule
     numOfOveralls = length . overalls $ capsule

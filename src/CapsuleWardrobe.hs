@@ -1,7 +1,7 @@
 module CapsuleWardrobe
   (CapsuleWardrobe(..)
   , Top(..)
-  , Bottom(..)
+  , Pants(..)
   , Dress(..)
   , Overall(..)
   , Shoe(..)
@@ -17,7 +17,8 @@ import GHC.Generics (Generic)
 
 data CapsuleWardrobe =
   CapsuleWardrobe { tops        :: [Top]
-                  , bottoms     :: [Bottom]
+                  , pants       :: [Pants]
+                  , skirts      :: [Skirt]
                   , dresses     :: [Dress]
                   , overalls    :: [Overall]
                   , shoes       :: [Shoe]
@@ -27,12 +28,16 @@ data CapsuleWardrobe =
 data Top = ShortSleeveShirt | LongSleeveShirt | TankTop | ShortSleeveBlouse | LongSleeveBlouse
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Bottom = SkinnyJeans | StraightJeans | CroppedJeans | Capris | JeansShorts | Skirt | StraightPants
+data Pants = SkinnyJeans | StraightJeans | CroppedJeans | Capris | JeansShorts | StraightPants
+  deriving (Show, Eq, Generic, ToJSON, FromJSON)
+
+data Skirt = Skirt
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 data Dress = Dress
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
+-- to do: think about transforming cardigans in layer2 and coats in layer3, so you can do a better count of the number of outfits (abstraction to layers)
 data Overall = Cardigan | TrenchCoat | WinterCoat
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
@@ -45,7 +50,8 @@ data Purse = Tote | Backpack | Clutch
 
 autumnWinterCasualCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse]
-                  , bottoms = [SkinnyJeans, Skirt]
+                  , pants = [SkinnyJeans]
+                  , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat, WinterCoat]
                   , shoes = [Boots, Bailarinas]
@@ -54,7 +60,8 @@ autumnWinterCasualCW =
 
 springSummerCasualCW =
   CapsuleWardrobe { tops = [ShortSleeveShirt, ShortSleeveShirt, ShortSleeveBlouse]
-                  , bottoms = [SkinnyJeans, Skirt]
+                  , pants = [SkinnyJeans]
+                  , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat]
                   , shoes = [Sandals, Bailarinas]
@@ -63,7 +70,8 @@ springSummerCasualCW =
 
 autumnWinterOfficeCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse]
-                  , bottoms = [StraightPants, Skirt]
+                  , pants = [StraightPants]
+                  , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat, WinterCoat]
                   , shoes = [Boots, Bailarinas]
@@ -72,7 +80,8 @@ autumnWinterOfficeCW =
 
 springSummerOfficeCW =
   CapsuleWardrobe { tops = [ShortSleeveShirt, ShortSleeveBlouse, ShortSleeveBlouse]
-                  , bottoms = [StraightPants, Skirt]
+                  , pants = [StraightPants]
+                  , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat]
                   , shoes = [Sandals, Bailarinas]

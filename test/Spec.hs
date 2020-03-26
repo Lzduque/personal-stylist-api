@@ -14,7 +14,7 @@ import Wish
 import CapsuleWardrobe
   (CapsuleWardrobe(..)
   , Top(..)
-  , Bottom(..)
+  , Pants(..)
   , Dress(..)
   , Overall(..)
   , Shoe(..)
@@ -30,7 +30,8 @@ autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual}
 
 aWCCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse]
-                  , bottoms = [SkinnyJeans, Skirt]
+                  , pants = [SkinnyJeans]
+                  , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat, WinterCoat]
                   , shoes = [Boots, Bailarinas]
@@ -70,7 +71,7 @@ main = hspec $ do
 
   describe "numOfOutfits" $ do
     it "returns the number of possible outfits if given a CapsuleWardrobe" $ do
-      numOfOutfits aWCCW `shouldBe` 18
+      numOfOutfits aWCCW `shouldBe` 9
 
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
