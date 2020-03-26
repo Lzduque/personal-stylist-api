@@ -35,3 +35,8 @@ countOutfits capsule = (numOfTops * numOfPants * numOfOveralls) + (numOfTops * n
     numOfSkirts = length . skirts $ capsule
     numOfDresses = length . dresses $ capsule
     numOfOveralls = length . overalls $ capsule
+
+toRange :: NumberOfOutfits -> [Int]
+toRange From10to20 = [10..20]
+toRange From21to30 = [21..30]
+toRange From31to40 = [31..40]
