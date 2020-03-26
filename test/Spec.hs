@@ -10,6 +10,7 @@ import Wish
   ( Wish(..)
   , Style(..)
   , Season(..)
+  , NumberOfOutfits(..)
   )
 import CapsuleWardrobe
   (CapsuleWardrobe(..)
@@ -27,7 +28,7 @@ import CapsuleWardrobe
   )
 import Data.Aeson (decode)
 
-autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual}
+autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20}
 
 testCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
@@ -50,7 +51,7 @@ main = hspec $ do
   describe "decode" $ do
     it "returns a Wish given a JSON file with extra content" $ do
       wish <- decodeJSON "test-1.json"
-      wish `shouldBe` Just (Wish {season = AutumnWinter, style = Casual})
+      wish `shouldBe` Just (Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20})
 
   describe "decode" $ do
     it "returns nothing given a JSON file with wrong content - style" $ do
