@@ -1,7 +1,11 @@
 import Test.Hspec
 -- import Test.QuickCheck
 -- import Control.Exception (evaluate)
-import Lib (getJSON, chooseCapsule)
+import Lib 
+  (getJSON
+  , chooseCapsule
+  , numOfOutfits
+  )
 import Wish
   ( Wish(..)
   , Style(..)
@@ -23,6 +27,15 @@ import CapsuleWardrobe
 import Data.Aeson (decode)
 
 autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual}
+
+aWCCW =
+  CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse]
+                  , bottoms = [SkinnyJeans, Skirt]
+                  , dresses = []
+                  , overalls = [Cardigan, TrenchCoat, WinterCoat]
+                  , shoes = [Boots, Bailarinas]
+                  , purses = [Backpack]
+                  }
 
 decodeJSON :: FilePath -> IO (Maybe Wish)
 decodeJSON filePath = do
@@ -54,6 +67,10 @@ main = hspec $ do
   describe "chooseCapsule" $ do
     it "returns a CapsuleWardrobe if given a Wish" $ do
       chooseCapsule autumnWinterCasualWish `shouldBe` autumnWinterCasualCW
+
+  describe "numOfOutfits" $ do
+    it "returns the number of possible outfits if given a CapsuleWardrobe" $ do
+      numOfOutfits aWCCW `shouldBe` 36
 
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
