@@ -1,10 +1,11 @@
 module CapsuleWardrobe
   (CapsuleWardrobe(..)
-  , Tops(..)
-  , Bottoms(..)
-  , Overalls(..)
-  , Shoes(..)
-  , Purses(..)
+  , Top(..)
+  , Bottom(..)
+  , Dress(..)
+  , Overall(..)
+  , Shoe(..)
+  , Purse(..)
   , autumnWinterCasualCW
   , springSummerCasualCW
   , autumnWinterOfficeCW
@@ -15,33 +16,38 @@ import Data.Aeson (FromJSON,ToJSON)
 import GHC.Generics (Generic)
 
 data CapsuleWardrobe =
-  CapsuleWardrobe { tops        :: [Tops]
-                  , bottoms     :: [Bottoms]
-                  , overalls    :: [Overalls]
-                  , shoes       :: [Shoes]
-                  , purses      :: [Purses]
+  CapsuleWardrobe { tops        :: [Top]
+                  , bottoms     :: [Bottom]
+                  , dresses     :: [Dress]
+                  , overalls    :: [Overall]
+                  , shoes       :: [Shoe]
+                  , purses      :: [Purse]
                   } deriving (Show, Generic, Eq, ToJSON, FromJSON)
 
-data Tops = ShortSleeveShirt | LongSleeveShirt | TankTop | ShortSleeveBlouse | LongSleeveBlouse | Cardigan
+data Top = ShortSleeveShirt | LongSleeveShirt | TankTop | ShortSleeveBlouse | LongSleeveBlouse | Cardigan
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Bottoms = SkinnyJeans | StraightJeans | CroppedJeans | Capris | JeansShorts | Skirt | StraightPants
+data Bottom = SkinnyJeans | StraightJeans | CroppedJeans | Capris | JeansShorts | Skirt | StraightPants
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Overalls = Dress | TrenchCoat | WinterCoat
+data Dress = Dress
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Shoes = Sandals | Bailarinas | Heels | Boots
+data Overall = TrenchCoat | WinterCoat
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Purses = Tote | Backpack | Clutch
+data Shoe = Sandals | Bailarinas | Heels | Boots
+  deriving (Show, Eq, Generic, ToJSON, FromJSON)
+
+data Purse = Tote | Backpack | Clutch
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 
 autumnWinterCasualCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, Cardigan]
                   , bottoms = [SkinnyJeans, Skirt]
-                  , overalls = [Dress, TrenchCoat, WinterCoat]
+                  , dresses = [Dress]
+                  , overalls = [TrenchCoat, WinterCoat]
                   , shoes = [Boots, Bailarinas]
                   , purses = [Backpack]
                   }
@@ -49,7 +55,8 @@ autumnWinterCasualCW =
 springSummerCasualCW =
   CapsuleWardrobe { tops = [ShortSleeveShirt, ShortSleeveShirt, ShortSleeveBlouse, Cardigan]
                   , bottoms = [SkinnyJeans, Skirt]
-                  , overalls = [Dress, TrenchCoat]
+                  , dresses = [Dress]
+                  , overalls = [TrenchCoat]
                   , shoes = [Sandals, Bailarinas]
                   , purses = [Tote]
                   }
@@ -57,7 +64,8 @@ springSummerCasualCW =
 autumnWinterOfficeCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, Cardigan]
                   , bottoms = [StraightPants, Skirt]
-                  , overalls = [Dress, TrenchCoat, WinterCoat]
+                  , dresses = [Dress]
+                  , overalls = [TrenchCoat, WinterCoat]
                   , shoes = [Boots, Bailarinas]
                   , purses = [Backpack]
                   }
@@ -65,7 +73,8 @@ autumnWinterOfficeCW =
 springSummerOfficeCW =
   CapsuleWardrobe { tops = [ShortSleeveShirt, ShortSleeveBlouse, ShortSleeveBlouse, Cardigan]
                   , bottoms = [StraightPants, Skirt]
-                  , overalls = [Dress, TrenchCoat]
+                  , dresses = [Dress]
+                  , overalls = [TrenchCoat]
                   , shoes = [Sandals, Bailarinas]
                   , purses = [Tote]
                   }
