@@ -7,6 +7,7 @@ import Wish
   ( Wish(..)
   , Style(..)
   , Season(..)
+  , NumberOfOutfits(..)
   )
 import CapsuleWardrobe
   (CapsuleWardrobe(..)
@@ -23,10 +24,10 @@ getJSON filePath = B.readFile filePath
 
 chooseCapsule :: Wish -> CapsuleWardrobe
 chooseCapsule wish
-  | wish == Wish {season = AutumnWinter, style = Casual} = autumnWinterCasualCW
-  | wish == Wish {season = SpringSummer, style = Casual} = springSummerCasualCW
-  | wish == Wish {season = AutumnWinter, style = Office} = autumnWinterOfficeCW
-  | wish == Wish {season = SpringSummer, style = Office} = springSummerOfficeCW
+  | wish == Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20} = autumnWinterCasualCW
+  | wish == Wish {season = SpringSummer, style = Casual, numberOfOutfits = From10to20} = springSummerCasualCW
+  | wish == Wish {season = AutumnWinter, style = Office, numberOfOutfits = From10to20} = autumnWinterOfficeCW
+  | wish == Wish {season = SpringSummer, style = Office, numberOfOutfits = From10to20} = springSummerOfficeCW
 
 numOfOutfits :: CapsuleWardrobe -> Int
 numOfOutfits capsule = (numOfTops * numOfPants * numOfOveralls) + (numOfTops * numOfSkirts * numOfOveralls) + (numOfDresses * numOfOveralls) where
