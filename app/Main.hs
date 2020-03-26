@@ -1,6 +1,6 @@
 module Main where
 
-import Lib (getJSON, chooseCapsule)
+import Lib (getJSON, chooseCapsule, numOfOutfits)
 import Wish
   (Wish(..)
   , Style(..)
@@ -23,7 +23,9 @@ main = do
   str <- getJSON jsonFile
   let decodedStr = decode str :: Maybe Wish
   case decodedStr of
-    Just wish -> print . encode . chooseCapsule $ wish
+    Just wish -> do
+      print . encode . chooseCapsule $ wish
+      print . numOfOutfits . chooseCapsule $ wish
     Nothing -> print "nothing"
 
 
