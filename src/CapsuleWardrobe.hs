@@ -43,7 +43,7 @@ data Dress = Dress
 data Overall = Cardigan | TrenchCoat
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Shoe = Sandals | Bailarinas | Heels | Boots
+data Shoe = Sandals | Flats | Heels | Boots
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 data Purse = Tote | Backpack | Clutch
@@ -56,7 +56,7 @@ autumnWinterCasualCW =
                   , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat]
-                  , shoes = [Boots, Bailarinas]
+                  , shoes = [Boots, Flats]
                   , purses = [Backpack]
                   }
 
@@ -66,7 +66,7 @@ springSummerCasualCW =
                   , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat]
-                  , shoes = [Sandals, Bailarinas]
+                  , shoes = [Sandals, Flats]
                   , purses = [Tote]
                   }
 
@@ -76,7 +76,7 @@ autumnWinterOfficeCW =
                   , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat]
-                  , shoes = [Boots, Bailarinas]
+                  , shoes = [Boots, Flats]
                   , purses = [Backpack]
                   }
 
@@ -86,7 +86,7 @@ springSummerOfficeCW =
                   , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat]
-                  , shoes = [Sandals, Bailarinas]
+                  , shoes = [Sandals, Flats]
                   , purses = [Tote]
                   }
 

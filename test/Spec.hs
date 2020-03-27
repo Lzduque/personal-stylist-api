@@ -36,7 +36,7 @@ testCW =
                   , skirts = [Skirt, Skirt]
                   , dresses = [Dress]
                   , overalls = [Cardigan, TrenchCoat]
-                  , shoes = [Boots, Bailarinas]
+                  , shoes = [Boots, Flats]
                   , purses = [Backpack]
                   }
 
