@@ -18,6 +18,16 @@ import CapsuleWardrobe
   )
 import qualified Data.ByteString.Lazy as B
 
+makeCapsule :: Wish -> CapsuleWardrobe
+makeCapsule wish capsule
+    | totalOutfits `inRange` rangeOfOutfits = capsule
+    | totalOutfits > snd rangeOfOutfits = error "Total Outfits larger than the Range of Outfits wished"
+    | otherwise = makeCapsule wish newCapsule
+    where
+      totalOutfits = countOutfits capsule
+      rangeOfOutfits = toRange . numberOfOutfits $ wish
+      newCapsule = addMoreClothes capsule
+
 -- get the json and transform in byte string
 getJSON :: FilePath -> IO B.ByteString
 getJSON filePath = B.readFile filePath
@@ -36,7 +46,13 @@ countOutfits capsule = (numOfTops * numOfPants * numOfOveralls) + (numOfTops * n
     numOfDresses = length . dresses $ capsule
     numOfOveralls = length . overalls $ capsule
 
-toRange :: NumberOfOutfits -> [Int]
-toRange From10to20 = [10..20]
-toRange From21to30 = [21..30]
-toRange From31to40 = [31..40]
+toRange :: NumberOfOutfits -> (Int,Int)
+toRange From10to20 = (10,20)
+toRange From21to30 = (21,30)
+toRange From31to40 = (31,40)
+
+inRange :: Int -> (Int,Int) -> Bool
+inRange x (a,b)
+  | a <= x && x <= b = True
+  | otherwise = False
+
