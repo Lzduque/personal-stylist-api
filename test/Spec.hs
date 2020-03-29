@@ -88,9 +88,9 @@ main = hspec $ do
       toRange From10to20 `shouldBe` (10,20)
       toRange From21to30 `shouldBe` (21,30)
       toRange From31to40 `shouldBe` (31,40)
-      toRange From31to40 `shouldBe` (41,50)
-      toRange From31to40 `shouldBe` (51,60)
-      toRange From31to40 `shouldBe` (61,70)
+      toRange From41to50 `shouldBe` (41,50)
+      toRange From51to60 `shouldBe` (51,60)
+      toRange From61to70 `shouldBe` (61,70)
 
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)

@@ -52,6 +52,9 @@ toRange :: NumberOfOutfits -> (Int,Int)
 toRange From10to20 = (10,20)
 toRange From21to30 = (21,30)
 toRange From31to40 = (31,40)
+toRange From41to50 = (41,50)
+toRange From51to60 = (51,60)
+toRange From61to70 = (61,70)
 
 inRange :: Int -> (Int,Int) -> Bool
 inRange x (a,b)
