@@ -1,11 +1,4 @@
-module Lib
-    ( getJSON
-    , chooseCapsule
-    , countOutfits
-    , toRange
-    , inRange
-    , countOccurrences
-    ) where
+module Lib where
 import Wish
   ( Wish(..)
   , Style(..)

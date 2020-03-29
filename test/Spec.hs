@@ -1,14 +1,7 @@
 import Test.Hspec
 -- import Test.QuickCheck
 -- import Control.Exception (evaluate)
-import Lib 
-  (getJSON
-  , chooseCapsule
-  , countOutfits
-  , toRange
-  , inRange
-  , countOccurrences
-  )
+import Lib
 import Wish
   ( Wish(..)
   , Style(..)
@@ -32,6 +25,7 @@ import CapsuleWardrobe
 import Data.Aeson (decode)
 
 autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20}
+autumnWinterCasualWish1 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From21to30}
 
 testCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
@@ -103,6 +97,27 @@ main = hspec $ do
     it "returns a the minimum e maximum from the range of outfits, given the desired Number Of Outfits" $ do
       countOccurrences 1 [1,2,3,4,1] `shouldBe` 2
       countOccurrences LongSleeveShirt [LongSleeveBlouse, LongSleeveBlouse] `shouldBe` 0
+
+
+
+-- Logic for Pants
+  describe "springSummerCasualPants" $ do
+    it "chooses a specifc type of pants given the Capsule Wardrobe" $ do
+      springSummerCasualPants testCW `shouldBe` JeansShorts
+
+  describe "autumnWinterCasualPants" $ do
+    it "chooses a specifc type of pants given the Capsule Wardrobe" $ do
+      autumnWinterCasualPants testCW `shouldBe` Leggings
+
+  describe "springSummerOfficePants" $ do
+    it "chooses a specifc type of pants given the Capsule Wardrobe" $ do
+      springSummerOfficePants testCW `shouldBe` SocialShorts
+
+  describe "autumnWinterOfficePants" $ do
+    it "chooses a specifc type of pants given the Capsule Wardrobe" $ do
+      autumnWinterOfficePants testCW `shouldBe` DressTrousers
+
+
 
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
