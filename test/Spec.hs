@@ -5,6 +5,9 @@ import Lib
   (getJSON
   , chooseCapsule
   , countOutfits
+  , toRange
+  , inRange
+  , countOccurrences
   )
 import Wish
   ( Wish(..)
@@ -32,9 +35,9 @@ autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual, numberOfOu
 
 testCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
-                  , pants = [SkinnyJeans, SkinnyJeans]
-                  , skirts = [Skirt, Skirt]
-                  , dresses = [Dress]
+                  , pants = [Jeans, Jeans]
+                  , skirts = [ShortSkirt, LongSkirt]
+                  , dresses = [LongSleeveDress]
                   , overalls = [Cardigan, TrenchCoat]
                   , shoes = [Boots, Flats]
                   , purses = [Backpack]
