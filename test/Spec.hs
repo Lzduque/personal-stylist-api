@@ -270,6 +270,34 @@ main = hspec $ do
 
 
 
+-- ------------ MAIN FUNCTIONS
+  describe "makeCapsule" $ do
+    it "returns a final capsule Wardrobe with a new item(s) of clothing given one Capsule Wardrobe" $ do
+      makeCapsule autumnWinterCasualWish1 autumnWinterCasualCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = [LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Sweater,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [Backpack]}
+      countOutfits (makeCapsule autumnWinterCasualWish1 autumnWinterCasualCW) `shouldBe` 26
+
+  describe "addMoreClothes" $ do
+    it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe" $ do
+      addMoreClothes autumnWinterCasualWish1 autumnWinterCasualCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = []
+          , dresses = [LongSleeveDress]
+          , overalls = [Sweater,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [Backpack]}
+
+
+
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
 
