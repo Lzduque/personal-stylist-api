@@ -190,12 +190,10 @@ autumnWinterOfficeTop capsule
 springSummerCasualDress :: CapsuleWardrobe -> Dress
 springSummerCasualDress capsule
   | numOfShortSleeveDress < numOfTops / 2 = ShortSleeveDress 
-  | numOfNoSleeveDress < numOfTops / 2 = NoSleeveDress 
-  | otherwise = ShortSleeveDress
+  | otherwise = NoSleeveDress
   where
     numOfTops = fromIntegral . length . tops $ capsule
     numOfShortSleeveDress = fromIntegral . countOccurrences ShortSleeveDress $ dresses capsule
-    numOfNoSleeveDress = fromIntegral . countOccurrences NoSleeveDress $ dresses capsule
 
 autumnWinterCasualDress :: CapsuleWardrobe -> Dress
 autumnWinterCasualDress capsule

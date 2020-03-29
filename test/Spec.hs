@@ -155,9 +155,32 @@ main = hspec $ do
     it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
       autumnWinterOfficeOverall testCW `shouldBe` Sweater
 
+
+
+
+-- Logic for Dress
+  describe "springSummerCasualDress" $ do
+    it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
+      springSummerCasualDress testCW `shouldBe` ShortSleeveDress
+
+  describe "autumnWinterCasualDress" $ do
+    it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
+      autumnWinterCasualDress testCW `shouldBe` LongSleeveDress
+
+  describe "springSummerOfficeDress" $ do
+    it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
+      springSummerOfficeDress testCW `shouldBe` ShortSleeveDress
+
+  describe "autumnWinterOfficeDress" $ do
+    it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
+      autumnWinterOfficeDress testCW `shouldBe` LongSleeveDress
+
+
+
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
 
     -- it "throws an exception if used with an empty list" $ do
     --   evaluate (head []) `shouldThrow` anyException
+
 
