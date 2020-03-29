@@ -13,9 +13,10 @@ import CapsuleWardrobe
   , autumnWinterOfficeCW
   , springSummerOfficeCW
   )
-import Data.Aeson (decode, encode)
+import Data.Aeson (decode)
+import Text.Pretty.Simple (pPrint)
 
-jsonFile = "test-1.json"
+jsonFile = "CW-1.json"
 
 -- main function that is running everything
 main :: IO ()
@@ -24,8 +25,9 @@ main = do
   let decodedStr = decode str :: Maybe Wish
   case decodedStr of
     Just wish -> do
-      print . makeCapsule wish $ chooseCapsule wish
-      print . countOutfits . makeCapsule wish $ chooseCapsule wish
+      pPrint . makeCapsule wish $ chooseCapsule wish
+      let count = countOutfits . makeCapsule wish $ chooseCapsule wish
+      putStrLn $ "Num Of Outfits: " ++ show count
     Nothing -> print "nothing"
 
 

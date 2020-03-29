@@ -23,6 +23,7 @@ dependencies:
 - base >= 4.7 && < 5
 - aeson >= 1.4.6.0
 - bytestring
+- pretty-simple
 
 library:
   source-dirs: src
