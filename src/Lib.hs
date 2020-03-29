@@ -83,6 +83,9 @@ inRange x (a,b)
 countOccurrences :: Eq a => a -> [a] -> Int
 countOccurrences x = length . filter (x==)
 
+
+
+
 -- Add Clothes function
 addTop :: CapsuleWardrobe -> CapsuleWardrobe
 addTop capsule
@@ -90,7 +93,7 @@ addTop capsule
   | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualTop capsule) capsule
   | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficeTop capsule) capsule
   | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficeTop capsule) capsule
-  | otherwise = error "Wrong capsule selected"
+  | otherwise = error "Wrong capsule selected - Top"
 
 addDress :: CapsuleWardrobe -> CapsuleWardrobe
 addDress capsule
@@ -98,10 +101,15 @@ addDress capsule
   | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualDress capsule) capsule
   | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficeDress capsule) capsule
   | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficeDress capsule) capsule
-  | otherwise = error "Wrong capsule selected"
+  | otherwise = error "Wrong capsule selected - Dress"
 
 addOverall :: CapsuleWardrobe -> CapsuleWardrobe
-addOverall = undefined
+addOverall capsule
+  | capsule == springSummerCasualCW = addToCapsule (springSummerCasualOverall capsule) capsule
+  | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualOverall capsule) capsule
+  | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficeOverall capsule) capsule
+  | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficeOverall capsule) capsule
+  | otherwise = error "Wrong capsule selected - Overall"
 
 addBottom :: CapsuleWardrobe -> CapsuleWardrobe
 addBottom capsule
@@ -111,10 +119,18 @@ addBottom capsule
     pantSkirt = fromIntegral (length . pants $ capsule) / fromIntegral (length . skirts $ capsule)
 
 addSkirt :: CapsuleWardrobe -> CapsuleWardrobe
-addSkirt = undefined
+addSkirt capsule
+  | capsule == springSummerCasualCW = addToCapsule (springSummerCasualSkirt capsule) capsule
+  | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualSkirt capsule) capsule
+  | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficeSkirt capsule) capsule
+  | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficeSkirt capsule) capsule
+  | otherwise = error "Wrong capsule selected - Skirt"
 
 addPant :: CapsuleWardrobe -> CapsuleWardrobe
-addPant = undefined
+addPant capsule
+
+
+
 
 -- Logic for Tops
 springSummerCasualTop :: CapsuleWardrobe -> Top
@@ -202,3 +218,67 @@ autumnWinterOfficeDress capsule
     numOfLongSleeveDress = fromIntegral . countOccurrences LongSleeveDress $ dresses capsule
     numOfNoSleeveDress = fromIntegral . countOccurrences NoSleeveDress $ dresses capsule
 
+-- Logic for Overalls
+springSummerCasualOverall :: CapsuleWardrobe -> Overall
+springSummerCasualOverall capsule
+  | numOfCardigan < numOfOveralls / 6 = Cardigan 
+  | numOfSweatshirt < numOfOveralls / 6 = Sweatshirt 
+  | numOfBlazer < numOfOveralls / 6 = Blazer 
+  | numOfTrenchCoat < numOfOveralls / 6 = TrenchCoat 
+  | numOfJacket < numOfOveralls / 6 = Jacket 
+  | otherwise = Vest
+  where
+    numOfOveralls = fromIntegral . length . overalls $ capsule
+    numOfCardigan = fromIntegral . countOccurrences Cardigan $ overalls capsule
+    numOfSweatshirt = fromIntegral . countOccurrences Sweatshirt $ overalls capsule
+    numOfBlazer = fromIntegral . countOccurrences Blazer $ overalls capsule
+    numOfTrenchCoat = fromIntegral . countOccurrences TrenchCoat $ overalls capsule
+    numOfJacket = fromIntegral . countOccurrences Jacket $ overalls capsule
+
+autumnWinterCasualOverall :: CapsuleWardrobe -> Overall
+autumnWinterCasualOverall capsule
+  | numOfCardigan < numOfOveralls / 8 = Cardigan 
+  | numOfJacket < numOfOveralls / 8 = Jacket 
+  | numOfSweatshirt < numOfOveralls / 8 = Sweatshirt 
+  | numOfBlazer < numOfOveralls / 8 = Blazer 
+  | numOfVest < numOfOveralls / 8 = Vest 
+  | numOfWoolCoat < numOfOveralls / 8 = WoolCoat 
+  | numOfSweater < numOfOveralls / 8 = Sweater 
+  | otherwise = TrenchCoat
+  where
+    numOfOveralls = fromIntegral . length . overalls $ capsule
+    numOfCardigan = fromIntegral . countOccurrences Cardigan $ overalls capsule
+    numOfJacket = fromIntegral . countOccurrences Jacket $ overalls capsule
+    numOfSweatshirt = fromIntegral . countOccurrences Sweatshirt $ overalls capsule
+    numOfBlazer = fromIntegral . countOccurrences Blazer $ overalls capsule
+    numOfVest = fromIntegral . countOccurrences Vest $ overalls capsule
+    numOfWoolCoat = fromIntegral . countOccurrences WoolCoat $ overalls capsule
+    numOfSweater = fromIntegral . countOccurrences Sweater $ overalls capsule
+
+springSummerOfficeOverall :: CapsuleWardrobe -> Overall
+springSummerOfficeOverall capsule
+  | numOfTrenchCoat < numOfOveralls / 4 = TrenchCoat 
+  | numOfVest < numOfOveralls / 4 = Vest 
+  | numOfCardigan < numOfOveralls / 4 = Cardigan 
+  | otherwise = Blazer
+  where
+    numOfOveralls = fromIntegral . length . overalls $ capsule
+    numOfTrenchCoat = fromIntegral . countOccurrences TrenchCoat $ overalls capsule
+    numOfVest = fromIntegral . countOccurrences Vest $ overalls capsule
+    numOfCardigan = fromIntegral . countOccurrences Cardigan $ overalls capsule
+
+autumnWinterOfficeOverall :: CapsuleWardrobe -> Overall
+autumnWinterOfficeOverall capsule
+  | numOfSweater < numOfOveralls / 6 = Sweater 
+  | numOfBlazer < numOfOveralls / 6 = Blazer 
+  | numOfVest < numOfOveralls / 6 = Vest 
+  | numOfWoolCoat < numOfOveralls / 6 = WoolCoat 
+  | numOfCardigan < numOfOveralls / 6 = Cardigan 
+  | otherwise = TrenchCoat
+  where
+    numOfOveralls = fromIntegral . length . overalls $ capsule
+    numOfSweater = fromIntegral . countOccurrences Sweater $ overalls capsule
+    numOfBlazer = fromIntegral . countOccurrences Blazer $ overalls capsule
+    numOfVest = fromIntegral . countOccurrences Vest $ overalls capsule
+    numOfWoolCoat = fromIntegral . countOccurrences WoolCoat $ overalls capsule
+    numOfCardigan = fromIntegral . countOccurrences Cardigan $ overalls capsule

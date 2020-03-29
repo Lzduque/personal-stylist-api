@@ -35,7 +35,7 @@ data Top = LongSleeveShirt | LongSleeveBlouse | ShortSleeveShirt | ShortSleeveBl
 instance Clothing Top where
   addToCapsule newTop capsule = capsule { tops = tops capsule ++ [newTop] }
   
-data Pants = Jeans | JeansShorts | SocialPants | SocialShorts
+data Pants = Jeans | JeansShorts | DressTrousers | SocialShorts | Leggings
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 instance Clothing Pants where
   addToCapsule newPants capsule = capsule { pants = pants capsule ++ [newPants] }
@@ -52,7 +52,7 @@ instance Clothing Dress where
 
 -- to do: think about transforming cardigans in layer2 and coats in layer3, so you can do a better count of the number of outfits (abstraction to layers)
 -- to do: WinterCoat??
-data Overall = Cardigan | TrenchCoat | WoolCoat
+data Overall = Sweater | Cardigan | Jacket | Vest | Blazer | Sweatshirt | TrenchCoat | WoolCoat
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 instance Clothing Overall where
   addToCapsule newOverall capsule = capsule { overalls = overalls capsule ++ [newOverall] }
@@ -73,7 +73,7 @@ autumnWinterCasualCW =
                   , pants = [Jeans, Jeans]
                   , skirts = []
                   , dresses = []
-                  , overalls = [Cardigan, TrenchCoat]
+                  , overalls = [Sweater, TrenchCoat]
                   , shoes = [Boots, Flats]
                   , purses = [Backpack]
                   }
@@ -83,14 +83,14 @@ springSummerCasualCW =
                   , pants = [Jeans, Jeans]
                   , skirts = []
                   , dresses = []
-                  , overalls = [Cardigan, TrenchCoat]
+                  , overalls = [Vest, Jacket]
                   , shoes = [Sandals, Flats]
                   , purses = [Tote]
                   }
 
 autumnWinterOfficeCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse]
-                  , pants = [SocialPants, SocialPants]
+                  , pants = [DressTrousers, DressTrousers]
                   , skirts = []
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat]
@@ -100,10 +100,10 @@ autumnWinterOfficeCW =
 
 springSummerOfficeCW =
   CapsuleWardrobe { tops = [ShortSleeveShirt, ShortSleeveBlouse, ShortSleeveBlouse]
-                  , pants = [SocialPants, SocialPants]
+                  , pants = [DressTrousers, DressTrousers]
                   , skirts = []
                   , dresses = []
-                  , overalls = [Cardigan, TrenchCoat]
+                  , overalls = [Cardigan, Blazer]
                   , shoes = [Sandals, Flats]
                   , purses = [Tote]
                   }
