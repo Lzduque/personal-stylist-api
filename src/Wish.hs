@@ -1,9 +1,4 @@
-module Wish
-  (Wish(..)
-  , Style(..)
-  , Season(..)
-  , NumberOfOutfits(..)
-  ) where
+module Wish where
 
 import Data.Aeson (FromJSON,ToJSON)
 import GHC.Generics (Generic)

@@ -1,18 +1,4 @@
-module CapsuleWardrobe
-  ( CapsuleWardrobe(..)
-  , Clothing(..)
-  , Top(..)
-  , Pants(..)
-  , Skirt(..)
-  , Dress(..)
-  , Overall(..)
-  , Shoe(..)
-  , Purse(..)
-  , autumnWinterCasualCW
-  , springSummerCasualCW
-  , autumnWinterOfficeCW
-  , springSummerOfficeCW
-  ) where
+module CapsuleWardrobe where
 
 import Data.Aeson (FromJSON,ToJSON)
 import GHC.Generics (Generic)
