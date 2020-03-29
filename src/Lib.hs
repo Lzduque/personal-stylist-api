@@ -282,3 +282,38 @@ autumnWinterOfficeOverall capsule
     numOfVest = fromIntegral . countOccurrences Vest $ overalls capsule
     numOfWoolCoat = fromIntegral . countOccurrences WoolCoat $ overalls capsule
     numOfCardigan = fromIntegral . countOccurrences Cardigan $ overalls capsule
+
+-- LongSkirt | ShortSkirt
+-- Logic for Skirt
+springSummerCasualSkirt :: CapsuleWardrobe -> Skirt
+springSummerCasualSkirt capsule
+  | numOfShortSkirt < numOfSkirts / 2 = ShortSkirt 
+  | otherwise = LongSkirt
+  where
+    numOfSkirts = fromIntegral . length . skirts $ capsule
+    numOfShortSkirt = fromIntegral . countOccurrences ShortSkirt $ skirts capsule
+
+autumnWinterCasualSkirt :: CapsuleWardrobe -> Skirt
+autumnWinterCasualSkirt capsule
+  | numOfShortSkirt < numOfSkirts / 2 = ShortSkirt 
+  | otherwise = LongSkirt
+  where
+    numOfSkirts = fromIntegral . length . skirts $ capsule
+    numOfShortSkirt = fromIntegral . countOccurrences ShortSkirt $ skirts capsule
+
+springSummerOfficeSkirt :: CapsuleWardrobe -> Skirt
+springSummerOfficeSkirt capsule
+  | numOfShortSkirt < numOfSkirts / 2 = ShortSkirt 
+  | otherwise = LongSkirt
+  where
+    numOfSkirts = fromIntegral . length . skirts $ capsule
+    numOfShortSkirt = fromIntegral . countOccurrences ShortSkirt $ skirts capsule
+
+autumnWinterOfficeSkirt :: CapsuleWardrobe -> Skirt
+autumnWinterOfficeSkirt capsule
+  | numOfShortSkirt < numOfSkirts / 2 = ShortSkirt 
+  | otherwise = LongSkirt
+  where
+    numOfSkirts = fromIntegral . length . skirts $ capsule
+    numOfShortSkirt = fromIntegral . countOccurrences ShortSkirt $ skirts capsule
+
