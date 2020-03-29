@@ -136,6 +136,25 @@ main = hspec $ do
     it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
       autumnWinterOfficeSkirt testCW `shouldBe` LongSkirt
 
+
+
+-- Logic for Overalls
+  describe "springSummerCasualOverall" $ do
+    it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
+      springSummerCasualOverall testCW `shouldBe` Sweatshirt
+
+  describe "autumnWinterCasualOverall" $ do
+    it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
+      autumnWinterCasualOverall testCW `shouldBe` Jacket
+
+  describe "springSummerOfficeOverall" $ do
+    it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
+      springSummerOfficeOverall testCW `shouldBe` Vest
+
+  describe "autumnWinterOfficeOverall" $ do
+    it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
+      autumnWinterOfficeOverall testCW `shouldBe` Sweater
+
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
 
