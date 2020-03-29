@@ -20,7 +20,7 @@ data Season = SpringSummer | AutumnWinter
 data Style = Casual | Office
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data NumberOfOutfits = From10to20 | From21to30 | From31to40
+data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 -- data BodyType = Rectangle | Apple | InvertedTriangle | Hourglass | Triangle
