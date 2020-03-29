@@ -66,7 +66,7 @@ countOccurrences x = length . filter (x==)
 
 
 
-
+-- ------------ MAIN FUNCTIONS
 makeCapsule :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
 makeCapsule wish capsule
     | totalOutfits `inRange` rangeOfOutfits = capsule
@@ -97,7 +97,7 @@ addMoreClothes capsule
 
 
 
--- Add Clothes function
+-- ------------ Add Clothes function
 addTop :: CapsuleWardrobe -> CapsuleWardrobe
 addTop capsule
   | capsule == springSummerCasualCW = addToCapsule (springSummerCasualTop capsule) capsule
