@@ -68,17 +68,17 @@ makeCapsule wish capsule
     where
       totalOutfits = countOutfits capsule
       rangeOfOutfits = toRange . numberOfOutfits $ wish
-      newCapsule = addMoreClothes capsule
+      newCapsule = addMoreClothes wish capsule
 
-addMoreClothes :: CapsuleWardrobe -> CapsuleWardrobe
-addMoreClothes capsule
-    | topBottom > 2 = addBottom capsule
-    | topBottom < 3/2 = addTop capsule
-    | dressBottom < 1/3 = addDress capsule
-    | topOverall >= 3 = addOverall capsule
-    | topOverall < 2 = addBottom capsule
-    | dressTop  <= 1/6 = addDress capsule
-    | otherwise = addTop capsule
+addMoreClothes :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addMoreClothes wish capsule
+    | topBottom > 2 = addBottom wish capsule
+    | topBottom < 3/2 = addTop wish capsule
+    | dressBottom < 1/3 = addDress wish capsule
+    | topOverall >= 3 = addOverall wish capsule
+    | topOverall < 2 = addBottom wish capsule
+    | dressTop  <= 1/6 = addDress wish capsule
+    | otherwise = addTop wish capsule
     where 
       numBottoms = fromIntegral $ (length . pants $ capsule) + (length . skirts $ capsule)
       topBottom = fromIntegral (length . tops $ capsule) / numBottoms
@@ -88,56 +88,68 @@ addMoreClothes capsule
 
 
 
-
-
 -- ------------ Add Clothes function
-addTop :: CapsuleWardrobe -> CapsuleWardrobe
-addTop capsule
-  | capsule == springSummerCasualCW = addToCapsule (springSummerCasualTop capsule) capsule
-  | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualTop capsule) capsule
-  | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficeTop capsule) capsule
-  | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficeTop capsule) capsule
+addTop :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addTop wish capsule
+  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule (springSummerCasualTop capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualTop capsule) capsule
+  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficeTop capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficeTop capsule) capsule
   | otherwise = error "Wrong capsule selected - Top"
+  where
+    wishedSeason = season $ wish
+    wishedStyle = style $ wish
 
-addDress :: CapsuleWardrobe -> CapsuleWardrobe
-addDress capsule
-  | capsule == springSummerCasualCW = addToCapsule (springSummerCasualDress capsule) capsule
-  | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualDress capsule) capsule
-  | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficeDress capsule) capsule
-  | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficeDress capsule) capsule
+addDress :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addDress wish capsule
+  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule (springSummerCasualDress capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualDress capsule) capsule
+  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficeDress capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficeDress capsule) capsule
   | otherwise = error "Wrong capsule selected - Dress"
+  where
+    wishedSeason = season $ wish
+    wishedStyle = style $ wish
 
-addOverall :: CapsuleWardrobe -> CapsuleWardrobe
-addOverall capsule
-  | capsule == springSummerCasualCW = addToCapsule (springSummerCasualOverall capsule) capsule
-  | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualOverall capsule) capsule
-  | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficeOverall capsule) capsule
-  | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficeOverall capsule) capsule
+addOverall :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addOverall wish capsule
+  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule (springSummerCasualOverall capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualOverall capsule) capsule
+  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficeOverall capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficeOverall capsule) capsule
   | otherwise = error "Wrong capsule selected - Overall"
+  where
+    wishedSeason = season $ wish
+    wishedStyle = style $ wish
 
-addBottom :: CapsuleWardrobe -> CapsuleWardrobe
-addBottom capsule
-  | pantSkirt > 3 = addSkirt capsule
-  | otherwise = addPant capsule
+addBottom :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addBottom wish capsule
+  | pantSkirt > 3 = addSkirt wish capsule
+  | otherwise = addPants wish capsule
   where
     pantSkirt = fromIntegral (length . pants $ capsule) / fromIntegral (length . skirts $ capsule)
 
-addSkirt :: CapsuleWardrobe -> CapsuleWardrobe
-addSkirt capsule
-  | capsule == springSummerCasualCW = addToCapsule (springSummerCasualSkirt capsule) capsule
-  | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualSkirt capsule) capsule
-  | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficeSkirt capsule) capsule
-  | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficeSkirt capsule) capsule
+addSkirt :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addSkirt wish capsule
+  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule (springSummerCasualSkirt capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualSkirt capsule) capsule
+  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficeSkirt capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficeSkirt capsule) capsule
   | otherwise = error "Wrong capsule selected - Skirt"
+  where
+    wishedSeason = season $ wish
+    wishedStyle = style $ wish
 
-addPant :: CapsuleWardrobe -> CapsuleWardrobe
-addPant capsule
-  | capsule == springSummerCasualCW = addToCapsule (springSummerCasualPants capsule) capsule
-  | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualPants capsule) capsule
-  | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficePants capsule) capsule
-  | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficePants capsule) capsule
+addPants :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addPants wish capsule
+  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule (springSummerCasualPants capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualPants capsule) capsule
+  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficePants capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficePants capsule) capsule
   | otherwise = error "Wrong capsule selected - Skirt"
-
+  where
+    wishedSeason = season $ wish
+    wishedStyle = style $ wish
 
 
 

@@ -195,6 +195,80 @@ main = hspec $ do
 
 
 
+-- ------------ Add Clothes function
+  describe "addTop" $ do
+    it "returns a capsule Wardrobe with a new top given one Capsule Wardrobe" $ do
+      addTop autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = [ShortSkirt,LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [Backpack]}
+
+  describe "addDress" $ do
+    it "returns a capsule Wardrobe with a new dress given one Capsule Wardrobe" $ do
+      addDress autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = [ShortSkirt,LongSkirt]
+          , dresses = [LongSleeveDress,LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [Backpack]}
+
+  describe "addOverall" $ do
+    it "returns a capsule Wardrobe with a new overall given one Capsule Wardrobe" $ do
+      addOverall autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = [ShortSkirt,LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat,Jacket]
+          , shoes = [Boots,Flats]
+          , purses = [Backpack]}
+
+  describe "addBottom" $ do
+    it "returns a capsule Wardrobe with a new bottom given one Capsule Wardrobe" $ do
+      addBottom autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans,Leggings]
+          , skirts = [ShortSkirt,LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [Backpack]}
+
+  describe "addSkirt" $ do
+    it "returns a capsule Wardrobe with a new skirt given one Capsule Wardrobe" $ do
+      addSkirt autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = [ShortSkirt,LongSkirt,LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [Backpack]}
+
+  describe "addPants" $ do
+    it "returns a capsule Wardrobe with a new pants given one Capsule Wardrobe" $ do
+      addPants autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans,Leggings]
+          , skirts = [ShortSkirt,LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [Backpack]}
+
+
 
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
