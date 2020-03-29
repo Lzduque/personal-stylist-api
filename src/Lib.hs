@@ -48,6 +48,9 @@ toRange From31to40 = (31,40)
 toRange From41to50 = (41,50)
 toRange From51to60 = (51,60)
 toRange From61to70 = (61,70)
+toRange From71to80 = (71,80)
+toRange From81to90 = (81,90)
+toRange From91to100 = (91,100)
 
 inRange :: Int -> (Int,Int) -> Bool
 inRange x (a,b)
@@ -146,7 +149,7 @@ addPants wish capsule
   | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualPants capsule) capsule
   | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficePants capsule) capsule
   | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficePants capsule) capsule
-  | otherwise = error "Wrong capsule selected - Skirt"
+  | otherwise = error "Wrong capsule selected - Pants"
   where
     wishedSeason = season $ wish
     wishedStyle = style $ wish
@@ -156,8 +159,8 @@ addPants wish capsule
 -- Logic for Tops
 springSummerCasualTop :: CapsuleWardrobe -> Top
 springSummerCasualTop capsule
-  | numOfShortSleeveShirt < numOfTops / 3 = ShortSleeveShirt 
-  | numOfShortSleeveBlouse < numOfTops / 3 = ShortSleeveBlouse 
+  | numOfShortSleeveShirt <= numOfTops / 3 = ShortSleeveShirt 
+  | numOfShortSleeveBlouse <= numOfTops / 3 = ShortSleeveBlouse 
   | otherwise = TankTop
   where
     numOfTops = fromIntegral . length . tops $ capsule
@@ -166,7 +169,7 @@ springSummerCasualTop capsule
 
 autumnWinterCasualTop :: CapsuleWardrobe -> Top
 autumnWinterCasualTop capsule
-  | numOfLongSleeveShirt < numOfTops / 2 = LongSleeveShirt 
+  | numOfLongSleeveShirt <= numOfTops / 2 = LongSleeveShirt 
   | otherwise = LongSleeveBlouse
   where
     numOfTops = fromIntegral . length . tops $ capsule
@@ -174,8 +177,8 @@ autumnWinterCasualTop capsule
 
 springSummerOfficeTop :: CapsuleWardrobe -> Top
 springSummerOfficeTop capsule
-  | numOfShortSleeveBlouse < numOfTops / 2 = ShortSleeveBlouse 
-  | numOfShortSleeveShirt < numOfTops / 4 = ShortSleeveShirt 
+  | numOfShortSleeveBlouse <= numOfTops / 2 = ShortSleeveBlouse 
+  | numOfShortSleeveShirt <= numOfTops / 4 = ShortSleeveShirt 
   | otherwise = TankTop
   where
     numOfTops = fromIntegral . length . tops $ capsule
@@ -184,16 +187,17 @@ springSummerOfficeTop capsule
 
 autumnWinterOfficeTop :: CapsuleWardrobe -> Top
 autumnWinterOfficeTop capsule
-  | numOfLongSleeveBlouse < numOfTops / (3/2) = LongSleeveBlouse 
+  | numOfLongSleeveBlouse <= numOfTops / (3/2) = LongSleeveBlouse 
   | otherwise = LongSleeveShirt
   where
     numOfTops = fromIntegral . length . tops $ capsule
     numOfLongSleeveBlouse = fromIntegral . countOccurrences LongSleeveBlouse $ tops capsule
 
 -- Logic for Dress
+-- to do: think about the ratio, it is given 2 short sleeve dresses at first
 springSummerCasualDress :: CapsuleWardrobe -> Dress
 springSummerCasualDress capsule
-  | numOfShortSleeveDress < numOfTops / 2 = ShortSleeveDress 
+  | numOfShortSleeveDress <= numOfTops / 2 = ShortSleeveDress 
   | otherwise = NoSleeveDress
   where
     numOfTops = fromIntegral . length . tops $ capsule
@@ -201,7 +205,7 @@ springSummerCasualDress capsule
 
 autumnWinterCasualDress :: CapsuleWardrobe -> Dress
 autumnWinterCasualDress capsule
-  | numOfLongSleeveDress < numOfTops / 2 = LongSleeveDress 
+  | numOfLongSleeveDress <= numOfTops / 2 = LongSleeveDress 
   | otherwise = NoSleeveDress
   where
     numOfTops = fromIntegral . length . tops $ capsule
@@ -209,7 +213,7 @@ autumnWinterCasualDress capsule
 
 springSummerOfficeDress :: CapsuleWardrobe -> Dress
 springSummerOfficeDress capsule
-  | numOfShortSleeveDress < numOfTops / 2 = ShortSleeveDress 
+  | numOfShortSleeveDress <= numOfTops / 2 = ShortSleeveDress 
   | otherwise = NoSleeveDress
   where
     numOfTops = fromIntegral . length . tops $ capsule
@@ -217,7 +221,7 @@ springSummerOfficeDress capsule
 
 autumnWinterOfficeDress :: CapsuleWardrobe -> Dress
 autumnWinterOfficeDress capsule
-  | numOfLongSleeveDress < numOfTops / 2 = LongSleeveDress 
+  | numOfLongSleeveDress <= numOfTops / 2 = LongSleeveDress 
   | otherwise = NoSleeveDress
   where
     numOfTops = fromIntegral . length . tops $ capsule
@@ -226,11 +230,11 @@ autumnWinterOfficeDress capsule
 -- Logic for Overalls
 springSummerCasualOverall :: CapsuleWardrobe -> Overall
 springSummerCasualOverall capsule
-  | numOfCardigan < numOfOveralls / 6 = Cardigan 
-  | numOfSweatshirt < numOfOveralls / 6 = Sweatshirt 
-  | numOfBlazer < numOfOveralls / 6 = Blazer 
-  | numOfTrenchCoat < numOfOveralls / 6 = TrenchCoat 
-  | numOfJacket < numOfOveralls / 6 = Jacket 
+  | numOfCardigan <= numOfOveralls / 6 = Cardigan 
+  | numOfSweatshirt <= numOfOveralls / 6 = Sweatshirt 
+  | numOfBlazer <= numOfOveralls / 6 = Blazer 
+  | numOfTrenchCoat <= numOfOveralls / 6 = TrenchCoat 
+  | numOfJacket <= numOfOveralls / 6 = Jacket 
   | otherwise = Vest
   where
     numOfOveralls = fromIntegral . length . overalls $ capsule
@@ -242,13 +246,13 @@ springSummerCasualOverall capsule
 
 autumnWinterCasualOverall :: CapsuleWardrobe -> Overall
 autumnWinterCasualOverall capsule
-  | numOfCardigan < numOfOveralls / 8 = Cardigan 
-  | numOfJacket < numOfOveralls / 8 = Jacket 
-  | numOfSweatshirt < numOfOveralls / 8 = Sweatshirt 
-  | numOfBlazer < numOfOveralls / 8 = Blazer 
-  | numOfVest < numOfOveralls / 8 = Vest 
-  | numOfWoolCoat < numOfOveralls / 8 = WoolCoat 
-  | numOfSweater < numOfOveralls / 8 = Sweater 
+  | numOfCardigan <= numOfOveralls / 8 = Cardigan 
+  | numOfJacket <= numOfOveralls / 8 = Jacket 
+  | numOfSweatshirt <= numOfOveralls / 8 = Sweatshirt 
+  | numOfBlazer <= numOfOveralls / 8 = Blazer 
+  | numOfVest <= numOfOveralls / 8 = Vest 
+  | numOfWoolCoat <= numOfOveralls / 8 = WoolCoat 
+  | numOfSweater <= numOfOveralls / 8 = Sweater 
   | otherwise = TrenchCoat
   where
     numOfOveralls = fromIntegral . length . overalls $ capsule
@@ -262,9 +266,9 @@ autumnWinterCasualOverall capsule
 
 springSummerOfficeOverall :: CapsuleWardrobe -> Overall
 springSummerOfficeOverall capsule
-  | numOfTrenchCoat < numOfOveralls / 4 = TrenchCoat 
-  | numOfVest < numOfOveralls / 4 = Vest 
-  | numOfCardigan < numOfOveralls / 4 = Cardigan 
+  | numOfTrenchCoat <= numOfOveralls / 4 = TrenchCoat 
+  | numOfVest <= numOfOveralls / 4 = Vest 
+  | numOfCardigan <= numOfOveralls / 4 = Cardigan 
   | otherwise = Blazer
   where
     numOfOveralls = fromIntegral . length . overalls $ capsule
@@ -274,11 +278,11 @@ springSummerOfficeOverall capsule
 
 autumnWinterOfficeOverall :: CapsuleWardrobe -> Overall
 autumnWinterOfficeOverall capsule
-  | numOfSweater < numOfOveralls / 6 = Sweater 
-  | numOfBlazer < numOfOveralls / 6 = Blazer 
-  | numOfVest < numOfOveralls / 6 = Vest 
-  | numOfWoolCoat < numOfOveralls / 6 = WoolCoat 
-  | numOfCardigan < numOfOveralls / 6 = Cardigan 
+  | numOfSweater <= numOfOveralls / 6 = Sweater 
+  | numOfBlazer <= numOfOveralls / 6 = Blazer 
+  | numOfVest <= numOfOveralls / 6 = Vest 
+  | numOfWoolCoat <= numOfOveralls / 6 = WoolCoat 
+  | numOfCardigan <= numOfOveralls / 6 = Cardigan 
   | otherwise = TrenchCoat
   where
     numOfOveralls = fromIntegral . length . overalls $ capsule
@@ -291,7 +295,7 @@ autumnWinterOfficeOverall capsule
 -- Logic for Skirt
 springSummerCasualSkirt :: CapsuleWardrobe -> Skirt
 springSummerCasualSkirt capsule
-  | numOfShortSkirt < numOfSkirts / 2 = ShortSkirt 
+  | numOfShortSkirt <= numOfSkirts / 2 = ShortSkirt 
   | otherwise = LongSkirt
   where
     numOfSkirts = fromIntegral . length . skirts $ capsule
@@ -299,7 +303,7 @@ springSummerCasualSkirt capsule
 
 autumnWinterCasualSkirt :: CapsuleWardrobe -> Skirt
 autumnWinterCasualSkirt capsule
-  | numOfShortSkirt < numOfSkirts / 2 = ShortSkirt 
+  | numOfShortSkirt <= numOfSkirts / 2 = ShortSkirt 
   | otherwise = LongSkirt
   where
     numOfSkirts = fromIntegral . length . skirts $ capsule
@@ -307,7 +311,7 @@ autumnWinterCasualSkirt capsule
 
 springSummerOfficeSkirt :: CapsuleWardrobe -> Skirt
 springSummerOfficeSkirt capsule
-  | numOfShortSkirt < numOfSkirts / 2 = ShortSkirt 
+  | numOfShortSkirt <= numOfSkirts / 2 = ShortSkirt 
   | otherwise = LongSkirt
   where
     numOfSkirts = fromIntegral . length . skirts $ capsule
@@ -315,7 +319,7 @@ springSummerOfficeSkirt capsule
 
 autumnWinterOfficeSkirt :: CapsuleWardrobe -> Skirt
 autumnWinterOfficeSkirt capsule
-  | numOfShortSkirt < numOfSkirts / 2 = ShortSkirt 
+  | numOfShortSkirt <= numOfSkirts / 2 = ShortSkirt 
   | otherwise = LongSkirt
   where
     numOfSkirts = fromIntegral . length . skirts $ capsule
@@ -324,8 +328,8 @@ autumnWinterOfficeSkirt capsule
 -- Logic for Pants
 springSummerCasualPants :: CapsuleWardrobe -> Pants
 springSummerCasualPants capsule
-  | numOfJeansShorts < numOfPants / 3 = JeansShorts 
-  | numOfLeggings < numOfPants / 3 = Leggings
+  | numOfJeansShorts <= numOfPants / 3 = JeansShorts 
+  | numOfLeggings <= numOfPants / 3 = Leggings
   | otherwise = Jeans
   where
     numOfPants = fromIntegral . length . pants $ capsule
@@ -334,7 +338,7 @@ springSummerCasualPants capsule
 
 autumnWinterCasualPants :: CapsuleWardrobe -> Pants
 autumnWinterCasualPants capsule
-  | numOfLeggings < numOfPants / 2 = Leggings
+  | numOfLeggings <= numOfPants / 2 = Leggings
   | otherwise = Jeans
   where
     numOfPants = fromIntegral . length . pants $ capsule
@@ -342,7 +346,7 @@ autumnWinterCasualPants capsule
 
 springSummerOfficePants :: CapsuleWardrobe -> Pants
 springSummerOfficePants capsule
-  | numOfSocialShorts < numOfPants / 2 = SocialShorts 
+  | numOfSocialShorts <= numOfPants / 2 = SocialShorts 
   | otherwise = DressTrousers
   where
     numOfPants = fromIntegral . length . pants $ capsule
