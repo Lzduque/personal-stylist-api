@@ -198,32 +198,26 @@ springSummerCasualDress capsule
 autumnWinterCasualDress :: CapsuleWardrobe -> Dress
 autumnWinterCasualDress capsule
   | numOfLongSleeveDress < numOfTops / 2 = LongSleeveDress 
-  | numOfNoSleeveDress < numOfTops / 2 = NoSleeveDress 
-  | otherwise = LongSleeveDress
+  | otherwise = NoSleeveDress
   where
     numOfTops = fromIntegral . length . tops $ capsule
     numOfLongSleeveDress = fromIntegral . countOccurrences LongSleeveDress $ dresses capsule
-    numOfNoSleeveDress = fromIntegral . countOccurrences NoSleeveDress $ dresses capsule
 
 springSummerOfficeDress :: CapsuleWardrobe -> Dress
 springSummerOfficeDress capsule
   | numOfShortSleeveDress < numOfTops / 2 = ShortSleeveDress 
-  | numOfNoSleeveDress < numOfTops / 2 = NoSleeveDress 
-  | otherwise = ShortSleeveDress
+  | otherwise = NoSleeveDress
   where
     numOfTops = fromIntegral . length . tops $ capsule
     numOfShortSleeveDress = fromIntegral . countOccurrences ShortSleeveDress $ dresses capsule
-    numOfNoSleeveDress = fromIntegral . countOccurrences NoSleeveDress $ dresses capsule
 
 autumnWinterOfficeDress :: CapsuleWardrobe -> Dress
 autumnWinterOfficeDress capsule
   | numOfLongSleeveDress < numOfTops / 2 = LongSleeveDress 
-  | numOfNoSleeveDress < numOfTops / 2 = NoSleeveDress 
-  | otherwise = LongSleeveDress
+  | otherwise = NoSleeveDress
   where
     numOfTops = fromIntegral . length . tops $ capsule
     numOfLongSleeveDress = fromIntegral . countOccurrences LongSleeveDress $ dresses capsule
-    numOfNoSleeveDress = fromIntegral . countOccurrences NoSleeveDress $ dresses capsule
 
 -- Logic for Overalls
 springSummerCasualOverall :: CapsuleWardrobe -> Overall
