@@ -99,13 +99,14 @@ main = hspec $ do
       inRange 20 (10,20) `shouldBe` True
       inRange 21 (10,20) `shouldBe` False
 
+  describe "countOccurrences" $ do
+    it "returns a the minimum e maximum from the range of outfits, given the desired Number Of Outfits" $ do
+      countOccurrences 1 [1,2,3,4,1] `shouldBe` 2
+      countOccurrences LongSleeveShirt [LongSleeveBlouse, LongSleeveBlouse] `shouldBe` 0
+
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
 
     -- it "throws an exception if used with an empty list" $ do
     --   evaluate (head []) `shouldThrow` anyException
-
-
--- countOccurrences :: Eq a => a -> [a] -> Int
--- countOccurrences x = length . filter (x==)
 
