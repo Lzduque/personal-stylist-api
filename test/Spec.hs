@@ -78,23 +78,26 @@ main = hspec $ do
       countOutfits testCW `shouldBe` 34
 
   describe "toRange" $ do
-    it "returns a the minimum e maximum from the range of outfits, given the desired Number Of Outfits" $ do
+    it "returns the minimum and the maximum from the range of outfits, given the desired Number Of Outfits" $ do
       toRange From10to20 `shouldBe` (10,20)
       toRange From21to30 `shouldBe` (21,30)
       toRange From31to40 `shouldBe` (31,40)
       toRange From41to50 `shouldBe` (41,50)
       toRange From51to60 `shouldBe` (51,60)
       toRange From61to70 `shouldBe` (61,70)
+      toRange From71to80 `shouldBe` (71,80)
+      toRange From81to90 `shouldBe` (81,90)
+      toRange From91to100 `shouldBe` (91,100)
 
   describe "inRange" $ do
-    it "returns a the minimum e maximum from the range of outfits, given the desired Number Of Outfits" $ do
+    it "returns True or False whether the number is within the range" $ do
       inRange 1 (10,20) `shouldBe` False
       inRange 11 (10,20) `shouldBe` True
       inRange 20 (10,20) `shouldBe` True
       inRange 21 (10,20) `shouldBe` False
 
   describe "countOccurrences" $ do
-    it "returns a the minimum e maximum from the range of outfits, given the desired Number Of Outfits" $ do
+    it "counts the number of times the element appears in the list" $ do
       countOccurrences 1 [1,2,3,4,1] `shouldBe` 2
       countOccurrences LongSleeveShirt [LongSleeveBlouse, LongSleeveBlouse] `shouldBe` 0
 
@@ -122,19 +125,19 @@ main = hspec $ do
 -- Logic for Skirt
   describe "springSummerCasualSkirt" $ do
     it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
-      springSummerCasualSkirt testCW `shouldBe` LongSkirt
+      springSummerCasualSkirt testCW `shouldBe` ShortSkirt
 
   describe "autumnWinterCasualSkirt" $ do
     it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
-      autumnWinterCasualSkirt testCW `shouldBe` LongSkirt
+      autumnWinterCasualSkirt testCW `shouldBe` ShortSkirt
 
   describe "springSummerOfficeSkirt" $ do
     it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
-      springSummerOfficeSkirt testCW `shouldBe` LongSkirt
+      springSummerOfficeSkirt testCW `shouldBe` ShortSkirt
 
   describe "autumnWinterOfficeSkirt" $ do
     it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
-      autumnWinterOfficeSkirt testCW `shouldBe` LongSkirt
+      autumnWinterOfficeSkirt testCW `shouldBe` ShortSkirt
 
 
 
@@ -183,7 +186,7 @@ main = hspec $ do
 
   describe "autumnWinterCasualTop" $ do
     it "chooses a specifc type of top given the Capsule Wardrobe" $ do
-      autumnWinterCasualTop testCW `shouldBe` LongSleeveBlouse
+      autumnWinterCasualTop testCW `shouldBe` LongSleeveShirt
 
   describe "springSummerOfficeTop" $ do
     it "chooses a specifc type of top given the Capsule Wardrobe" $ do
@@ -200,7 +203,7 @@ main = hspec $ do
     it "returns a capsule Wardrobe with a new top given one Capsule Wardrobe" $ do
       addTop autumnWinterCasualWish1 testCW `shouldBe` 
         CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse,LongSleeveBlouse]
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse,LongSleeveShirt]
           , pants = [Jeans,Jeans]
           , skirts = [ShortSkirt,LongSkirt]
           , dresses = [LongSleeveDress]
@@ -250,7 +253,7 @@ main = hspec $ do
         CapsuleWardrobe 
           {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
           , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt,LongSkirt,LongSkirt]
+          , skirts = [ShortSkirt,LongSkirt,ShortSkirt]
           , dresses = [LongSleeveDress]
           , overalls = [Cardigan,TrenchCoat]
           , shoes = [Boots,Flats]
@@ -277,7 +280,7 @@ main = hspec $ do
         CapsuleWardrobe 
           {tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse]
           , pants = [Jeans,Jeans]
-          , skirts = [LongSkirt]
+          , skirts = [ShortSkirt]
           , dresses = [LongSleeveDress]
           , overalls = [Sweater,TrenchCoat]
           , shoes = [Boots,Flats]
