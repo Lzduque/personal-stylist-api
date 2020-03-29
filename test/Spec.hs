@@ -92,8 +92,20 @@ main = hspec $ do
       toRange From51to60 `shouldBe` (51,60)
       toRange From61to70 `shouldBe` (61,70)
 
+  describe "inRange" $ do
+    it "returns a the minimum e maximum from the range of outfits, given the desired Number Of Outfits" $ do
+      inRange 1 (10,20) `shouldBe` False
+      inRange 11 (10,20) `shouldBe` True
+      inRange 20 (10,20) `shouldBe` True
+      inRange 21 (10,20) `shouldBe` False
+
     -- it "returns the first element of an *arbitrary* list" $
     --   property $ \x xs -> head (x:xs) == (x :: Int)
 
     -- it "throws an exception if used with an empty list" $ do
     --   evaluate (head []) `shouldThrow` anyException
+
+
+-- countOccurrences :: Eq a => a -> [a] -> Int
+-- countOccurrences x = length . filter (x==)
+
