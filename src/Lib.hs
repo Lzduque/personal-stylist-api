@@ -146,44 +146,36 @@ springSummerCasualTop :: CapsuleWardrobe -> Top
 springSummerCasualTop capsule
   | numOfShortSleeveShirt < numOfTops / 3 = ShortSleeveShirt 
   | numOfShortSleeveBlouse < numOfTops / 3 = ShortSleeveBlouse 
-  | numOfTankTop < numOfTops / 3 = TankTop 
-  | otherwise = ShortSleeveShirt
+  | otherwise = TankTop
   where
     numOfTops = fromIntegral . length . tops $ capsule
     numOfShortSleeveShirt = fromIntegral . countOccurrences ShortSleeveShirt $ tops capsule
     numOfShortSleeveBlouse = fromIntegral . countOccurrences ShortSleeveBlouse $ tops capsule
-    numOfTankTop = fromIntegral . countOccurrences TankTop $ tops capsule
 
 autumnWinterCasualTop :: CapsuleWardrobe -> Top
 autumnWinterCasualTop capsule
   | numOfLongSleeveShirt < numOfTops / 2 = LongSleeveShirt 
-  | numOfLongSleeveBlouse < numOfTops / 2 = LongSleeveBlouse 
-  | otherwise = LongSleeveShirt
+  | otherwise = LongSleeveBlouse
   where
     numOfTops = fromIntegral . length . tops $ capsule
     numOfLongSleeveShirt = fromIntegral . countOccurrences LongSleeveShirt $ tops capsule
-    numOfLongSleeveBlouse = fromIntegral . countOccurrences LongSleeveBlouse $ tops capsule
 
 springSummerOfficeTop :: CapsuleWardrobe -> Top
 springSummerOfficeTop capsule
-  | numOfShortSleeveShirt < numOfTops / 4 = ShortSleeveShirt 
   | numOfShortSleeveBlouse < numOfTops / 2 = ShortSleeveBlouse 
-  | numOfTankTop < numOfTops / 4 = TankTop 
-  | otherwise = ShortSleeveShirt
+  | numOfShortSleeveShirt < numOfTops / 4 = ShortSleeveShirt 
+  | otherwise = TankTop
   where
     numOfTops = fromIntegral . length . tops $ capsule
-    numOfShortSleeveShirt = fromIntegral . countOccurrences ShortSleeveShirt $ tops capsule
     numOfShortSleeveBlouse = fromIntegral . countOccurrences ShortSleeveBlouse $ tops capsule
-    numOfTankTop = fromIntegral . countOccurrences TankTop $ tops capsule
+    numOfShortSleeveShirt = fromIntegral . countOccurrences ShortSleeveShirt $ tops capsule
 
 autumnWinterOfficeTop :: CapsuleWardrobe -> Top
 autumnWinterOfficeTop capsule
-  | numOfLongSleeveShirt < numOfTops / 3 = LongSleeveShirt 
   | numOfLongSleeveBlouse < numOfTops / (3/2) = LongSleeveBlouse 
   | otherwise = LongSleeveShirt
   where
     numOfTops = fromIntegral . length . tops $ capsule
-    numOfLongSleeveShirt = fromIntegral . countOccurrences LongSleeveShirt $ tops capsule
     numOfLongSleeveBlouse = fromIntegral . countOccurrences LongSleeveBlouse $ tops capsule
 
 -- Logic for Dress
