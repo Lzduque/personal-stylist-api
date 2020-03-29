@@ -157,7 +157,6 @@ main = hspec $ do
 
 
 
-
 -- Logic for Dress
   describe "springSummerCasualDress" $ do
     it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
@@ -174,6 +173,26 @@ main = hspec $ do
   describe "autumnWinterOfficeDress" $ do
     it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
       autumnWinterOfficeDress testCW `shouldBe` LongSleeveDress
+
+
+
+-- Logic for Tops
+  describe "springSummerCasualTop" $ do
+    it "chooses a specifc type of top given the Capsule Wardrobe" $ do
+      springSummerCasualTop testCW `shouldBe` ShortSleeveShirt
+
+  describe "autumnWinterCasualTop" $ do
+    it "chooses a specifc type of top given the Capsule Wardrobe" $ do
+      autumnWinterCasualTop testCW `shouldBe` LongSleeveBlouse
+
+  describe "springSummerOfficeTop" $ do
+    it "chooses a specifc type of top given the Capsule Wardrobe" $ do
+      springSummerOfficeTop testCW `shouldBe` ShortSleeveBlouse
+
+  describe "autumnWinterOfficeTop" $ do
+    it "chooses a specifc type of top given the Capsule Wardrobe" $ do
+      autumnWinterOfficeTop testCW `shouldBe` LongSleeveBlouse
+
 
 
 
