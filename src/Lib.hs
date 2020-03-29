@@ -2,6 +2,9 @@ module Lib
     ( getJSON
     , chooseCapsule
     , countOutfits
+    , toRange
+    , inRange
+    , countOccurrences
     ) where
 import Wish
   ( Wish(..)
@@ -26,32 +29,7 @@ import CapsuleWardrobe
   )
 import qualified Data.ByteString.Lazy as B
 
-makeCapsule :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
-makeCapsule wish capsule
-    | totalOutfits `inRange` rangeOfOutfits = capsule
-    | totalOutfits > snd rangeOfOutfits = error "Total Outfits larger than the Range of Outfits wished"
-    | otherwise = makeCapsule wish newCapsule
-    where
-      totalOutfits = countOutfits capsule
-      rangeOfOutfits = toRange . numberOfOutfits $ wish
-      newCapsule = addMoreClothes capsule
-
-addMoreClothes :: CapsuleWardrobe -> CapsuleWardrobe
-addMoreClothes capsule
-    | topBottom > 2 = addBottom capsule
-    | topBottom < 3/2 = addTop capsule
-    | dressBottom < 1/3 = addDress capsule
-    | topOverall >= 3 = addOverall capsule
-    | topOverall < 2 = addBottom capsule
-    | dressTop  <= 1/6 = addDress capsule
-    | otherwise = addTop capsule
-    where 
-      numBottoms = fromIntegral $ (length . pants $ capsule) + (length . skirts $ capsule)
-      topBottom = fromIntegral (length . tops $ capsule) / numBottoms
-      dressBottom = fromIntegral (length . dresses $ capsule) / numBottoms
-      topOverall = fromIntegral (length . tops $ capsule) / fromIntegral (length . overalls $ capsule)
-      dressTop = fromIntegral (length . dresses $ capsule) / fromIntegral (length . tops $ capsule)
-
+-- ------------ HELPERS
 -- get the json and transform in byte string
 getJSON :: FilePath -> IO B.ByteString
 getJSON filePath = B.readFile filePath
@@ -82,6 +60,36 @@ inRange x (a,b)
 
 countOccurrences :: Eq a => a -> [a] -> Int
 countOccurrences x = length . filter (x==)
+
+
+
+
+makeCapsule :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+makeCapsule wish capsule
+    | totalOutfits `inRange` rangeOfOutfits = capsule
+    | totalOutfits > snd rangeOfOutfits = error "Total Outfits larger than the Range of Outfits wished"
+    | otherwise = makeCapsule wish newCapsule
+    where
+      totalOutfits = countOutfits capsule
+      rangeOfOutfits = toRange . numberOfOutfits $ wish
+      newCapsule = addMoreClothes capsule
+
+addMoreClothes :: CapsuleWardrobe -> CapsuleWardrobe
+addMoreClothes capsule
+    | topBottom > 2 = addBottom capsule
+    | topBottom < 3/2 = addTop capsule
+    | dressBottom < 1/3 = addDress capsule
+    | topOverall >= 3 = addOverall capsule
+    | topOverall < 2 = addBottom capsule
+    | dressTop  <= 1/6 = addDress capsule
+    | otherwise = addTop capsule
+    where 
+      numBottoms = fromIntegral $ (length . pants $ capsule) + (length . skirts $ capsule)
+      topBottom = fromIntegral (length . tops $ capsule) / numBottoms
+      dressBottom = fromIntegral (length . dresses $ capsule) / numBottoms
+      topOverall = fromIntegral (length . tops $ capsule) / fromIntegral (length . overalls $ capsule)
+      dressTop = fromIntegral (length . dresses $ capsule) / fromIntegral (length . tops $ capsule)
+
 
 
 
@@ -128,6 +136,11 @@ addSkirt capsule
 
 addPant :: CapsuleWardrobe -> CapsuleWardrobe
 addPant capsule
+  | capsule == springSummerCasualCW = addToCapsule (springSummerCasualPants capsule) capsule
+  | capsule == autumnWinterCasualCW = addToCapsule (autumnWinterCasualPants capsule) capsule
+  | capsule == springSummerOfficeCW = addToCapsule (springSummerOfficePants capsule) capsule
+  | capsule == autumnWinterOfficeCW = addToCapsule (autumnWinterOfficePants capsule) capsule
+  | otherwise = error "Wrong capsule selected - Skirt"
 
 
 
@@ -283,7 +296,6 @@ autumnWinterOfficeOverall capsule
     numOfWoolCoat = fromIntegral . countOccurrences WoolCoat $ overalls capsule
     numOfCardigan = fromIntegral . countOccurrences Cardigan $ overalls capsule
 
--- LongSkirt | ShortSkirt
 -- Logic for Skirt
 springSummerCasualSkirt :: CapsuleWardrobe -> Skirt
 springSummerCasualSkirt capsule
@@ -317,3 +329,32 @@ autumnWinterOfficeSkirt capsule
     numOfSkirts = fromIntegral . length . skirts $ capsule
     numOfShortSkirt = fromIntegral . countOccurrences ShortSkirt $ skirts capsule
 
+-- Logic for Pants
+springSummerCasualPants :: CapsuleWardrobe -> Pants
+springSummerCasualPants capsule
+  | numOfJeansShorts < numOfPants / 3 = JeansShorts 
+  | numOfLeggings < numOfPants / 3 = Leggings
+  | otherwise = Jeans
+  where
+    numOfPants = fromIntegral . length . pants $ capsule
+    numOfJeansShorts = fromIntegral . countOccurrences JeansShorts $ pants capsule
+    numOfLeggings = fromIntegral . countOccurrences Leggings $ pants capsule
+
+autumnWinterCasualPants :: CapsuleWardrobe -> Pants
+autumnWinterCasualPants capsule
+  | numOfLeggings < numOfPants / 2 = Leggings
+  | otherwise = Jeans
+  where
+    numOfPants = fromIntegral . length . pants $ capsule
+    numOfLeggings = fromIntegral . countOccurrences Leggings $ pants capsule
+
+springSummerOfficePants :: CapsuleWardrobe -> Pants
+springSummerOfficePants capsule
+  | numOfSocialShorts < numOfPants / 2 = SocialShorts 
+  | otherwise = DressTrousers
+  where
+    numOfPants = fromIntegral . length . pants $ capsule
+    numOfSocialShorts = fromIntegral . countOccurrences SocialShorts $ pants capsule
+
+autumnWinterOfficePants :: CapsuleWardrobe -> Pants
+autumnWinterOfficePants capsule = DressTrousers
