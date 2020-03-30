@@ -117,16 +117,6 @@ addMoreClothes wish capsule
       topOverall = fromIntegral (length . tops $ capsule) / fromIntegral (length . overalls $ capsule)
       dressTop = fromIntegral (length . dresses $ capsule) / fromIntegral (length . tops $ capsule)
 
--- addColors :: Wish -> [Colors]
--- addColors wish = colors $ wish
-
--- addColors :: (Clothing a, Eq a, Show a) => [a] -> Wish -> [Colors]
--- addColors cs wish
---   | head cs `elem` accentClothing = take (length cs) (reverse . colors $ wish)
---   | otherwise = take (length cs) (colors $ wish)
---   where
---     accentClothing = [LongSleeveDress, ShortSleeveDress, NoSleeveDress, RelaxedBag, StructuredBag]
-
 
 
 -- ------------ Add Clothes function
