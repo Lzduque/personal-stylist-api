@@ -13,7 +13,7 @@ import CapsuleWardrobe
   , Skirt(..)
   , Dress(..)
   , Overall(..)
-  , Shoe(..)
+  , Shoes(..)
   , Purse(..)
   , autumnWinterCasualCW
   , springSummerCasualCW
