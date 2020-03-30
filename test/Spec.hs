@@ -260,7 +260,7 @@ main = hspec $ do
           , purses = [RelaxedBag]}
 
   describe "addPants" $ do
-    it "returns a capsule Wardrobe with a new pants given one Capsule Wardrobe" $ do
+    it "returns a capsule Wardrobe with new pants given one Capsule Wardrobe" $ do
       addPants autumnWinterCasualWish1 testCW `shouldBe` 
         CapsuleWardrobe 
           {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
@@ -270,6 +270,42 @@ main = hspec $ do
           , overalls = [Cardigan,TrenchCoat]
           , shoes = [Boots,Flats]
           , purses = [RelaxedBag]}
+
+  describe "addAccessories" $ do
+    it "returns a capsule Wardrobe with new accessories given one Capsule Wardrobe and the actual number of Outfits" $ do
+      addAccessories (countOutfits testCW) autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = [ShortSkirt,LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [RelaxedBag,RelaxedBag]}
+
+  describe "addShoes" $ do
+    it "returns a capsule Wardrobe with new shoes given one Capsule Wardrobe" $ do
+      addShoes autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = [ShortSkirt,LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat]
+          , shoes = [Boots,Flats,Sneakers]
+          , purses = [RelaxedBag]}
+
+  describe "addPurse" $ do
+    it "returns a capsule Wardrobe with a new purse given one Capsule Wardrobe" $ do
+      addPurse autumnWinterCasualWish1 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
+          , pants = [Jeans,Jeans]
+          , skirts = [ShortSkirt,LongSkirt]
+          , dresses = [LongSleeveDress]
+          , overalls = [Cardigan,TrenchCoat]
+          , shoes = [Boots,Flats]
+          , purses = [RelaxedBag,RelaxedBag]}
 
 
 
