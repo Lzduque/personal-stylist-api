@@ -154,6 +154,28 @@ addPants wish capsule
     wishedSeason = season $ wish
     wishedStyle = style $ wish
 
+addShoes :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addShoes wish capsule
+  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule (springSummerCasualShoes capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualShoes capsule) capsule
+  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficeShoes capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficeShoes capsule) capsule
+  | otherwise = error "Wrong capsule selected - Shoes"
+  where
+    wishedSeason = season $ wish
+    wishedStyle = style $ wish
+
+addPurse :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addPurse wish capsule
+  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule (springSummerCasualPurse capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualPurse capsule) capsule
+  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficePurse capsule) capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficePurse capsule) capsule
+  | otherwise = error "Wrong capsule selected - Purse"
+  where
+    wishedSeason = season $ wish
+    wishedStyle = style $ wish
+
 
 
 -- Logic for Tops
@@ -354,3 +376,60 @@ springSummerOfficePants capsule
 
 autumnWinterOfficePants :: CapsuleWardrobe -> Pants
 autumnWinterOfficePants capsule = DressTrousers
+
+-- Sandals | Flats | AnkleBoots | Loafers | Sneakers | Wedges | Boots
+--  | Heels
+
+-- Logic for Shoes
+springSummerCasualShoes :: CapsuleWardrobe -> Shoes
+springSummerCasualShoes capsule
+  | numOfSneakers <= numOfShoes / 5 = Sneakers 
+  | numOfWedges <= numOfShoes / 5 = Wedges 
+  | numOfLoafers <= numOfShoes / 5 = Loafers 
+  | numOfSandals <= numOfShoes / 5 = Sandals
+  | otherwise = Flats
+  where
+    numOfShoes = fromIntegral . length . shoes $ capsule
+    numOfSneakers = fromIntegral . countOccurrences Sneakers $ shoes capsule
+    numOfWedges = fromIntegral . countOccurrences Wedges $ shoes capsule
+    numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes capsule
+    numOfSandals = fromIntegral . countOccurrences Sandals $ shoes capsule
+
+autumnWinterCasualShoes :: CapsuleWardrobe -> Shoes
+autumnWinterCasualShoes capsule
+  | numOfSneakers <= numOfShoes / 5 = Sneakers 
+  | numOfAnkleBoots <= numOfShoes / 5 = AnkleBoots 
+  | numOfLoafers <= numOfShoes / 5 = Loafers 
+  | numOfBoots <= numOfShoes / 5 = Boots 
+  | otherwise = Flats
+  where
+    numOfShoes = fromIntegral . length . shoes $ capsule
+    numOfSneakers = fromIntegral . countOccurrences Sneakers $ shoes capsule
+    numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes capsule
+    numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes capsule
+    numOfBoots = fromIntegral . countOccurrences Boots $ shoes capsule
+
+springSummerOfficeShoes :: CapsuleWardrobe -> Shoe
+springSummerOfficeShoes capsule
+  | numOfHeels <= numOfShoes / 4 = Heels 
+  | numOfLoafers <= numOfShoes / 4 = Loafers 
+  | numOfSandals <= numOfShoes / 4 = Sandals
+  | otherwise = Flats
+  where
+    numOfShoes = fromIntegral . length . shoes $ capsule
+    numOfHeels = fromIntegral . countOccurrences Heels $ shoes capsule
+    numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes capsule
+    numOfSandals = fromIntegral . countOccurrences Sandals $ shoes capsule
+
+autumnWinterOfficeShoes :: CapsuleWardrobe -> Shoes
+autumnWinterOfficeShoes capsule
+  | numOfHeels <= numOfShoes / 4 = Heels 
+  | numOfAnkleBoots <= numOfShoes / 4 = AnkleBoots 
+  | numOfBoots <= numOfShoes / 4 = Boots 
+  | otherwise = Flats
+  where
+    numOfShoes = fromIntegral . length . shoes $ capsule
+    numOfHeels = fromIntegral . countOccurrences Heels $ shoes capsule
+    numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes capsule
+    numOfBoots = fromIntegral . countOccurrences Boots $ shoes capsule
+

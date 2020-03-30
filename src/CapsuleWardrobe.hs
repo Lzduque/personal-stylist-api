@@ -43,10 +43,10 @@ data Overall = Sweater | Cardigan | Jacket | Vest | Blazer | Sweatshirt | Trench
 instance Clothing Overall where
   addToCapsule newOverall capsule = capsule { overalls = overalls capsule ++ [newOverall] }
 
-data Shoe = Sandals | Flats | Heels | Boots
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
-instance Clothing Shoe where
-  addToCapsule newShoe capsule = capsule { shoes = shoes capsule ++ [newShoe] }
+data Shoes = Sandals | Flats | Heels | AnkleBoots | Boots | Loafers | Sneakers | Wedges
+instance Clothing Shoes where
+  addToCapsule newShoes capsule = capsule { shoes = shoes capsule ++ [newShoes] }
 
 data Purse = Tote | Backpack | Clutch
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
