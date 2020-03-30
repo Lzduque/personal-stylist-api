@@ -54,6 +54,7 @@ instance Clothing Purse where
   addToCapsule newPurse capsule = capsule { purses = purses capsule ++ [newPurse] }
 
 -- base Capsule Wardrobes
+autumnWinterCasualCW :: CapsuleWardrobe
 autumnWinterCasualCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse]
                   , pants = [Jeans, Jeans]
@@ -64,6 +65,7 @@ autumnWinterCasualCW =
                   , purses = [RelaxedBag]
                   }
 
+springSummerCasualCW :: CapsuleWardrobe
 springSummerCasualCW =
   CapsuleWardrobe { tops = [ShortSleeveShirt, ShortSleeveShirt, ShortSleeveBlouse]
                   , pants = [Jeans, Jeans]
@@ -74,6 +76,7 @@ springSummerCasualCW =
                   , purses = [RelaxedBag]
                   }
 
+autumnWinterOfficeCW :: CapsuleWardrobe
 autumnWinterOfficeCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse]
                   , pants = [DressTrousers, DressTrousers]
@@ -84,6 +87,7 @@ autumnWinterOfficeCW =
                   , purses = [StructuredBag]
                   }
 
+springSummerOfficeCW :: CapsuleWardrobe
 springSummerOfficeCW =
   CapsuleWardrobe { tops = [ShortSleeveShirt, ShortSleeveBlouse, ShortSleeveBlouse]
                   , pants = [DressTrousers, DressTrousers]

@@ -187,10 +187,10 @@ addShoes wish capsule
 
 addPurse :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
 addPurse wish capsule
-  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule (springSummerCasualPurse capsule) capsule
-  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule (autumnWinterCasualPurse capsule) capsule
-  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule (springSummerOfficePurse capsule) capsule
-  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule (autumnWinterOfficePurse capsule) capsule
+  | wishedSeason == SpringSummer && wishedStyle == Casual = addToCapsule springSummerCasualPurse capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Casual = addToCapsule autumnWinterCasualPurse capsule
+  | wishedSeason == SpringSummer && wishedStyle == Office = addToCapsule springSummerOfficePurse capsule
+  | wishedSeason == AutumnWinter && wishedStyle == Office = addToCapsule autumnWinterOfficePurse capsule
   | otherwise = error "Wrong capsule selected - Purse"
   where
     wishedSeason = season $ wish
@@ -451,15 +451,15 @@ autumnWinterOfficeShoes capsule
     numOfBoots = fromIntegral . countOccurrences Boots $ shoes capsule
 
 -- Logic for Purse
-springSummerCasualPurse :: CapsuleWardrobe -> Purse
-springSummerCasualPurse capsule = RelaxedBag 
+springSummerCasualPurse :: Purse
+springSummerCasualPurse = RelaxedBag 
 
-autumnWinterCasualPurse :: CapsuleWardrobe -> Purse
-autumnWinterCasualPurse capsule = RelaxedBag 
+autumnWinterCasualPurse :: Purse
+autumnWinterCasualPurse = RelaxedBag 
 
-springSummerOfficePurse :: CapsuleWardrobe -> Purse
-springSummerOfficePurse capsule = StructuredBag 
+springSummerOfficePurse :: Purse
+springSummerOfficePurse = StructuredBag 
 
-autumnWinterOfficePurse :: CapsuleWardrobe -> Purse
-autumnWinterOfficePurse capsule = StructuredBag 
+autumnWinterOfficePurse :: Purse
+autumnWinterOfficePurse = StructuredBag 
 
