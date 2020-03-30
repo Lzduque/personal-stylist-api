@@ -1,21 +1,12 @@
 module Main where
 
 import Lib (getJSON, chooseCapsule, countOutfits, makeCapsule)
-import Wish
-  (Wish(..)
-  , Style(..)
-  , Season(..)
-  )
-import CapsuleWardrobe
-  (CapsuleWardrobe(..)
-  , autumnWinterCasualCW
-  , springSummerCasualCW
-  , autumnWinterOfficeCW
-  , springSummerOfficeCW
-  )
+import Wish (Wish(..))
+import CapsuleWardrobe ()
 import Data.Aeson (decode)
 import Text.Pretty.Simple (pPrint)
 
+jsonFile :: FilePath
 jsonFile = "CW-1.json"
 
 -- main function that is running everything
@@ -29,5 +20,3 @@ main = do
       let count = countOutfits . makeCapsule wish $ chooseCapsule wish
       putStrLn $ "Num Of Outfits: " ++ show count
     Nothing -> print "nothing"
-
-
