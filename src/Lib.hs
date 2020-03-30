@@ -73,6 +73,25 @@ sortCapsule capsule =
   , purses = sort . purses $ capsule
   }
 
+groupByClothing :: CapsuleWardrobe -> [(String,Int)]
+groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, fshoes, fpurses]
+  where
+    f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int)]
+    f = map turnToTouple . group
+    ftops = f . tops $ capsule
+    fpants = f . pants $ capsule
+    fskirts = f . skirts $ capsule
+    fdresses = f . dresses $ capsule
+    foveralls = f . overalls $ capsule
+    fshoes = f . shoes $ capsule
+    fpurses = f . purses $ capsule
+
+turnToTouple :: (Clothing a, Show a) => [a] -> (String,Int)
+turnToTouple [] = error "list cannot be empty"
+turnToTouple cs = (show . head $ cs, length cs)
+
+
+
 -- ------------ MAIN FUNCTIONS
 makeCapsule :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
 makeCapsule wish capsule
