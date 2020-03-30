@@ -430,3 +430,16 @@ autumnWinterOfficeShoes capsule
     numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes capsule
     numOfBoots = fromIntegral . countOccurrences Boots $ shoes capsule
 
+-- Logic for Purse
+springSummerCasualPurse :: CapsuleWardrobe -> Purse
+springSummerCasualPurse capsule = RelaxedBag 
+
+autumnWinterCasualPurse :: CapsuleWardrobe -> Purse
+autumnWinterCasualPurse capsule = RelaxedBag 
+
+springSummerOfficePurse :: CapsuleWardrobe -> Purse
+springSummerOfficePurse capsule = StructuredBag 
+
+autumnWinterOfficePurse :: CapsuleWardrobe -> Purse
+autumnWinterOfficePurse capsule = StructuredBag 
+
