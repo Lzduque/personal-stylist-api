@@ -48,8 +48,8 @@ data Shoes = Sandals | Flats | Heels | AnkleBoots | Boots | Loafers | Sneakers |
 instance Clothing Shoes where
   addToCapsule newShoes capsule = capsule { shoes = shoes capsule ++ [newShoes] }
 
-data Purse = Tote | Backpack | Clutch
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
+data Purse = RelaxedBag | StructuredBag
 instance Clothing Purse where
   addToCapsule newPurse capsule = capsule { purses = purses capsule ++ [newPurse] }
 
@@ -61,7 +61,7 @@ autumnWinterCasualCW =
                   , dresses = []
                   , overalls = [Sweater, TrenchCoat]
                   , shoes = [Boots, Flats]
-                  , purses = [Backpack]
+                  , purses = [RelaxedBag]
                   }
 
 springSummerCasualCW =
@@ -71,7 +71,7 @@ springSummerCasualCW =
                   , dresses = []
                   , overalls = [Vest, Jacket]
                   , shoes = [Sandals, Flats]
-                  , purses = [Tote]
+                  , purses = [RelaxedBag]
                   }
 
 autumnWinterOfficeCW =
@@ -81,7 +81,7 @@ autumnWinterOfficeCW =
                   , dresses = []
                   , overalls = [Cardigan, TrenchCoat]
                   , shoes = [Boots, Flats]
-                  , purses = [Backpack]
+                  , purses = [StructuredBag]
                   }
 
 springSummerOfficeCW =
@@ -91,6 +91,6 @@ springSummerOfficeCW =
                   , dresses = []
                   , overalls = [Cardigan, Blazer]
                   , shoes = [Sandals, Flats]
-                  , purses = [Tote]
+                  , purses = [StructuredBag]
                   }
 

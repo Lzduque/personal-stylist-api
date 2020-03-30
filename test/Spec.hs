@@ -34,7 +34,7 @@ testCW =
                   , dresses = [LongSleeveDress]
                   , overalls = [Cardigan, TrenchCoat]
                   , shoes = [Boots, Flats]
-                  , purses = [Backpack]
+                  , purses = [RelaxedBag]
                   }
 
 
@@ -209,7 +209,7 @@ main = hspec $ do
           , dresses = [LongSleeveDress]
           , overalls = [Cardigan,TrenchCoat]
           , shoes = [Boots,Flats]
-          , purses = [Backpack]}
+          , purses = [RelaxedBag]}
 
   describe "addDress" $ do
     it "returns a capsule Wardrobe with a new dress given one Capsule Wardrobe" $ do
@@ -221,7 +221,7 @@ main = hspec $ do
           , dresses = [LongSleeveDress,LongSleeveDress]
           , overalls = [Cardigan,TrenchCoat]
           , shoes = [Boots,Flats]
-          , purses = [Backpack]}
+          , purses = [RelaxedBag]}
 
   describe "addOverall" $ do
     it "returns a capsule Wardrobe with a new overall given one Capsule Wardrobe" $ do
@@ -233,7 +233,7 @@ main = hspec $ do
           , dresses = [LongSleeveDress]
           , overalls = [Cardigan,TrenchCoat,Jacket]
           , shoes = [Boots,Flats]
-          , purses = [Backpack]}
+          , purses = [RelaxedBag]}
 
   describe "addBottom" $ do
     it "returns a capsule Wardrobe with a new bottom given one Capsule Wardrobe" $ do
@@ -245,7 +245,7 @@ main = hspec $ do
           , dresses = [LongSleeveDress]
           , overalls = [Cardigan,TrenchCoat]
           , shoes = [Boots,Flats]
-          , purses = [Backpack]}
+          , purses = [RelaxedBag]}
 
   describe "addSkirt" $ do
     it "returns a capsule Wardrobe with a new skirt given one Capsule Wardrobe" $ do
@@ -257,7 +257,7 @@ main = hspec $ do
           , dresses = [LongSleeveDress]
           , overalls = [Cardigan,TrenchCoat]
           , shoes = [Boots,Flats]
-          , purses = [Backpack]}
+          , purses = [RelaxedBag]}
 
   describe "addPants" $ do
     it "returns a capsule Wardrobe with a new pants given one Capsule Wardrobe" $ do
@@ -269,7 +269,7 @@ main = hspec $ do
           , dresses = [LongSleeveDress]
           , overalls = [Cardigan,TrenchCoat]
           , shoes = [Boots,Flats]
-          , purses = [Backpack]}
+          , purses = [RelaxedBag]}
 
 
 
@@ -284,7 +284,7 @@ main = hspec $ do
           , dresses = [LongSleeveDress]
           , overalls = [Sweater,TrenchCoat]
           , shoes = [Boots,Flats]
-          , purses = [Backpack]}
+          , purses = [RelaxedBag]}
       countOutfits (makeCapsule autumnWinterCasualWish1 autumnWinterCasualCW) `shouldBe` 26
 
   describe "addMoreClothes" $ do
@@ -297,7 +297,7 @@ main = hspec $ do
           , dresses = [LongSleeveDress]
           , overalls = [Sweater,TrenchCoat]
           , shoes = [Boots,Flats]
-          , purses = [Backpack]}
+          , purses = [RelaxedBag]}
 
 
 
