@@ -91,7 +91,6 @@ groupByClothing :: Wish -> CapsuleWardrobe -> [(String,Int,[Colors])]
 groupByClothing wish capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, fshoes, fpurses]
   where
     f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int,[Colors])]
-    -- f = map (\cs -> (show . head $ cs, length cs, take (length cs) (addColors wish))) . group
     f = map (\cs -> (show . head $ cs, length cs, takeColors cs (colors wish))) . group
     ftops = f . tops $ capsule
     fpants = f . pants $ capsule

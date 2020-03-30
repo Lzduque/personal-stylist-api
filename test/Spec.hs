@@ -361,7 +361,6 @@ main = hspec $ do
           ,("RelaxedBag",1,[LightGreen])
         ]
 
--- groupByClothing :: Wish -> CapsuleWardrobe -> [(String,Int,[Colors])]
 
 
     -- it "returns the first element of an *arbitrary* list" $
