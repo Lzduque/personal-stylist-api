@@ -26,6 +26,7 @@ import Data.Aeson (decode)
 
 autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20}
 autumnWinterCasualWish1 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From21to30}
+autumnWinterCasualWish2 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From71to80}
 
 testCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
@@ -322,6 +323,16 @@ main = hspec $ do
           , shoes = [Flats,Boots]
           , purses = [RelaxedBag]}
       countOutfits (makeCapsule autumnWinterCasualWish1 autumnWinterCasualCW) `shouldBe` 26
+      makeCapsule autumnWinterCasualWish2 testCW `shouldBe` 
+        CapsuleWardrobe 
+          {tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse,ShortSleeveShirt]
+          , pants = [Jeans,Jeans]
+          , skirts = [LongSkirt,ShortSkirt]
+          , dresses = [LongSleeveDress,LongSleeveDress]
+          , overalls = [Cardigan,Jacket,TrenchCoat]
+          , shoes = [Flats,Boots,Sneakers]
+          , purses = [RelaxedBag,RelaxedBag]}
+      countOutfits (makeCapsule autumnWinterCasualWish2 testCW) `shouldBe` 78
 
   describe "addMoreClothes" $ do
     it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe" $ do
