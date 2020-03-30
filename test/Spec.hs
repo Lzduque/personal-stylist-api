@@ -283,7 +283,7 @@ main = hspec $ do
           , skirts = [ShortSkirt]
           , dresses = [LongSleeveDress]
           , overalls = [Sweater,TrenchCoat]
-          , shoes = [Boots,Flats]
+          , shoes = [Flats,Boots]
           , purses = [RelaxedBag]}
       countOutfits (makeCapsule autumnWinterCasualWish1 autumnWinterCasualCW) `shouldBe` 26
 

@@ -21,6 +21,7 @@ import CapsuleWardrobe
   , springSummerOfficeCW
   )
 import qualified Data.ByteString.Lazy as B
+import Data.List
 
 -- ------------ HELPERS
 -- get the json and transform in byte string
@@ -60,12 +61,22 @@ inRange x (a,b)
 countOccurrences :: Eq a => a -> [a] -> Int
 countOccurrences x = length . filter (x==)
 
-
+sortCapsule :: CapsuleWardrobe -> CapsuleWardrobe
+sortCapsule capsule = 
+  capsule 
+  { tops = sort . tops $ capsule
+  , pants = sort . pants $ capsule
+  , skirts = sort . skirts $ capsule
+  , dresses = sort . dresses $ capsule
+  , overalls = sort . overalls $ capsule
+  , shoes = sort . shoes $ capsule
+  , purses = sort . purses $ capsule
+  }
 
 -- ------------ MAIN FUNCTIONS
 makeCapsule :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
 makeCapsule wish capsule
-    | totalOutfits `inRange` rangeOfOutfits = capsule
+    | totalOutfits `inRange` rangeOfOutfits = sortCapsule capsule
     | totalOutfits > snd rangeOfOutfits = error "Total Outfits larger than the Range of Outfits wished"
     | otherwise = makeCapsule wish newCapsule
     where
