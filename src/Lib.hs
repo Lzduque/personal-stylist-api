@@ -377,9 +377,6 @@ springSummerOfficePants capsule
 autumnWinterOfficePants :: CapsuleWardrobe -> Pants
 autumnWinterOfficePants capsule = DressTrousers
 
--- Sandals | Flats | AnkleBoots | Loafers | Sneakers | Wedges | Boots
---  | Heels
-
 -- Logic for Shoes
 springSummerCasualShoes :: CapsuleWardrobe -> Shoes
 springSummerCasualShoes capsule
@@ -409,7 +406,7 @@ autumnWinterCasualShoes capsule
     numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes capsule
     numOfBoots = fromIntegral . countOccurrences Boots $ shoes capsule
 
-springSummerOfficeShoes :: CapsuleWardrobe -> Shoe
+springSummerOfficeShoes :: CapsuleWardrobe -> Shoes
 springSummerOfficeShoes capsule
   | numOfHeels <= numOfShoes / 4 = Heels 
   | numOfLoafers <= numOfShoes / 4 = Loafers 
