@@ -71,7 +71,7 @@ makeCapsule wish capsule
     where
       totalOutfits = countOutfits capsule
       rangeOfOutfits = toRange . numberOfOutfits $ wish
-      newCapsule = addMoreClothes wish capsule
+      newCapsule = addAccessories totalOutfits wish (addMoreClothes wish capsule)
 
 addMoreClothes :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
 addMoreClothes wish capsule
@@ -153,6 +153,15 @@ addPants wish capsule
   where
     wishedSeason = season $ wish
     wishedStyle = style $ wish
+
+addAccessories :: Int -> Wish -> CapsuleWardrobe -> CapsuleWardrobe
+addAccessories numOfOutfits wish capsule
+  | shoesNumOfOutfits <= 1/20 = addShoes wish capsule
+  | purseNumOfOutfits <= 1/30 = addPurse wish capsule
+  | otherwise = capsule
+  where
+    shoesNumOfOutfits = fromIntegral (length . shoes $ capsule) / fromIntegral numOfOutfits
+    purseNumOfOutfits = fromIntegral (length . purses $ capsule) / fromIntegral numOfOutfits
 
 addShoes :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
 addShoes wish capsule
