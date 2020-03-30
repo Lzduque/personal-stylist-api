@@ -15,26 +15,31 @@ data CapsuleWardrobe =
 
 class Clothing a where
   addToCapsule :: a -> CapsuleWardrobe -> CapsuleWardrobe
+  takeColors :: [a] -> [b] -> [b]
 
 data Top = LongSleeveShirt | LongSleeveBlouse | ShortSleeveShirt | ShortSleeveBlouse | TankTop
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Top where
   addToCapsule newTop capsule = capsule { tops = tops capsule ++ [newTop] }
+  takeColors cs = take (length cs)
   
 data Pants = Jeans | JeansShorts | DressTrousers | SocialShorts | Leggings
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Pants where
   addToCapsule newPants capsule = capsule { pants = pants capsule ++ [newPants] }
+  takeColors cs = take (length cs)
 
 data Skirt = LongSkirt | ShortSkirt
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Skirt where
   addToCapsule newSkirt capsule = capsule { skirts = skirts capsule ++ [newSkirt] }
+  takeColors cs = take (length cs)
 
 data Dress = LongSleeveDress | ShortSleeveDress | NoSleeveDress
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Dress where
   addToCapsule newDress capsule = capsule { dresses = dresses capsule ++ [newDress] }
+  takeColors cs = take (length cs) . reverse
 
 -- to do: think about transforming cardigans in layer2 and coats in layer3, so you can do a better count of the number of outfits (abstraction to layers)
 -- to do: WinterCoat??
@@ -42,16 +47,19 @@ data Overall = Sweater | Cardigan | Jacket | Vest | Blazer | Sweatshirt | Trench
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Overall where
   addToCapsule newOverall capsule = capsule { overalls = overalls capsule ++ [newOverall] }
+  takeColors cs = take (length cs)
 
 data Shoes = Sandals | Flats | Heels | AnkleBoots | Boots | Loafers | Sneakers | Wedges
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Shoes where
   addToCapsule newShoes capsule = capsule { shoes = shoes capsule ++ [newShoes] }
+  takeColors cs = take (length cs)
 
 data Purse = RelaxedBag | StructuredBag
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Purse where
   addToCapsule newPurse capsule = capsule { purses = purses capsule ++ [newPurse] }
+  takeColors cs = take (length cs) . reverse
 
 -- base Capsule Wardrobes
 autumnWinterCasualCW :: CapsuleWardrobe

@@ -91,7 +91,8 @@ groupByClothing :: Wish -> CapsuleWardrobe -> [(String,Int,[Colors])]
 groupByClothing wish capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, fshoes, fpurses]
   where
     f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int,[Colors])]
-    f = map (\cs -> (show . head $ cs, length cs, take (length cs) (addColors wish))) . group
+    -- f = map (\cs -> (show . head $ cs, length cs, take (length cs) (addColors wish))) . group
+    f = map (\cs -> (show . head $ cs, length cs, takeColors cs (colors wish))) . group
     ftops = f . tops $ capsule
     fpants = f . pants $ capsule
     fskirts = f . skirts $ capsule
@@ -116,8 +117,15 @@ addMoreClothes wish capsule
       topOverall = fromIntegral (length . tops $ capsule) / fromIntegral (length . overalls $ capsule)
       dressTop = fromIntegral (length . dresses $ capsule) / fromIntegral (length . tops $ capsule)
 
-addColors :: Wish -> [Colors]
-addColors wish = colors $ wish
+-- addColors :: Wish -> [Colors]
+-- addColors wish = colors $ wish
+
+-- addColors :: (Clothing a, Eq a, Show a) => [a] -> Wish -> [Colors]
+-- addColors cs wish
+--   | head cs `elem` accentClothing = take (length cs) (reverse . colors $ wish)
+--   | otherwise = take (length cs) (colors $ wish)
+--   where
+--     accentClothing = [LongSleeveDress, ShortSleeveDress, NoSleeveDress, RelaxedBag, StructuredBag]
 
 
 
