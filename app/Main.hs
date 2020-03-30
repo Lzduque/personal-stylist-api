@@ -1,6 +1,6 @@
 module Main where
 
-import Lib (getJSON, chooseCapsule, countOutfits, makeCapsule)
+import Lib (getJSON, chooseCapsule, countOutfits, makeCapsule, groupByClothing)
 import Wish (Wish(..))
 import CapsuleWardrobe ()
 import Data.Aeson (decode)
@@ -16,7 +16,7 @@ main = do
   let decodedStr = decode str :: Maybe Wish
   case decodedStr of
     Just wish -> do
-      pPrint . makeCapsule wish $ chooseCapsule wish
+      pPrint . groupByClothing . makeCapsule wish $ chooseCapsule wish
       let count = countOutfits . makeCapsule wish $ chooseCapsule wish
       putStrLn $ "Num Of Outfits: " ++ show count
     Nothing -> print "nothing"
