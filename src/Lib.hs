@@ -73,19 +73,6 @@ sortCapsule capsule =
   , purses = sort . purses $ capsule
   }
 
-groupByClothing :: CapsuleWardrobe -> [(String,Int)]
-groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, fshoes, fpurses]
-  where
-    f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int)]
-    f = map (\cs -> (show . head $ cs, length cs)) . group
-    ftops = f . tops $ capsule
-    fpants = f . pants $ capsule
-    fskirts = f . skirts $ capsule
-    fdresses = f . dresses $ capsule
-    foveralls = f . overalls $ capsule
-    fshoes = f . shoes $ capsule
-    fpurses = f . purses $ capsule
-
 
 
 -- ------------ MAIN FUNCTIONS
@@ -98,6 +85,19 @@ makeCapsule wish capsule
       totalOutfits = countOutfits capsule
       rangeOfOutfits = toRange . numberOfOutfits $ wish
       newCapsule = addAccessories totalOutfits wish (addMoreClothes wish capsule)
+
+groupByClothing :: CapsuleWardrobe -> [(String,Int)]
+groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, fshoes, fpurses]
+  where
+    f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int)]
+    f = map (\cs -> (show . head $ cs, length cs)) . group
+    ftops = f . tops $ capsule
+    fpants = f . pants $ capsule
+    fskirts = f . skirts $ capsule
+    fdresses = f . dresses $ capsule
+    foveralls = f . overalls $ capsule
+    fshoes = f . shoes $ capsule
+    fpurses = f . purses $ capsule
 
 addMoreClothes :: Wish -> CapsuleWardrobe -> CapsuleWardrobe
 addMoreClothes wish capsule
