@@ -9,7 +9,7 @@ data CapsuleWardrobe =
                   , skirts      :: [Skirt]
                   , dresses     :: [Dress]
                   , overalls    :: [Overall]
-                  , shoes       :: [Shoe]
+                  , shoes       :: [Shoes]
                   , purses      :: [Purse]
                   } deriving (Show, Generic, Eq, ToJSON, FromJSON)
 
