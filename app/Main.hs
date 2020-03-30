@@ -16,7 +16,7 @@ main = do
   let decodedStr = decode str :: Maybe Wish
   case decodedStr of
     Just wish -> do
-      pPrint . groupByClothing . makeCapsule wish $ chooseCapsule wish
+      pPrint . groupByClothing wish . makeCapsule wish $ chooseCapsule wish
       let count = countOutfits . makeCapsule wish $ chooseCapsule wish
       putStrLn $ "Num Of Outfits: " ++ show count
     Nothing -> print "nothing"

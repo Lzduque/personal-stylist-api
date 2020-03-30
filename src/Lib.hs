@@ -4,6 +4,7 @@ import Wish
   , Style(..)
   , Season(..)
   , NumberOfOutfits(..)
+  , Colors(..)
   )
 import CapsuleWardrobe
   ( CapsuleWardrobe(..)
@@ -86,11 +87,11 @@ makeCapsule wish capsule
       rangeOfOutfits = toRange . numberOfOutfits $ wish
       newCapsule = addAccessories totalOutfits wish (addMoreClothes wish capsule)
 
-groupByClothing :: CapsuleWardrobe -> [(String,Int)]
-groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, fshoes, fpurses]
+groupByClothing :: Wish -> CapsuleWardrobe -> [(String,Int,[Colors])]
+groupByClothing wish capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, fshoes, fpurses]
   where
-    f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int)]
-    f = map (\cs -> (show . head $ cs, length cs)) . group
+    f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int,[Colors])]
+    f = map (\cs -> (show . head $ cs, length cs, take (length cs) (addColors wish))) . group
     ftops = f . tops $ capsule
     fpants = f . pants $ capsule
     fskirts = f . skirts $ capsule
@@ -114,6 +115,9 @@ addMoreClothes wish capsule
       dressBottom = fromIntegral (length . dresses $ capsule) / numBottoms
       topOverall = fromIntegral (length . tops $ capsule) / fromIntegral (length . overalls $ capsule)
       dressTop = fromIntegral (length . dresses $ capsule) / fromIntegral (length . tops $ capsule)
+
+addColors :: Wish -> [Colors]
+addColors wish = colors $ wish
 
 
 

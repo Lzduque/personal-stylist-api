@@ -7,6 +7,7 @@ import Wish
   , Style(..)
   , Season(..)
   , NumberOfOutfits(..)
+  , Colors(..)
   )
 import CapsuleWardrobe
   (CapsuleWardrobe(..)
