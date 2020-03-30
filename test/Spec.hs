@@ -26,7 +26,7 @@ import CapsuleWardrobe
 import Data.Aeson (decode)
 
 autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20}
-autumnWinterCasualWish1 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From21to30}
+autumnWinterCasualWish1 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From21to30, colors = [Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink,LightPurple,LightGreen]}
 autumnWinterCasualWish2 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From71to80}
 
 testCW =
@@ -50,7 +50,7 @@ main = hspec $ do
   describe "decode" $ do
     it "returns a Wish given a JSON file with extra content" $ do
       wish <- decodeJSON "test-1.json"
-      wish `shouldBe` Just (Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20})
+      wish `shouldBe` Just (Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20,colors = [Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink,LightPurple,LightGreen]})
 
   describe "decode" $ do
     it "returns nothing given a JSON file with wrong content - style" $ do
@@ -347,6 +347,21 @@ main = hspec $ do
           , shoes = [Boots,Flats]
           , purses = [RelaxedBag]}
 
+  describe "groupByClothing" $ do
+    it "returns a displayable capsule Wardrobe with the clothes, numbers and colors given a wish and a Capsule Wardrobe" $ do
+      groupByClothing autumnWinterCasualWish1 autumnWinterCasualCW `shouldBe` 
+        [
+          ("LongSleeveShirt",2,[Navy,OffWhite])
+          ,("LongSleeveBlouse",1,[Navy])
+          ,("Jeans",2,[Navy,OffWhite])
+          ,("Sweater",1,[Navy])
+          ,("TrenchCoat",1,[Navy])
+          ,("Boots",1,[Navy])
+          ,("Flats",1,[Navy])
+          ,("RelaxedBag",1,[LightGreen])
+        ]
+
+-- groupByClothing :: Wish -> CapsuleWardrobe -> [(String,Int,[Colors])]
 
 
     -- it "returns the first element of an *arbitrary* list" $
