@@ -39,7 +39,7 @@ data Dress = LongSleeveDress | ShortSleeveDress | NoSleeveDress
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Dress where
   addToCapsule newDress capsule = capsule { dresses = dresses capsule ++ [newDress] }
-  takeColors cs = take (length cs) . reverse
+  takeColors cs = reverse . take (length cs) . reverse
 
 -- to do: think about transforming cardigans in layer2 and coats in layer3, so you can do a better count of the number of outfits (abstraction to layers)
 -- to do: WinterCoat??
@@ -59,7 +59,7 @@ data Purse = RelaxedBag | StructuredBag
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Purse where
   addToCapsule newPurse capsule = capsule { purses = purses capsule ++ [newPurse] }
-  takeColors cs = take (length cs) . reverse
+  takeColors cs = reverse . take (length cs) . reverse
 
 -- base Capsule Wardrobes
 autumnWinterCasualCW :: CapsuleWardrobe
