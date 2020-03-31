@@ -7,20 +7,6 @@ import Wish
   , Colors(..)
   )
 import CapsuleWardrobe
-  ( CapsuleWardrobe(..)
-  , Clothing(..)
-  , Top(..)
-  , Pants(..)
-  , Skirt(..)
-  , Dress(..)
-  , Overall(..)
-  , Shoes(..)
-  , Purse(..)
-  , autumnWinterCasualCW
-  , springSummerCasualCW
-  , autumnWinterOfficeCW
-  , springSummerOfficeCW
-  )
 import qualified Data.ByteString.Lazy as B
 import Data.List
 
@@ -61,18 +47,6 @@ inRange x (a,b)
 
 countOccurrences :: Eq a => a -> [a] -> Int
 countOccurrences x = length . filter (x==)
-
-sortCapsule :: CapsuleWardrobe -> CapsuleWardrobe
-sortCapsule capsule = 
-  capsule 
-  { tops = sort . tops $ capsule
-  , pants = sort . pants $ capsule
-  , skirts = sort . skirts $ capsule
-  , dresses = sort . dresses $ capsule
-  , overalls = sort . overalls $ capsule
-  , shoes = sort . shoes $ capsule
-  , purses = sort . purses $ capsule
-  }
 
 
 

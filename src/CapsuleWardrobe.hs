@@ -2,6 +2,7 @@ module CapsuleWardrobe where
 
 import Data.Aeson (FromJSON,ToJSON)
 import GHC.Generics (Generic)
+import Data.List
 
 data CapsuleWardrobe =
   CapsuleWardrobe { tops        :: [Top]
@@ -60,6 +61,23 @@ data Purse = RelaxedBag | StructuredBag
 instance Clothing Purse where
   addToCapsule newPurse capsule = capsule { purses = purses capsule ++ [newPurse] }
   takeColors cs = reverse . take (length cs) . reverse
+
+
+
+-- ------------ FUNCTIONS
+sortCapsule :: CapsuleWardrobe -> CapsuleWardrobe
+sortCapsule capsule = 
+  capsule 
+  { tops = sort . tops $ capsule
+  , pants = sort . pants $ capsule
+  , skirts = sort . skirts $ capsule
+  , dresses = sort . dresses $ capsule
+  , overalls = sort . overalls $ capsule
+  , shoes = sort . shoes $ capsule
+  , purses = sort . purses $ capsule
+  }
+
+
 
 -- base Capsule Wardrobes
 autumnWinterCasualCW :: CapsuleWardrobe
