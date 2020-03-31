@@ -1,8 +1,7 @@
 module Main where
 
-import Lib (getJSON, chooseCapsule, countOutfits, makeCapsule, groupByClothing)
-import Wish (Wish(..))
-import CapsuleWardrobe ()
+import Lib (getJSON, setUpBaseWardrobe, countOutfits, fillUpWardrobe, groupByClothing)
+import CapsuleWardrobe
 import Data.Aeson (decode)
 import Text.Pretty.Simple (pPrint)
 
@@ -13,10 +12,10 @@ jsonFile = "CW-1.json"
 main :: IO ()
 main = do
   str <- getJSON jsonFile
-  let decodedStr = decode str :: Maybe Wish
+  let decodedStr = decode str :: Maybe CapsuleWardrobe
   case decodedStr of
-    Just wish -> do
-      pPrint . groupByClothing wish . makeCapsule wish $ chooseCapsule wish
-      let count = countOutfits . makeCapsule wish $ chooseCapsule wish
+    Just capsule -> do
+      pPrint . groupByClothing . fillUpWardrobe $ setUpBaseWardrobe capsule
+      let count = countOutfits . wardrobe . fillUpWardrobe $ setUpBaseWardrobe capsule
       putStrLn $ "Num Of Outfits: " ++ show count
     Nothing -> print "nothing"

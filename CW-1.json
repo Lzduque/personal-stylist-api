@@ -2,7 +2,5 @@
   "season": "AutumnWinter",
   "style": "Casual",
   "numberOfOutfits": "From81to90",
-  "colors": ["Navy","OffWhite","LightYellow","Beige","Brown","LightBlue","LightPink","LightPurple","LightGreen"],
-  "bodyType": "Triangle",
-  "preferences": ["Skirts","Pants","Dresses","Heels","Sneakers"]
+  "colors": ["Navy","OffWhite","LightYellow","Beige","Brown","LightBlue","LightPink","LightPurple","LightGreen"]
 }
