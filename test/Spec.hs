@@ -2,35 +2,31 @@ import Test.Hspec
 -- import Test.QuickCheck
 -- import Control.Exception (evaluate)
 import Lib
-import Wish
-  ( Wish(..)
-  , Style(..)
-  , Season(..)
-  , NumberOfOutfits(..)
-  , Colors(..)
-  )
 import CapsuleWardrobe
-  (CapsuleWardrobe(..)
-  , Top(..)
-  , Pants(..)
-  , Skirt(..)
-  , Dress(..)
-  , Overall(..)
-  , Shoes(..)
-  , Purse(..)
-  , autumnWinterCasualCW
-  , springSummerCasualCW
-  , autumnWinterOfficeCW
-  , springSummerOfficeCW
-  )
 import Data.Aeson (decode)
 
-autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20, colors = [Black,Navy,LightYellow,Brown,OffWhite,LightPink,LightGreen]}
-autumnWinterCasualWish1 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From21to30, colors = [Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink,LightPurple,LightGreen]}
-autumnWinterCasualWish2 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From71to80, colors = [Black,Navy,LightYellow,Brown,OffWhite,LightRed,DarkGreen]}
 
-testCW =
-  CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
+
+baseCW = 
+  CapsuleWardrobe 
+    { season = undefined
+    , style = undefined
+    , numberOfOutfits = undefined
+    , colors = []
+    , wardrobe = 
+      Wardrobe
+        { tops = []
+        , pants = []
+        , skirts = []
+        , dresses = []
+        , overalls = []
+        , shoes = []
+        , purses = []
+        }
+    }
+
+testWardrobe =
+  Wardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
                   , pants = [Jeans, Jeans]
                   , skirts = [ShortSkirt, LongSkirt]
                   , dresses = [LongSleeveDress]
@@ -40,7 +36,8 @@ testCW =
                   }
 
 
-decodeJSON :: FilePath -> IO (Maybe Wish)
+
+decodeJSON :: FilePath -> IO (Maybe CapsuleWardrobe)
 decodeJSON filePath = do
   str <- getJSON filePath
   return $ decode str
@@ -48,36 +45,52 @@ decodeJSON filePath = do
 main :: IO ()
 main = hspec $ do
   describe "decode" $ do
-    it "returns a Wish given a JSON file with extra content" $ do
-      wish <- decodeJSON "test-1.json"
-      wish `shouldBe` Just (Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20,colors = [Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink,LightPurple,LightGreen]})
+    it "returns a CapsuleWardrobe given a JSON file with extra content" $ do
+      capsule <- decodeJSON "test-1.json"
+      capsule `shouldBe` Just (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20, colors = [Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink,LightPurple,LightGreen]})
 
   describe "decode" $ do
     it "returns nothing given a JSON file with wrong content - style" $ do
-      wish <- decodeJSON "test-2.json"
-      wish `shouldBe` Nothing
+      capsule <- decodeJSON "test-2.json"
+      capsule `shouldBe` Nothing
 
   describe "decode" $ do
     it "returns nothing given a JSON file with wrong content - season" $ do
-      wish <- decodeJSON "test-3.json"
-      wish `shouldBe` Nothing
+      capsule <- decodeJSON "test-3.json"
+      capsule `shouldBe` Nothing
 
   describe "decode" $ do
     it "returns nothing given a JSON file with no content" $ do
-      wish <- decodeJSON "test-4.json"
-      wish `shouldBe` Nothing
+      capsule <- decodeJSON "test-4.json"
+      capsule `shouldBe` Nothing
 
-  describe "chooseCapsule" $ do
-    it "returns a CapsuleWardrobe if given a Wish" $ do
-      chooseCapsule autumnWinterCasualWish `shouldBe` autumnWinterCasualCW
+  describe "setUpBaseWardrobe" $ do
+    it "returns a CapsuleWardrobe if given a CapsuleWardrobe" $ do
+      let cw = setUpBaseWardrobe (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops =
+                  [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse]
+              , pants =
+                  [Jeans, Jeans]
+              , skirts = []
+              , dresses =
+                  []
+              , overalls =
+                  [Sweater, TrenchCoat]
+              , shoes =
+                  [Boots,Flats]
+              , purses =
+                  [RelaxedBag]
+              }
 
   describe "countOutfits" $ do
     it "returns the number of possible outfits if given a CapsuleWardrobe" $ do
-      countOutfits autumnWinterCasualCW `shouldBe` 12
-      countOutfits springSummerCasualCW `shouldBe` 12
-      countOutfits autumnWinterOfficeCW `shouldBe` 12
-      countOutfits springSummerOfficeCW `shouldBe` 12
-      countOutfits testCW `shouldBe` 34
+      countOutfits autumnWinterCasual `shouldBe` 12
+      countOutfits springSummerCasual `shouldBe` 12
+      countOutfits autumnWinterOffice `shouldBe` 12
+      countOutfits springSummerOffice `shouldBe` 12
+      countOutfits testWardrobe `shouldBe` 34
 
   describe "toRange" $ do
     it "returns the minimum and the maximum from the range of outfits, given the desired Number Of Outfits" $ do
@@ -105,261 +118,270 @@ main = hspec $ do
 
 
 
--- Logic for Pants
-  describe "springSummerCasualPants" $ do
-    it "chooses a specifc type of pants given the Capsule Wardrobe" $ do
-      springSummerCasualPants testCW `shouldBe` JeansShorts
-
-  describe "autumnWinterCasualPants" $ do
-    it "chooses a specifc type of pants given the Capsule Wardrobe" $ do
-      autumnWinterCasualPants testCW `shouldBe` Leggings
-
-  describe "springSummerOfficePants" $ do
-    it "chooses a specifc type of pants given the Capsule Wardrobe" $ do
-      springSummerOfficePants testCW `shouldBe` SocialShorts
-
-  describe "autumnWinterOfficePants" $ do
-    it "chooses a specifc type of pants given the Capsule Wardrobe" $ do
-      autumnWinterOfficePants testCW `shouldBe` DressTrousers
-
-
-
--- Logic for Skirt
-  describe "springSummerCasualSkirt" $ do
-    it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
-      springSummerCasualSkirt testCW `shouldBe` ShortSkirt
-
-  describe "autumnWinterCasualSkirt" $ do
-    it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
-      autumnWinterCasualSkirt testCW `shouldBe` ShortSkirt
-
-  describe "springSummerOfficeSkirt" $ do
-    it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
-      springSummerOfficeSkirt testCW `shouldBe` ShortSkirt
-
-  describe "autumnWinterOfficeSkirt" $ do
-    it "chooses a specifc type of skirt given the Capsule Wardrobe" $ do
-      autumnWinterOfficeSkirt testCW `shouldBe` ShortSkirt
-
-
-
--- Logic for Overalls
-  describe "springSummerCasualOverall" $ do
-    it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
-      springSummerCasualOverall testCW `shouldBe` Sweatshirt
-
-  describe "autumnWinterCasualOverall" $ do
-    it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
-      autumnWinterCasualOverall testCW `shouldBe` Jacket
-
-  describe "springSummerOfficeOverall" $ do
-    it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
-      springSummerOfficeOverall testCW `shouldBe` Vest
-
-  describe "autumnWinterOfficeOverall" $ do
-    it "chooses a specifc type of overall given the Capsule Wardrobe" $ do
-      autumnWinterOfficeOverall testCW `shouldBe` Sweater
-
-
-
--- Logic for Dress
-  describe "springSummerCasualDress" $ do
-    it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
-      springSummerCasualDress testCW `shouldBe` ShortSleeveDress
-
-  describe "autumnWinterCasualDress" $ do
-    it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
-      autumnWinterCasualDress testCW `shouldBe` LongSleeveDress
-
-  describe "springSummerOfficeDress" $ do
-    it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
-      springSummerOfficeDress testCW `shouldBe` ShortSleeveDress
-
-  describe "autumnWinterOfficeDress" $ do
-    it "chooses a specifc type of dress given the Capsule Wardrobe" $ do
-      autumnWinterOfficeDress testCW `shouldBe` LongSleeveDress
-
-
-
--- Logic for Tops
-  describe "springSummerCasualTop" $ do
-    it "chooses a specifc type of top given the Capsule Wardrobe" $ do
-      springSummerCasualTop testCW `shouldBe` ShortSleeveShirt
-
-  describe "autumnWinterCasualTop" $ do
-    it "chooses a specifc type of top given the Capsule Wardrobe" $ do
-      autumnWinterCasualTop testCW `shouldBe` LongSleeveShirt
-
-  describe "springSummerOfficeTop" $ do
-    it "chooses a specifc type of top given the Capsule Wardrobe" $ do
-      springSummerOfficeTop testCW `shouldBe` ShortSleeveBlouse
-
-  describe "autumnWinterOfficeTop" $ do
-    it "chooses a specifc type of top given the Capsule Wardrobe" $ do
-      autumnWinterOfficeTop testCW `shouldBe` LongSleeveBlouse
-
-
-
 -- ------------ Add Clothes function
   describe "addTop" $ do
     it "returns a capsule Wardrobe with a new top given one Capsule Wardrobe" $ do
-      addTop autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse,LongSleeveShirt]
-          , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt,LongSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag]}
+      let cw = addTop (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = [LongSleeveShirt]
+              , pants = []
+              , skirts = []
+              , dresses = []
+              , overalls = []
+              , shoes = []
+              , purses = []
+              }
 
   describe "addDress" $ do
     it "returns a capsule Wardrobe with a new dress given one Capsule Wardrobe" $ do
-      addDress autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt,LongSkirt]
-          , dresses = [LongSleeveDress,LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag]}
+      let cw = addDress (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = []
+              , pants = []
+              , skirts = []
+              , dresses = [LongSleeveDress]
+              , overalls = []
+              , shoes = []
+              , purses = []
+              }
 
   describe "addOverall" $ do
     it "returns a capsule Wardrobe with a new overall given one Capsule Wardrobe" $ do
-      addOverall autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt,LongSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat,Jacket]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag]}
+      let cw = addOverall (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = []
+              , pants = []
+              , skirts = []
+              , dresses = []
+              , overalls = [Cardigan]
+              , shoes = []
+              , purses = []
+              }
 
   describe "addBottom" $ do
     it "returns a capsule Wardrobe with a new bottom given one Capsule Wardrobe" $ do
-      addBottom autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans,Leggings]
-          , skirts = [ShortSkirt,LongSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag]}
+      let cw = addBottom (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = []
+              , pants = [Leggings]
+              , skirts = []
+              , dresses = []
+              , overalls = []
+              , shoes = []
+              , purses = []
+              }
 
   describe "addSkirt" $ do
     it "returns a capsule Wardrobe with a new skirt given one Capsule Wardrobe" $ do
-      addSkirt autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt,LongSkirt,ShortSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag]}
+      let cw = addSkirt (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = []
+              , pants = []
+              , skirts = [ShortSkirt]
+              , dresses = []
+              , overalls = []
+              , shoes = []
+              , purses = []
+              }
 
   describe "addPants" $ do
     it "returns a capsule Wardrobe with new pants given one Capsule Wardrobe" $ do
-      addPants autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans,Leggings]
-          , skirts = [ShortSkirt,LongSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag]}
+      let cw = addPants (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = []
+              , pants = [Leggings]
+              , skirts = []
+              , dresses = []
+              , overalls = []
+              , shoes = []
+              , purses = []
+              }
 
   describe "addAccessories" $ do
     it "returns a capsule Wardrobe with new accessories given one Capsule Wardrobe and the actual number of Outfits" $ do
-      addAccessories (countOutfits testCW) autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt,LongSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag,RelaxedBag]}
+      let cw = addAccessories (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, wardrobe = Wardrobe
+                { tops =
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                , pants =
+                    [Jeans, Jeans, Leggings]
+                , skirts = [ ShortSkirt ]
+                , dresses =
+                    [LongSleeveDress, LongSleeveDress]
+                , overalls =
+                    [Sweater, Cardigan, TrenchCoat]
+                , shoes =
+                    []
+                , purses =
+                    []
+                }
+            }) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+                { tops =
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                , pants =
+                    [Jeans, Jeans, Leggings]
+                , skirts = [ ShortSkirt ]
+                , dresses =
+                    [LongSleeveDress, LongSleeveDress]
+                , overalls =
+                    [Sweater, Cardigan, TrenchCoat]
+                , shoes =
+                    [Sneakers]
+                , purses =
+                    []
+                }
 
   describe "addShoes" $ do
     it "returns a capsule Wardrobe with new shoes given one Capsule Wardrobe" $ do
-      addShoes autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt,LongSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat]
-          , shoes = [Boots,Flats,Sneakers]
-          , purses = [RelaxedBag]}
+      let cw = addShoes (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, wardrobe = Wardrobe
+                { tops =
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                , pants =
+                    [Jeans, Jeans, Leggings]
+                , skirts = [ ShortSkirt ]
+                , dresses =
+                    [LongSleeveDress, LongSleeveDress]
+                , overalls =
+                    [Sweater, Cardigan, TrenchCoat]
+                , shoes =
+                    []
+                , purses =
+                    []
+                }
+            }) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+                { tops =
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                , pants =
+                    [Jeans, Jeans, Leggings]
+                , skirts = [ ShortSkirt ]
+                , dresses =
+                    [LongSleeveDress, LongSleeveDress]
+                , overalls =
+                    [Sweater, Cardigan, TrenchCoat]
+                , shoes =
+                    [Sneakers]
+                , purses =
+                    []
+                }
 
   describe "addPurse" $ do
     it "returns a capsule Wardrobe with a new purse given one Capsule Wardrobe" $ do
-      addPurse autumnWinterCasualWish1 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,ShortSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt,LongSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Cardigan,TrenchCoat]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag,RelaxedBag]}
+      let cw = addPurse (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, wardrobe = Wardrobe
+                { tops =
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                , pants =
+                    [Jeans, Jeans, Leggings]
+                , skirts = [ ShortSkirt ]
+                , dresses =
+                    [LongSleeveDress, LongSleeveDress, LongSleeveDress]
+                , overalls =
+                    [Sweater, Cardigan, Cardigan, TrenchCoat]
+                , shoes =
+                    []
+                , purses =
+                    []
+                }
+            }) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+                { tops =
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                , pants =
+                    [Jeans, Jeans, Leggings]
+                , skirts = [ ShortSkirt ]
+                , dresses =
+                    [LongSleeveDress, LongSleeveDress, LongSleeveDress]
+                , overalls =
+                    [Sweater, Cardigan, Cardigan, TrenchCoat]
+                , shoes =
+                    []
+                , purses =
+                    [RelaxedBag]
+                }
 
 
 
 -- ------------ MAIN FUNCTIONS
-  describe "makeCapsule" $ do
+  describe "fillUpWardrobe" $ do
     it "returns a final capsule Wardrobe with a new item(s) of clothing given one Capsule Wardrobe" $ do
-      makeCapsule autumnWinterCasualWish1 autumnWinterCasualCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse]
-          , pants = [Jeans,Jeans]
-          , skirts = [ShortSkirt]
-          , dresses = [LongSleeveDress]
-          , overalls = [Sweater,TrenchCoat]
-          , shoes = [Flats,Boots]
-          , purses = [RelaxedBag]}
-      countOutfits (makeCapsule autumnWinterCasualWish1 autumnWinterCasualCW) `shouldBe` 26
-      makeCapsule autumnWinterCasualWish2 testCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse,ShortSleeveShirt]
-          , pants = [Jeans,Jeans]
-          , skirts = [LongSkirt,ShortSkirt]
-          , dresses = [LongSleeveDress,LongSleeveDress]
-          , overalls = [Cardigan,Jacket,TrenchCoat]
-          , shoes = [Flats,Boots,Sneakers]
-          , purses = [RelaxedBag,RelaxedBag]}
-      countOutfits (makeCapsule autumnWinterCasualWish2 testCW) `shouldBe` 78
+      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = [ShortSleeveShirt,ShortSleeveShirt,ShortSleeveShirt,ShortSleeveBlouse,ShortSleeveBlouse,TankTop,TankTop]
+              , pants = [JeansShorts,Leggings]
+              , skirts = [ShortSkirt]
+              , dresses = [ShortSleeveDress,ShortSleeveDress]
+              , overalls = [Cardigan,Blazer,Sweatshirt]
+              , shoes = [Sandals,Loafers,Sneakers,Wedges]
+              , purses = [RelaxedBag,RelaxedBag,RelaxedBag]
+              }
+      countOutfits (wardrobe cw) `shouldBe` 69
+
+      let cw = fillUpWardrobe (baseCW {season = AutumnWinter, style = Office, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse]
+              , pants = [DressTrousers,DressTrousers,DressTrousers]
+              , skirts = [ShortSkirt]
+              , dresses = [LongSleeveDress,LongSleeveDress]
+              , overalls = [Sweater,Vest,Blazer]
+              , shoes = [Flats,Heels,Heels,AnkleBoots,Boots]
+              , purses = [StructuredBag,StructuredBag,StructuredBag]
+              }
+      countOutfits (wardrobe cw) `shouldBe` 90
 
   describe "addMoreClothes" $ do
     it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe" $ do
-      addMoreClothes autumnWinterCasualWish1 autumnWinterCasualCW `shouldBe` 
-        CapsuleWardrobe 
-          {tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse]
-          , pants = [Jeans,Jeans]
-          , skirts = []
-          , dresses = [LongSleeveDress]
-          , overalls = [Sweater,TrenchCoat]
-          , shoes = [Boots,Flats]
-          , purses = [RelaxedBag]}
+      let cw = fillUpWardrobe (baseCW {season = AutumnWinter, style = Office, numberOfOutfits = From81to90}) 
+      wardrobe cw `shouldBe` 
+            Wardrobe
+              { tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse]
+              , pants = [DressTrousers,DressTrousers,DressTrousers]
+              , skirts = [ShortSkirt]
+              , dresses = [LongSleeveDress,LongSleeveDress]
+              , overalls = [Sweater,Vest,Blazer]
+              , shoes = [Flats,Heels,Heels,AnkleBoots,Boots]
+              , purses = [StructuredBag,StructuredBag,StructuredBag]
+              }
 
   describe "groupByClothing" $ do
     it "returns a displayable capsule Wardrobe with the clothes, numbers and colors given a wish and a Capsule Wardrobe" $ do
-      groupByClothing autumnWinterCasualWish1 autumnWinterCasualCW `shouldBe` 
+      groupByClothing (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, colors = [Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink,LightPurple,LightGreen], wardrobe = Wardrobe
+                { tops =
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                , pants =
+                    [Jeans, Jeans, Leggings]
+                , skirts = [ ShortSkirt ]
+                , dresses =
+                    [LongSleeveDress, LongSleeveDress, LongSleeveDress]
+                , overalls =
+                    [Sweater, Cardigan, Cardigan, TrenchCoat]
+                , shoes =
+                    []
+                , purses =
+                    []
+                }
+            }) `shouldBe` 
         [
-          ("LongSleeveShirt",2,[Navy,OffWhite])
-          ,("LongSleeveBlouse",1,[Navy])
+          ("LongSleeveShirt",4,[Navy,OffWhite,LightYellow,Beige])
+          ,("LongSleeveBlouse",3,[Navy,OffWhite,LightYellow])
           ,("Jeans",2,[Navy,OffWhite])
+          ,("Leggings",1,[Navy])
+          ,("ShortSkirt",1,[Navy])
+          ,("LongSleeveDress",3,[LightPink,LightPurple,LightGreen])
           ,("Sweater",1,[Navy])
+          ,("Cardigan",2,[Navy,OffWhite])
           ,("TrenchCoat",1,[Navy])
-          ,("Boots",1,[Navy])
-          ,("Flats",1,[Navy])
-          ,("RelaxedBag",1,[LightGreen])
-        ]
+          ]
 
 
 
