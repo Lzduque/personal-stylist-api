@@ -25,9 +25,9 @@ import CapsuleWardrobe
   )
 import Data.Aeson (decode)
 
-autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20}
+autumnWinterCasualWish = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From10to20, colors = [Black,Navy,LightYellow,Brown,OffWhite,LightPink,LightGreen]}
 autumnWinterCasualWish1 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From21to30, colors = [Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink,LightPurple,LightGreen]}
-autumnWinterCasualWish2 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From71to80}
+autumnWinterCasualWish2 = Wish {season = AutumnWinter, style = Casual, numberOfOutfits = From71to80, colors = [Black,Navy,LightYellow,Brown,OffWhite,LightRed,DarkGreen]}
 
 testCW =
   CapsuleWardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
