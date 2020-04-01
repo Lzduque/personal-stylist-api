@@ -1,6 +1,7 @@
 {
   "season": "AutumnWinter",
   "style": "Casual",
-  "numberOfOutfits": "From81to90",
-  "colors": ["Navy","OffWhite","LightYellow","Beige","Brown","LightBlue","LightPink","LightPurple","LightGreen"]
+  "numberOfOutfits": "From51to60",
+  "colors": ["Navy","OffWhite","LightYellow","Beige","Brown","LightBlue","LightPink","LightPurple","LightGreen"],
+  "preferences": ["Skirts","Dresses","Pants","HighHeels"]
 }

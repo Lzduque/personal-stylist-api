@@ -3,5 +3,6 @@
   "style": "Casual",
   "numberOfOutfits": "From10to20",
   "colors": ["Navy","OffWhite","LightYellow","Beige","Brown","LightBlue","LightPink","LightPurple","LightGreen"],
+  "preferences": ["Skirts","Dresses","Pants","HighHeels"],
   "sevs": "wfewfwe"
 }

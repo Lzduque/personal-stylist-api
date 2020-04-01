@@ -1,5 +1,6 @@
 {
   "season": "AutumnWinter",
   "style": "rgerdfs",
-  "numberOfOutfits": "From10to20"
+  "numberOfOutfits": "From10to20",
+  "preferences": ["Skirts","Dresses","Pants","HighHeels"]
 }

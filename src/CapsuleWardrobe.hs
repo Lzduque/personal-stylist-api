@@ -12,6 +12,7 @@ data CapsuleWardrobe =
   , style           :: Style
   , numberOfOutfits :: NumberOfOutfits
   , colors          :: [Colors]
+  , preferences     :: [Preferences]
   , wardrobe        :: Wardrobe
   } deriving (Show, Generic, Eq, ToJSON)
 
@@ -21,6 +22,7 @@ instance FromJSON CapsuleWardrobe where
     style           <- cw .: "style"
     numberOfOutfits <- cw .: "numberOfOutfits"
     colors          <- cw .: "colors"
+    preferences     <- cw .: "preferences"
     wardrobe        <- cw .:? "wardrobe" .!= defaultWardrobe
     return CapsuleWardrobe{..}
       where
@@ -56,6 +58,9 @@ data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From5
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 data Colors = White | OffWhite | Beige | Brown | Black | Navy | Blue | LightBlue | DarkGreen | LightGreen | DarkYellow | LightYellow | DarkPink | LightPink | DarkRed | LightRed | DarkOrgange | LightOrange | DarkPurple | LightPurple
+  deriving (Show, Eq, Generic, ToJSON, FromJSON)
+
+data Preferences = Skirts | Dresses | Pants | HighHeels
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 class Clothing a where
@@ -168,20 +173,25 @@ groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, f
 
 addMoreClothes :: CapsuleWardrobe -> CapsuleWardrobe
 addMoreClothes capsule
-    | topBottom > 2 = addBottom capsule
-    | topBottom < 3/2 = addTop capsule
-    | dressBottom < 1/3 = addDress capsule
+    | topBottom > 2 && wantBottoms = addBottom capsule
+    | topBottom < 3/2 && wantBottoms = addTop capsule
+    | dressBottom < 1/3 && wantDresses = addDress capsule
     | topOverall >= 3 = addOverall capsule
-    | topOverall < 2 = addBottom capsule
-    | dressTop  <= 1/6 = addDress capsule
+    | topOverall < 2 && wantBottoms = addBottom capsule
+    | dressTop <= 1/6 && wantDresses = addDress capsule
+    | dressOverall >= 2 && wantDresses && not wantBottoms = addOverall capsule
+    | wantDresses && not wantBottoms = addDress capsule
     | otherwise = addTop capsule
     where 
       numBottoms = fromIntegral $ (length . pants $ wardrobe capsule) + (length . skirts $ wardrobe capsule)
       topBottom = fromIntegral (length . tops $ wardrobe capsule) / numBottoms
       dressBottom = fromIntegral (length . dresses $ wardrobe capsule) / numBottoms
+      dressOverall = fromIntegral (length . dresses $ wardrobe capsule) / fromIntegral (length . overalls $ wardrobe capsule)
       topOverall = fromIntegral (length . tops $ wardrobe capsule) / fromIntegral (length . overalls $ wardrobe capsule)
       dressTop = fromIntegral (length . dresses $ wardrobe capsule) / fromIntegral (length . tops $ wardrobe capsule)
-
+      clothesPreferences = preferences capsule
+      wantBottoms = Pants `elem` clothesPreferences || Skirts `elem` clothesPreferences
+      wantDresses = Dresses `elem` clothesPreferences
 
 
 addTop :: CapsuleWardrobe -> CapsuleWardrobe
@@ -215,20 +225,22 @@ addDress capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newDress = case (season, style) of
       (SpringSummer, Casual) -> if
-        | numOfShortSleeveDress <= numOfTops / 2 -> ShortSleeveDress 
+        | numOfShortSleeveDress <= numOfDresses / 2 -> ShortSleeveDress 
         | otherwise -> NoSleeveDress
       (AutumnWinter, Casual) -> if
-        | numOfLongSleeveDress <= numOfTops / 2 -> LongSleeveDress 
+        | numOfLongSleeveDress <= numOfDresses / 3 -> LongSleeveDress 
+        | numOfShortSleeveDress <= numOfDresses / 3 -> ShortSleeveDress 
         | otherwise -> NoSleeveDress
       (SpringSummer, Office) -> if
-        | numOfShortSleeveDress <= numOfTops / 2 -> ShortSleeveDress 
+        | numOfShortSleeveDress <= numOfDresses / 2 -> ShortSleeveDress 
         | otherwise -> NoSleeveDress
       (AutumnWinter, Office) -> if
-        | numOfLongSleeveDress <= numOfTops / 2 -> LongSleeveDress 
+        | numOfLongSleeveDress <= numOfDresses / 3 -> LongSleeveDress 
+        | numOfShortSleeveDress <= numOfDresses / 3 -> ShortSleeveDress 
         | otherwise -> NoSleeveDress
   in capsule {wardrobe = addToWardrobe newDress wardrobe}
     where
-      numOfTops = fromIntegral . length . tops $ wardrobe
+      numOfDresses = fromIntegral . length . dresses $ wardrobe
       numOfShortSleeveDress = fromIntegral . countOccurrences ShortSleeveDress $ dresses wardrobe
       numOfLongSleeveDress = fromIntegral . countOccurrences LongSleeveDress $ dresses wardrobe
 
@@ -278,10 +290,18 @@ addOverall capsule@(CapsuleWardrobe {season, style, wardrobe}) =
 
 addBottom :: CapsuleWardrobe -> CapsuleWardrobe
 addBottom capsule
-  | pantSkirt > 3 = addSkirt capsule
+  | wantsSkirts && not wantsPants = addSkirt capsule
+  | wantsPants && not wantsSkirts = addPants capsule
+  | pantSkirt > 3 && wantsSkirts = addSkirt capsule
+  | pantSkirt <= 3 && wantsPants = addPants capsule
   | otherwise = addPants capsule
   where
-    pantSkirt = fromIntegral (length . pants $ wardrobe capsule) / fromIntegral (length . skirts $ wardrobe capsule)
+    numOfSkirts = fromIntegral (length . skirts $ wardrobe capsule)
+    numOfPants = fromIntegral (length . pants $ wardrobe capsule)
+    pantSkirt = numOfPants / numOfSkirts
+    clothesPreferences = preferences capsule
+    wantsPants = Pants `elem` clothesPreferences
+    wantsSkirts = Skirts `elem` clothesPreferences
 
 addSkirt :: CapsuleWardrobe -> CapsuleWardrobe
 addSkirt capsule@(CapsuleWardrobe {season, style, wardrobe}) =
@@ -355,11 +375,11 @@ addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
       (SpringSummer, Office) -> if
         | numOfSandals <= numOfShoes / 4 -> Sandals
         | numOfFlats <= numOfShoes / 4 -> Flats 
-        | numOfHeels <= numOfShoes / 4 -> Heels 
+        | numOfHeels <= numOfShoes / 4 && wantsHeels -> Heels 
         | otherwise -> Loafers
       (AutumnWinter, Office) -> if
         | numOfBoots <= numOfShoes / 4 -> Boots 
-        | numOfHeels <= numOfShoes / 4 -> Heels 
+        | numOfHeels <= numOfShoes / 4 && wantsHeels -> Heels 
         | numOfFlats <= numOfShoes / 4 -> Flats 
         | otherwise -> AnkleBoots
   in capsule {wardrobe = addToWardrobe newShoes wardrobe}
@@ -372,6 +392,8 @@ addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
       numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes wardrobe
       numOfBoots = fromIntegral . countOccurrences Boots $ shoes wardrobe
       numOfHeels = fromIntegral . countOccurrences Heels $ shoes wardrobe
+      clothesPreferences = preferences capsule
+      wantsHeels = HighHeels `elem` clothesPreferences
 
 addPurse :: CapsuleWardrobe -> CapsuleWardrobe
 addPurse capsule@(CapsuleWardrobe {season, style, wardrobe}) =
