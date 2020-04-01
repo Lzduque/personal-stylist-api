@@ -65,32 +65,8 @@ main = hspec $ do
       capsule <- decodeJSON "test-4.json"
       capsule `shouldBe` Nothing
 
-  describe "setUpBaseWardrobe" $ do
-    it "returns a CapsuleWardrobe if given a CapsuleWardrobe" $ do
-      let cw = setUpBaseWardrobe (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90}) 
-      wardrobe cw `shouldBe` 
-            Wardrobe
-              { tops =
-                  [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse]
-              , pants =
-                  [Jeans, Jeans]
-              , skirts = []
-              , dresses =
-                  []
-              , overalls =
-                  [Sweater, TrenchCoat]
-              , shoes =
-                  [Boots,Flats]
-              , purses =
-                  [RelaxedBag]
-              }
-
   describe "countOutfits" $ do
     it "returns the number of possible outfits if given a CapsuleWardrobe" $ do
-      countOutfits autumnWinterCasual `shouldBe` 12
-      countOutfits springSummerCasual `shouldBe` 12
-      countOutfits autumnWinterOffice `shouldBe` 12
-      countOutfits springSummerOffice `shouldBe` 12
       countOutfits testWardrobe `shouldBe` 34
 
   describe "toRange" $ do
@@ -104,6 +80,9 @@ main = hspec $ do
       toRange From71to80 `shouldBe` (71,80)
       toRange From81to90 `shouldBe` (81,90)
       toRange From91to100 `shouldBe` (91,100)
+      toRange From101to110 `shouldBe` (101,110)
+      toRange From111to120 `shouldBe` (111,120)
+      toRange From121to130 `shouldBe` (121,130)
 
   describe "inRange" $ do
     it "returns True or False whether the number is within the range" $ do
@@ -157,7 +136,7 @@ main = hspec $ do
               , pants = []
               , skirts = []
               , dresses = []
-              , overalls = [Cardigan]
+              , overalls = [Sweater]
               , shoes = []
               , purses = []
               }
@@ -168,7 +147,7 @@ main = hspec $ do
       wardrobe cw `shouldBe` 
             Wardrobe
               { tops = []
-              , pants = [Leggings]
+              , pants = [Jeans]
               , skirts = []
               , dresses = []
               , overalls = []
@@ -196,7 +175,7 @@ main = hspec $ do
       wardrobe cw `shouldBe` 
             Wardrobe
               { tops = []
-              , pants = [Leggings]
+              , pants = [Jeans]
               , skirts = []
               , dresses = []
               , overalls = []
@@ -234,7 +213,7 @@ main = hspec $ do
                 , overalls =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
-                    [Sneakers]
+                    [Boots]
                 , purses =
                     []
                 }
@@ -269,7 +248,7 @@ main = hspec $ do
                 , overalls =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
-                    [Sneakers]
+                    [Boots]
                 , purses =
                     []
                 }
@@ -318,12 +297,12 @@ main = hspec $ do
       wardrobe cw `shouldBe` 
             Wardrobe
               { tops = [ShortSleeveShirt,ShortSleeveShirt,ShortSleeveShirt,ShortSleeveBlouse,ShortSleeveBlouse,TankTop,TankTop]
-              , pants = [JeansShorts,Leggings]
+              , pants = [Jeans,JeansShorts]
               , skirts = [ShortSkirt]
               , dresses = [ShortSleeveDress,ShortSleeveDress]
-              , overalls = [Cardigan,Blazer,Sweatshirt]
-              , shoes = [Sandals,Loafers,Sneakers,Wedges]
-              , purses = [RelaxedBag,RelaxedBag,RelaxedBag]
+              , overalls = [Cardigan,Jacket,Vest]
+              , shoes = [Sandals,Flats,Sneakers]
+              , purses = [RelaxedBag,RelaxedBag]
               }
       countOutfits (wardrobe cw) `shouldBe` 69
 
@@ -334,9 +313,9 @@ main = hspec $ do
               , pants = [DressTrousers,DressTrousers,DressTrousers]
               , skirts = [ShortSkirt]
               , dresses = [LongSleeveDress,LongSleeveDress]
-              , overalls = [Sweater,Vest,Blazer]
-              , shoes = [Flats,Heels,Heels,AnkleBoots,Boots]
-              , purses = [StructuredBag,StructuredBag,StructuredBag]
+              , overalls = [Sweater,Cardigan,TrenchCoat]
+              , shoes = [Flats,Heels,AnkleBoots,Boots]
+              , purses = [StructuredBag,StructuredBag]
               }
       countOutfits (wardrobe cw) `shouldBe` 90
 
@@ -349,9 +328,9 @@ main = hspec $ do
               , pants = [DressTrousers,DressTrousers,DressTrousers]
               , skirts = [ShortSkirt]
               , dresses = [LongSleeveDress,LongSleeveDress]
-              , overalls = [Sweater,Vest,Blazer]
-              , shoes = [Flats,Heels,Heels,AnkleBoots,Boots]
-              , purses = [StructuredBag,StructuredBag,StructuredBag]
+              , overalls = [Sweater,Cardigan,TrenchCoat]
+              , shoes = [Flats,Heels,AnkleBoots,Boots]
+              , purses = [StructuredBag,StructuredBag]
               }
 
   describe "groupByClothing" $ do

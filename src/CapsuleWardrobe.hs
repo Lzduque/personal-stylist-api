@@ -52,7 +52,7 @@ data Season = SpringSummer | AutumnWinter
 data Style = Casual | Office
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100
+data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 data Colors = White | OffWhite | Beige | Brown | Black | Navy | Blue | LightBlue | DarkGreen | LightGreen | DarkYellow | LightYellow | DarkPink | LightPink | DarkRed | LightRed | DarkOrgange | LightOrange | DarkPurple | LightPurple
@@ -133,6 +133,9 @@ toRange From61to70 = (61,70)
 toRange From71to80 = (71,80)
 toRange From81to90 = (81,90)
 toRange From91to100 = (91,100)
+toRange From101to110 = (101,110)
+toRange From111to120 = (111,120)
+toRange From121to130 = (121,130)
 
 sortWardrobe :: Wardrobe -> Wardrobe
 sortWardrobe wardrobe = 
@@ -331,8 +334,8 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
 
 addAccessories :: CapsuleWardrobe -> CapsuleWardrobe
 addAccessories capsule
-  | shoesNumOfOutfits <= 1/20 = addShoes capsule
-  | purseNumOfOutfits <= 1/30 = addPurse capsule
+  | shoesNumOfOutfits <= 1/25 = addShoes capsule
+  | purseNumOfOutfits <= 1/35 = addPurse capsule
   | otherwise = capsule
   where
     numOfOutfits = fromIntegral . countOutfits $ wardrobe capsule
