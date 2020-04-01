@@ -109,11 +109,11 @@ instance Clothing Purse where
 
 
 -- ------------ FUNCTIONS
-setUpBaseWardrobe :: CapsuleWardrobe -> CapsuleWardrobe
-setUpBaseWardrobe capsule@(CapsuleWardrobe {season = AutumnWinter, style = Casual}) = capsule { wardrobe = autumnWinterCasual}
-setUpBaseWardrobe capsule@(CapsuleWardrobe {season = SpringSummer, style = Casual}) = capsule { wardrobe = springSummerCasual}
-setUpBaseWardrobe capsule@(CapsuleWardrobe {season = AutumnWinter, style = Office}) = capsule { wardrobe = autumnWinterOffice}
-setUpBaseWardrobe capsule@(CapsuleWardrobe {season = SpringSummer, style = Office}) = capsule { wardrobe = springSummerOffice}
+-- setUpBaseWardrobe :: CapsuleWardrobe -> CapsuleWardrobe
+-- setUpBaseWardrobe capsule@(CapsuleWardrobe {season = AutumnWinter, style = Casual}) = capsule { wardrobe = autumnWinterCasual}
+-- setUpBaseWardrobe capsule@(CapsuleWardrobe {season = SpringSummer, style = Casual}) = capsule { wardrobe = springSummerCasual}
+-- setUpBaseWardrobe capsule@(CapsuleWardrobe {season = AutumnWinter, style = Office}) = capsule { wardrobe = autumnWinterOffice}
+-- setUpBaseWardrobe capsule@(CapsuleWardrobe {season = SpringSummer, style = Office}) = capsule { wardrobe = springSummerOffice}
 
 countOutfits :: Wardrobe -> Int
 countOutfits wardrobe = (numOfTops * numOfPants * numOfOveralls) + (numOfTops * numOfSkirts * numOfOveralls) + (numOfDresses * numOfOveralls) where
@@ -240,33 +240,33 @@ addOverall capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newOverall = case (season, style) of
       (SpringSummer, Casual) -> if
+        | numOfJacket <= numOfOveralls / 6 -> Jacket 
+        | numOfVest <= numOfOveralls / 6 -> Vest 
         | numOfCardigan <= numOfOveralls / 6 -> Cardigan 
         | numOfSweatshirt <= numOfOveralls / 6 -> Sweatshirt 
         | numOfBlazer <= numOfOveralls / 6 -> Blazer 
-        | numOfTrenchCoat <= numOfOveralls / 6 -> TrenchCoat 
-        | numOfJacket <= numOfOveralls / 6 -> Jacket 
-        | otherwise -> Vest
+        | otherwise -> TrenchCoat
       (AutumnWinter, Casual) -> if
+        | numOfSweater <= numOfOveralls / 8 -> Sweater 
+        | numOfTrenchCoat <= numOfOveralls / 8 -> TrenchCoat 
         | numOfCardigan <= numOfOveralls / 8 -> Cardigan 
         | numOfJacket <= numOfOveralls / 8 -> Jacket 
         | numOfSweatshirt <= numOfOveralls / 8 -> Sweatshirt 
         | numOfBlazer <= numOfOveralls / 8 -> Blazer 
         | numOfVest <= numOfOveralls / 8 -> Vest 
-        | numOfWoolCoat <= numOfOveralls / 8 -> WoolCoat 
-        | numOfSweater <= numOfOveralls / 8 -> Sweater 
-        | otherwise -> TrenchCoat
+        | otherwise -> WoolCoat
       (SpringSummer, Office) -> if
-        | numOfTrenchCoat <= numOfOveralls / 4 -> TrenchCoat 
-        | numOfVest <= numOfOveralls / 4 -> Vest 
         | numOfCardigan <= numOfOveralls / 4 -> Cardigan 
-        | otherwise -> Blazer
+        | numOfBlazer <= numOfOveralls / 4 -> Blazer 
+        | numOfTrenchCoat <= numOfOveralls / 4 -> TrenchCoat 
+        | otherwise -> Vest
       (AutumnWinter, Office) -> if
+        | numOfCardigan <= numOfOveralls / 6 -> Cardigan 
+        | numOfTrenchCoat <= numOfOveralls / 6 -> TrenchCoat 
         | numOfSweater <= numOfOveralls / 6 -> Sweater 
         | numOfBlazer <= numOfOveralls / 6 -> Blazer 
         | numOfVest <= numOfOveralls / 6 -> Vest 
-        | numOfWoolCoat <= numOfOveralls / 6 -> WoolCoat 
-        | numOfCardigan <= numOfOveralls / 6 -> Cardigan 
-        | otherwise -> TrenchCoat
+        | otherwise -> WoolCoat
   in capsule {wardrobe = addToWardrobe newOverall wardrobe}
     where
       numOfOveralls = fromIntegral . length . overalls $ wardrobe
@@ -312,22 +312,22 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newPants = case (season, style) of
       (SpringSummer, Casual) -> if
+        | numOfJeans <= numOfPants / 3 -> Jeans
         | numOfJeansShorts <= numOfPants / 3 -> JeansShorts 
-        | numOfLeggings <= numOfPants / 3 -> Leggings
-        | otherwise -> Jeans
+        | otherwise -> Leggings
       (AutumnWinter, Casual) -> if
-        | numOfLeggings <= numOfPants / 2 -> Leggings
-        | otherwise -> Jeans
+        | numOfJeans <= numOfPants / 2 -> Jeans
+        | otherwise -> Leggings
       (SpringSummer, Office) -> if
-        | numOfSocialShorts <= numOfPants / 2 -> SocialShorts 
-        | otherwise -> DressTrousers
+        | numOfDressTrousers <= numOfPants / 2 -> DressTrousers 
+        | otherwise -> SocialShorts
       (AutumnWinter, Office) -> DressTrousers
   in capsule {wardrobe = addToWardrobe newPants wardrobe}
     where
       numOfPants = fromIntegral . length . pants $ wardrobe
       numOfJeansShorts = fromIntegral . countOccurrences JeansShorts $ pants wardrobe
-      numOfLeggings = fromIntegral . countOccurrences Leggings $ pants wardrobe
-      numOfSocialShorts = fromIntegral . countOccurrences SocialShorts $ pants wardrobe
+      numOfJeans = fromIntegral . countOccurrences Jeans $ pants wardrobe
+      numOfDressTrousers = fromIntegral . countOccurrences DressTrousers $ pants wardrobe
 
 addAccessories :: CapsuleWardrobe -> CapsuleWardrobe
 addAccessories capsule
@@ -344,34 +344,34 @@ addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newShoes = case (season, style) of
       (SpringSummer, Casual) -> if
+        | numOfSandals <= numOfShoes / 5 -> Sandals
+        | numOfFlats <= numOfShoes / 5 -> Flats 
         | numOfSneakers <= numOfShoes / 5 -> Sneakers 
         | numOfWedges <= numOfShoes / 5 -> Wedges 
-        | numOfLoafers <= numOfShoes / 5 -> Loafers 
-        | numOfSandals <= numOfShoes / 5 -> Sandals
-        | otherwise -> Flats
+        | otherwise -> Loafers
       (AutumnWinter, Casual) -> if
+        | numOfBoots <= numOfShoes / 5 -> Boots 
+        | numOfFlats <= numOfShoes / 5 -> Flats 
         | numOfSneakers <= numOfShoes / 5 -> Sneakers 
         | numOfAnkleBoots <= numOfShoes / 5 -> AnkleBoots 
-        | numOfLoafers <= numOfShoes / 5 -> Loafers 
-        | numOfBoots <= numOfShoes / 5 -> Boots 
-        | otherwise -> Flats
+        | otherwise -> Loafers
       (SpringSummer, Office) -> if
-        | numOfHeels <= numOfShoes / 4 -> Heels 
-        | numOfLoafers <= numOfShoes / 4 -> Loafers 
         | numOfSandals <= numOfShoes / 4 -> Sandals
-        | otherwise -> Flats
-      (AutumnWinter, Office) -> if
+        | numOfFlats <= numOfShoes / 4 -> Flats 
         | numOfHeels <= numOfShoes / 4 -> Heels 
-        | numOfAnkleBoots <= numOfShoes / 4 -> AnkleBoots 
+        | otherwise -> Loafers
+      (AutumnWinter, Office) -> if
         | numOfBoots <= numOfShoes / 4 -> Boots 
-        | otherwise -> Flats
+        | numOfHeels <= numOfShoes / 4 -> Heels 
+        | numOfFlats <= numOfShoes / 4 -> Flats 
+        | otherwise -> AnkleBoots
   in capsule {wardrobe = addToWardrobe newShoes wardrobe}
     where
       numOfShoes = fromIntegral . length . shoes $ wardrobe
       numOfSneakers = fromIntegral . countOccurrences Sneakers $ shoes wardrobe
       numOfWedges = fromIntegral . countOccurrences Wedges $ shoes wardrobe
-      numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes wardrobe
       numOfSandals = fromIntegral . countOccurrences Sandals $ shoes wardrobe
+      numOfFlats = fromIntegral . countOccurrences Flats $ shoes wardrobe
       numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes wardrobe
       numOfBoots = fromIntegral . countOccurrences Boots $ shoes wardrobe
       numOfHeels = fromIntegral . countOccurrences Heels $ shoes wardrobe
@@ -389,53 +389,53 @@ addPurse capsule@(CapsuleWardrobe {season, style, wardrobe}) =
 
 
 -- ------------ base Capsule Wardrobes
-autumnWinterCasual :: Wardrobe
-autumnWinterCasual =
-  Wardrobe 
-    { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse]
-    , pants = [Jeans, Jeans]
-    , skirts = []
-    , dresses = []
-    , overalls = [Sweater, TrenchCoat]
-    , shoes = [Boots, Flats]
-    , purses = [RelaxedBag]
-    }
+-- autumnWinterCasual :: Wardrobe
+-- autumnWinterCasual =
+--   Wardrobe 
+--     { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse]
+--     , pants = [Jeans, Jeans]
+--     , skirts = []
+--     , dresses = []
+--     , overalls = [Sweater, TrenchCoat]
+--     , shoes = [Boots, Flats]
+--     , purses = [RelaxedBag]
+--     }
 
-springSummerCasual :: Wardrobe
-springSummerCasual =
-  Wardrobe 
-    { tops = [ShortSleeveShirt, ShortSleeveShirt, ShortSleeveBlouse]
-    , pants = [Jeans, Jeans]
-    , skirts = []
-    , dresses = []
-    , overalls = [Vest, Jacket]
-    , shoes = [Sandals, Flats]
-    , purses = [RelaxedBag]
-    }
+-- springSummerCasual :: Wardrobe
+-- springSummerCasual =
+--   Wardrobe 
+--     { tops = [ShortSleeveShirt, ShortSleeveShirt, ShortSleeveBlouse]
+--     , pants = [Jeans, Jeans]
+--     , skirts = []
+--     , dresses = []
+--     , overalls = [Vest, Jacket]
+--     , shoes = [Sandals, Flats]
+--     , purses = [RelaxedBag]
+--     }
 
-autumnWinterOffice :: Wardrobe
-autumnWinterOffice =
-  Wardrobe 
-    { tops = [LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse]
-    , pants = [DressTrousers, DressTrousers]
-    , skirts = []
-    , dresses = []
-    , overalls = [Cardigan, TrenchCoat]
-    , shoes = [Boots, Flats]
-    , purses = [StructuredBag]
-    }
+-- autumnWinterOffice :: Wardrobe
+-- autumnWinterOffice =
+--   Wardrobe 
+--     { tops = [LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse]
+--     , pants = [DressTrousers, DressTrousers]
+--     , skirts = []
+--     , dresses = []
+--     , overalls = [Cardigan, TrenchCoat]
+--     , shoes = [Boots, Flats]
+--     , purses = [StructuredBag]
+--     }
 
-springSummerOffice :: Wardrobe
-springSummerOffice =
-  Wardrobe 
-    { tops = [ShortSleeveShirt, ShortSleeveBlouse, ShortSleeveBlouse]
-    , pants = [DressTrousers, DressTrousers]
-    , skirts = []
-    , dresses = []
-    , overalls = [Cardigan, Blazer]
-    , shoes = [Sandals, Flats]
-    , purses = [StructuredBag]
-    }
+-- springSummerOffice :: Wardrobe
+-- springSummerOffice =
+--   Wardrobe 
+--     { tops = [ShortSleeveShirt, ShortSleeveBlouse, ShortSleeveBlouse]
+--     , pants = [DressTrousers, DressTrousers]
+--     , skirts = []
+--     , dresses = []
+--     , overalls = [Cardigan, Blazer]
+--     , shoes = [Sandals, Flats]
+--     , purses = [StructuredBag]
+--     }
 
 
 -- to do

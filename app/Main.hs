@@ -8,7 +8,6 @@ import CapsuleWardrobe
   ( CapsuleWardrobe(..)
   , groupByClothing
   , fillUpWardrobe
-  , setUpBaseWardrobe
   , countOutfits
   )
 
@@ -24,7 +23,7 @@ main = do
   let decodedStr = decode str :: Maybe CapsuleWardrobe
   case decodedStr of
     Just capsule -> do
-      pPrint . groupByClothing . fillUpWardrobe $ setUpBaseWardrobe capsule
-      let count = countOutfits . wardrobe . fillUpWardrobe $ setUpBaseWardrobe capsule
+      print . groupByClothing $ fillUpWardrobe capsule
+      let count = countOutfits . wardrobe $ fillUpWardrobe capsule
       putStrLn $ "Num Of Outfits: " ++ show count
     Nothing -> print "nothing"
