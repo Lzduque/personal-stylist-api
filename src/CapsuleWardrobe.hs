@@ -403,57 +403,41 @@ addAccessories capsule
     purseNumOfOutfits = fromIntegral (length . purses $ wardrobe capsule) / numOfOutfits
 
 addShoes :: CapsuleWardrobe -> CapsuleWardrobe
-addShoes capsule@(CapsuleWardrobe {season = SpringSummer, style = Casual, wardrobe}) = capsule {wardrobe = addToWardrobe newShoes wardrobe}
-  where 
-    newShoes
-      | numOfSneakers <= numOfShoes / 5 = Sneakers 
-      | numOfWedges <= numOfShoes / 5 = Wedges 
-      | numOfLoafers <= numOfShoes / 5 = Loafers 
-      | numOfSandals <= numOfShoes / 5 = Sandals
-      | otherwise = Flats
-    numOfShoes = fromIntegral . length . shoes $ wardrobe
-    numOfSneakers = fromIntegral . countOccurrences Sneakers $ shoes wardrobe
-    numOfWedges = fromIntegral . countOccurrences Wedges $ shoes wardrobe
-    numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes wardrobe
-    numOfSandals = fromIntegral . countOccurrences Sandals $ shoes wardrobe
-
-addShoes capsule@(CapsuleWardrobe {season = AutumnWinter, style = Casual, wardrobe}) = capsule {wardrobe = addToWardrobe newShoes wardrobe}
-  where 
-    newShoes
-      | numOfSneakers <= numOfShoes / 5 = Sneakers 
-      | numOfAnkleBoots <= numOfShoes / 5 = AnkleBoots 
-      | numOfLoafers <= numOfShoes / 5 = Loafers 
-      | numOfBoots <= numOfShoes / 5 = Boots 
-      | otherwise = Flats
-    numOfShoes = fromIntegral . length . shoes $ wardrobe
-    numOfSneakers = fromIntegral . countOccurrences Sneakers $ shoes wardrobe
-    numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes wardrobe
-    numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes wardrobe
-    numOfBoots = fromIntegral . countOccurrences Boots $ shoes wardrobe
-
-addShoes capsule@(CapsuleWardrobe {season = SpringSummer, style = Office, wardrobe}) = capsule {wardrobe = addToWardrobe newShoes wardrobe}
-  where 
-    newShoes
-      | numOfHeels <= numOfShoes / 4 = Heels 
-      | numOfLoafers <= numOfShoes / 4 = Loafers 
-      | numOfSandals <= numOfShoes / 4 = Sandals
-      | otherwise = Flats
-    numOfShoes = fromIntegral . length . shoes $ wardrobe
-    numOfHeels = fromIntegral . countOccurrences Heels $ shoes wardrobe
-    numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes wardrobe
-    numOfSandals = fromIntegral . countOccurrences Sandals $ shoes wardrobe
-
-addShoes capsule@(CapsuleWardrobe {season = AutumnWinter, style = Office, wardrobe}) = capsule {wardrobe = addToWardrobe newShoes wardrobe}
-  where 
-    newShoes
-      | numOfHeels <= numOfShoes / 4 = Heels 
-      | numOfAnkleBoots <= numOfShoes / 4 = AnkleBoots 
-      | numOfBoots <= numOfShoes / 4 = Boots 
-      | otherwise = Flats
-    numOfShoes = fromIntegral . length . shoes $ wardrobe
-    numOfHeels = fromIntegral . countOccurrences Heels $ shoes wardrobe
-    numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes wardrobe
-    numOfBoots = fromIntegral . countOccurrences Boots $ shoes wardrobe
+addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
+  let 
+    newShoes = case (season, style) of
+      (SpringSummer, Casual) -> if
+        | numOfSneakers <= numOfShoes / 5 -> Sneakers 
+        | numOfWedges <= numOfShoes / 5 -> Wedges 
+        | numOfLoafers <= numOfShoes / 5 -> Loafers 
+        | numOfSandals <= numOfShoes / 5 -> Sandals
+        | otherwise -> Flats
+      (AutumnWinter, Casual) -> if
+        | numOfSneakers <= numOfShoes / 5 -> Sneakers 
+        | numOfAnkleBoots <= numOfShoes / 5 -> AnkleBoots 
+        | numOfLoafers <= numOfShoes / 5 -> Loafers 
+        | numOfBoots <= numOfShoes / 5 -> Boots 
+        | otherwise -> Flats
+      (SpringSummer, Office) -> if
+        | numOfHeels <= numOfShoes / 4 -> Heels 
+        | numOfLoafers <= numOfShoes / 4 -> Loafers 
+        | numOfSandals <= numOfShoes / 4 -> Sandals
+        | otherwise -> Flats
+      (AutumnWinter, Office) -> if
+        | numOfHeels <= numOfShoes / 4 -> Heels 
+        | numOfAnkleBoots <= numOfShoes / 4 -> AnkleBoots 
+        | numOfBoots <= numOfShoes / 4 -> Boots 
+        | otherwise -> Flats
+  in capsule {wardrobe = addToWardrobe newShoes wardrobe}
+    where
+      numOfShoes = fromIntegral . length . shoes $ wardrobe
+      numOfSneakers = fromIntegral . countOccurrences Sneakers $ shoes wardrobe
+      numOfWedges = fromIntegral . countOccurrences Wedges $ shoes wardrobe
+      numOfLoafers = fromIntegral . countOccurrences Loafers $ shoes wardrobe
+      numOfSandals = fromIntegral . countOccurrences Sandals $ shoes wardrobe
+      numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes wardrobe
+      numOfBoots = fromIntegral . countOccurrences Boots $ shoes wardrobe
+      numOfHeels = fromIntegral . countOccurrences Heels $ shoes wardrobe
 
 addPurse :: CapsuleWardrobe -> CapsuleWardrobe
 addPurse capsule@(CapsuleWardrobe {season = SpringSummer, style = Casual, wardrobe}) = capsule {wardrobe = addToWardrobe newPurse wardrobe}
@@ -474,7 +458,7 @@ addPurse capsule@(CapsuleWardrobe {season = AutumnWinter, style = Office, wardro
 
 
 
--- base Capsule Wardrobes
+-- ------------ base Capsule Wardrobes
 autumnWinterCasual :: Wardrobe
 autumnWinterCasual =
   Wardrobe 

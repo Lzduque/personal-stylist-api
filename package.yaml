@@ -57,3 +57,4 @@ default-extensions:
   - DeriveAnyClass
   - RecordWildCards
   - NamedFieldPuns
+  - MultiWayIf
