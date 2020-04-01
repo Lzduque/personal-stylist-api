@@ -1,9 +1,18 @@
 module Main where
 
-import Lib (getJSON, setUpBaseWardrobe, countOutfits, fillUpWardrobe, groupByClothing)
-import CapsuleWardrobe
 import Data.Aeson (decode)
 import Text.Pretty.Simple (pPrint)
+
+import Lib (getJSON)
+import CapsuleWardrobe 
+  ( CapsuleWardrobe(..)
+  , groupByClothing
+  , fillUpWardrobe
+  , setUpBaseWardrobe
+  , countOutfits
+  )
+
+
 
 jsonFile :: FilePath
 jsonFile = "CW-1.json"

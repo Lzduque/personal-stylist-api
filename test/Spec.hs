@@ -1,9 +1,10 @@
 import Test.Hspec
 -- import Test.QuickCheck
 -- import Control.Exception (evaluate)
+import Data.Aeson (decode)
+
 import Lib
 import CapsuleWardrobe
-import Data.Aeson (decode)
 
 
 
