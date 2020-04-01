@@ -23,7 +23,7 @@ main = do
   let decodedStr = decode str :: Maybe CapsuleWardrobe
   case decodedStr of
     Just capsule -> do
-      pPrint . groupByClothing . groupByClothing $ fillUpWardrobe capsule
+      pPrint . groupByClothing $ fillUpWardrobe capsule
       let count = countOutfits . wardrobe $ fillUpWardrobe capsule
       putStrLn $ "Num Of Outfits: " ++ show count
     Nothing -> print "nothing"
