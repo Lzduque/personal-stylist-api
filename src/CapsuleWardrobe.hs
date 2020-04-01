@@ -109,12 +109,6 @@ instance Clothing Purse where
 
 
 -- ------------ FUNCTIONS
--- setUpBaseWardrobe :: CapsuleWardrobe -> CapsuleWardrobe
--- setUpBaseWardrobe capsule@(CapsuleWardrobe {season = AutumnWinter, style = Casual}) = capsule { wardrobe = autumnWinterCasual}
--- setUpBaseWardrobe capsule@(CapsuleWardrobe {season = SpringSummer, style = Casual}) = capsule { wardrobe = springSummerCasual}
--- setUpBaseWardrobe capsule@(CapsuleWardrobe {season = AutumnWinter, style = Office}) = capsule { wardrobe = autumnWinterOffice}
--- setUpBaseWardrobe capsule@(CapsuleWardrobe {season = SpringSummer, style = Office}) = capsule { wardrobe = springSummerOffice}
-
 countOutfits :: Wardrobe -> Int
 countOutfits wardrobe = (numOfTops * numOfPants * numOfOveralls) + (numOfTops * numOfSkirts * numOfOveralls) + (numOfDresses * numOfOveralls) where
     numOfTops = length . tops $ wardrobe
@@ -388,70 +382,3 @@ addPurse capsule@(CapsuleWardrobe {season, style, wardrobe}) =
       (SpringSummer, Office) -> StructuredBag
       (AutumnWinter, Office) -> StructuredBag
   in capsule {wardrobe = addToWardrobe newPurse wardrobe}
-
-
-
--- ------------ base Capsule Wardrobes
--- autumnWinterCasual :: Wardrobe
--- autumnWinterCasual =
---   Wardrobe 
---     { tops = [LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse]
---     , pants = [Jeans, Jeans]
---     , skirts = []
---     , dresses = []
---     , overalls = [Sweater, TrenchCoat]
---     , shoes = [Boots, Flats]
---     , purses = [RelaxedBag]
---     }
-
--- springSummerCasual :: Wardrobe
--- springSummerCasual =
---   Wardrobe 
---     { tops = [ShortSleeveShirt, ShortSleeveShirt, ShortSleeveBlouse]
---     , pants = [Jeans, Jeans]
---     , skirts = []
---     , dresses = []
---     , overalls = [Vest, Jacket]
---     , shoes = [Sandals, Flats]
---     , purses = [RelaxedBag]
---     }
-
--- autumnWinterOffice :: Wardrobe
--- autumnWinterOffice =
---   Wardrobe 
---     { tops = [LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse]
---     , pants = [DressTrousers, DressTrousers]
---     , skirts = []
---     , dresses = []
---     , overalls = [Cardigan, TrenchCoat]
---     , shoes = [Boots, Flats]
---     , purses = [StructuredBag]
---     }
-
--- springSummerOffice :: Wardrobe
--- springSummerOffice =
---   Wardrobe 
---     { tops = [ShortSleeveShirt, ShortSleeveBlouse, ShortSleeveBlouse]
---     , pants = [DressTrousers, DressTrousers]
---     , skirts = []
---     , dresses = []
---     , overalls = [Cardigan, Blazer]
---     , shoes = [Sandals, Flats]
---     , purses = [StructuredBag]
---     }
-
-
--- to do
-
--- data BodyType = Rectangle | Circle | InvertedTriangle | Hourglass | Triangle
---   deriving (Show, Eq, Generic, ToJSON, FromJSON)
-
--- Hourglass
---   General 
---     "Try to choose light fabrics that don't add too much volume."
---     "The best fabric for your body type is soft but firm and elastic, such as viscose, polyester, jersey, silk, chiffon, soft wool crepe, fine knits and fabrics with lycra."
---   Dresses
---     "Try acentuating your curves, drawing attention to your waist."
---     "The best dresses are wrap, bodycon, monocrome, with V-neckline, but never too tight."
---   Tops
---     ""
