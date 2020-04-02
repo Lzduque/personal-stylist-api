@@ -28,10 +28,10 @@ baseCW =
     }
 
 testWardrobe =
-  Wardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveBlouse]
+  Wardrobe { tops = [LongSleeveShirt, LongSleeveShirt, ShortSleeveShirt, LongSleeveShirt]
                   , pants = [Jeans, Jeans]
-                  , skirts = [ShortSkirt, LongSkirt]
-                  , dresses = [LongSleeveDress]
+                  , skirts = [Skirt, Skirt]
+                  , dresses = [DayDress]
                   , overalls = [Cardigan, TrenchCoat]
                   , shoes = [Boots, Flats]
                   , purses = [RelaxedBag]
@@ -98,7 +98,7 @@ main = hspec $ do
   describe "countOccurrences" $ do
     it "counts the number of times the element appears in the list" $ do
       countOccurrences 1 [1,2,3,4,1] `shouldBe` 2
-      countOccurrences LongSleeveShirt [LongSleeveBlouse, LongSleeveBlouse] `shouldBe` 0
+      countOccurrences ShortSleeveShirt [LongSleeveShirt, LongSleeveShirt] `shouldBe` 0
 
 
 
@@ -125,15 +125,15 @@ main = hspec $ do
               { tops = []
               , pants = []
               , skirts = []
-              , dresses = [LongSleeveDress]
+              , dresses = [DayDress]
               , overalls = []
               , shoes = []
               , purses = []
               }
 
-  describe "addOverall" $ do
-    it "returns a capsule Wardrobe with a new overall given one Capsule Wardrobe" $ do
-      let cw = addOverall (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, preferences = [Dresses,Pants,Skirts]}) 
+  describe "addCoat" $ do
+    it "returns a capsule Wardrobe with a new coat given one Capsule Wardrobe" $ do
+      let cw = addCoat (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, preferences = [Dresses,Pants,Skirts]}) 
       wardrobe cw `shouldBe` 
             Wardrobe
               { tops = []
@@ -166,7 +166,7 @@ main = hspec $ do
             Wardrobe
               { tops = []
               , pants = []
-              , skirts = [ShortSkirt]
+              , skirts = [Skirt]
               , dresses = []
               , overalls = []
               , shoes = []
@@ -191,12 +191,12 @@ main = hspec $ do
     it "returns a capsule Wardrobe with new accessories given one Capsule Wardrobe and the actual number of Outfits" $ do
       let cw = addAccessories (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, preferences = [Dresses,Pants,Skirts], wardrobe = Wardrobe
                 { tops =
-                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ ShortSkirt ]
+                , skirts = [ Skirt ]
                 , dresses =
-                    [LongSleeveDress, LongSleeveDress]
+                    [DayDress, DayDress]
                 , overalls =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
@@ -208,12 +208,12 @@ main = hspec $ do
       wardrobe cw `shouldBe` 
             Wardrobe
                 { tops =
-                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ ShortSkirt ]
+                , skirts = [ Skirt ]
                 , dresses =
-                    [LongSleeveDress, LongSleeveDress]
+                    [DayDress, DayDress]
                 , overalls =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
@@ -226,12 +226,12 @@ main = hspec $ do
     it "returns a capsule Wardrobe with new shoes given one Capsule Wardrobe" $ do
       let cw = addShoes (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, preferences = [Dresses,Pants,Skirts], wardrobe = Wardrobe
                 { tops =
-                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ ShortSkirt ]
+                , skirts = [ Skirt ]
                 , dresses =
-                    [LongSleeveDress, LongSleeveDress]
+                    [DayDress, DayDress]
                 , overalls =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
@@ -243,12 +243,12 @@ main = hspec $ do
       wardrobe cw `shouldBe` 
             Wardrobe
                 { tops =
-                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ ShortSkirt ]
+                , skirts = [ Skirt ]
                 , dresses =
-                    [LongSleeveDress, LongSleeveDress]
+                    [DayDress, DayDress]
                 , overalls =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
@@ -261,12 +261,12 @@ main = hspec $ do
     it "returns a capsule Wardrobe with a new purse given one Capsule Wardrobe" $ do
       let cw = addPurse (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, preferences = [Dresses,Pants,Skirts], wardrobe = Wardrobe
                 { tops =
-                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ ShortSkirt ]
+                , skirts = [ Skirt ]
                 , dresses =
-                    [LongSleeveDress, LongSleeveDress, LongSleeveDress]
+                    [DayDress, DayDress, DayDress]
                 , overalls =
                     [Sweater, Cardigan, Cardigan, TrenchCoat]
                 , shoes =
@@ -278,12 +278,12 @@ main = hspec $ do
       wardrobe cw `shouldBe` 
             Wardrobe
                 { tops =
-                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ ShortSkirt ]
+                , skirts = [ Skirt ]
                 , dresses =
-                    [LongSleeveDress, LongSleeveDress, LongSleeveDress]
+                    [DayDress, DayDress, DayDress]
                 , overalls =
                     [Sweater, Cardigan, Cardigan, TrenchCoat]
                 , shoes =
@@ -300,10 +300,10 @@ main = hspec $ do
       let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, preferences = [Dresses,Pants]}) 
       wardrobe cw `shouldBe` 
             Wardrobe
-              { tops = [ShortSleeveShirt,ShortSleeveShirt,ShortSleeveShirt,ShortSleeveBlouse,ShortSleeveBlouse,TankTop,TankTop]
+              { tops = [ShortSleeveShirt,ShortSleeveShirt,ShortSleeveShirt,ShortSleeveShirt,TankTop,TankTop,TankTop]
               , pants = [Jeans,JeansShorts,JeansShorts]
               , skirts = []
-              , dresses = [ShortSleeveDress,NoSleeveDress]
+              , dresses = [DayDress,DayDress]
               , overalls = [Cardigan,Jacket,Vest]
               , shoes = [Sandals,Flats,Sneakers]
               , purses = [RelaxedBag,RelaxedBag]
@@ -313,9 +313,9 @@ main = hspec $ do
       let cw = fillUpWardrobe (baseCW {season = AutumnWinter, style = Office, numberOfOutfits = From81to90, preferences = [Pants,Skirts]}) 
       wardrobe cw `shouldBe` 
             Wardrobe
-              { tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse]
+              { tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveShirt]
               , pants = [DressTrousers,DressTrousers,DressTrousers]
-              , skirts = [ShortSkirt]
+              , skirts = [Skirt]
               , dresses = []
               , overalls = [Sweater,Cardigan,TrenchCoat]
               , shoes = [Flats,AnkleBoots,AnkleBoots,Boots]
@@ -329,7 +329,7 @@ main = hspec $ do
               { tops = []
               , pants = []
               , skirts = []
-              , dresses = [ShortSleeveDress,ShortSleeveDress,ShortSleeveDress,ShortSleeveDress,ShortSleeveDress,ShortSleeveDress,NoSleeveDress,NoSleeveDress,NoSleeveDress,NoSleeveDress,NoSleeveDress,NoSleeveDress]
+              , dresses = [BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress]
               , overalls = [Cardigan,Cardigan,Vest,Blazer,Blazer,TrenchCoat,TrenchCoat]
               , shoes = [Sandals,Sandals,Flats,Heels]
               , purses = [StructuredBag,StructuredBag,StructuredBag]
@@ -341,10 +341,10 @@ main = hspec $ do
       let cw = fillUpWardrobe (baseCW {season = AutumnWinter, style = Office, numberOfOutfits = From81to90, preferences = [Dresses,Pants,Skirts]}) 
       wardrobe cw `shouldBe` 
             Wardrobe
-              { tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse,LongSleeveBlouse]
+              { tops = [LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveShirt,LongSleeveShirt]
               , pants = [DressTrousers,DressTrousers,DressTrousers]
-              , skirts = [ShortSkirt]
-              , dresses = [LongSleeveDress,ShortSleeveDress]
+              , skirts = [Skirt]
+              , dresses = [BusinessDress,BusinessDress]
               , overalls = [Sweater,Cardigan,TrenchCoat]
               , shoes = [Flats,AnkleBoots,AnkleBoots,Boots]
               , purses = [StructuredBag,StructuredBag]
@@ -354,12 +354,12 @@ main = hspec $ do
     it "returns a displayable capsule Wardrobe with the clothes, numbers and colors given a wish and a Capsule Wardrobe" $ do
       groupByClothing (baseCW {season = AutumnWinter, style = Casual, numberOfOutfits = From81to90, colors = [Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink,LightPurple,LightGreen], preferences = [Dresses,Pants,Skirts], wardrobe = Wardrobe
                 { tops =
-                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveBlouse, LongSleeveBlouse, LongSleeveBlouse]
+                    [LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt, LongSleeveShirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ ShortSkirt ]
+                , skirts = [ Skirt ]
                 , dresses =
-                    [LongSleeveDress, LongSleeveDress, LongSleeveDress]
+                    [DayDress, DayDress, DayDress]
                 , overalls =
                     [Sweater, Cardigan, Cardigan, TrenchCoat]
                 , shoes =
@@ -369,12 +369,11 @@ main = hspec $ do
                 }
             }) `shouldBe` 
         [
-          ("LongSleeveShirt",4,[Navy,OffWhite,LightYellow,Beige])
-          ,("LongSleeveBlouse",3,[Navy,OffWhite,LightYellow])
+          ("LongSleeveShirt",7,[Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink])
           ,("Jeans",2,[Navy,OffWhite])
           ,("Leggings",1,[Navy])
-          ,("ShortSkirt",1,[Navy])
-          ,("LongSleeveDress",3,[LightPink,LightPurple,LightGreen])
+          ,("Skirt",1,[Navy])
+          ,("DayDress",3,[LightPink,LightPurple,LightGreen])
           ,("Sweater",1,[Navy])
           ,("Cardigan",2,[Navy,OffWhite])
           ,("TrenchCoat",1,[Navy])
