@@ -54,13 +54,13 @@ data Season = SpringSummer | AutumnWinter
 data Style = Casual | Office
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130
+data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130 | From131to140 | From141to150 | From151to160
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 data Colors = White | OffWhite | Beige | Brown | Black | Navy | Blue | LightBlue | DarkGreen | LightGreen | DarkYellow | LightYellow | DarkPink | LightPink | DarkRed | LightRed | DarkOrgange | LightOrange | DarkPurple | LightPurple
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Preferences = Skirts | Dresses | Pants | HighHeels
+data Preferences = Skirts | Dresses | Pants | HighHeels | LeggingsPants
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 class Clothing a where
@@ -99,7 +99,7 @@ instance Clothing Overall where
   addToWardrobe newOverall wardrobe = wardrobe { overalls = overalls wardrobe ++ [newOverall] }
   takeColors cs = take (length cs)
 
-data Shoes = Sandals | Flats | Heels | AnkleBoots | Boots | Loafers | Sneakers | Wedges
+data Shoes = Sandals | Flats | Heels | AnkleBoots | Boots | Sneakers | Wedges
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Shoes where
   addToWardrobe newShoes wardrobe = wardrobe { shoes = shoes wardrobe ++ [newShoes] }
@@ -135,6 +135,9 @@ toRange From91to100 = (91,100)
 toRange From101to110 = (101,110)
 toRange From111to120 = (111,120)
 toRange From121to130 = (121,130)
+toRange From131to140 = (131,140)
+toRange From141to150 = (141,150)
+toRange From151to160 = (151,160)
 
 sortWardrobe :: Wardrobe -> Wardrobe
 sortWardrobe wardrobe = 
@@ -330,11 +333,11 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
     newPants = case (season, style) of
       (SpringSummer, Casual) -> if
         | numOfJeans <= numOfPants / 3 -> Jeans
-        | numOfJeansShorts <= numOfPants / 3 -> JeansShorts 
-        | otherwise -> Leggings
+        | numOfLeggings <= numOfPants / 3 && wantsLeggings -> Leggings 
+        | otherwise -> JeansShorts
       (AutumnWinter, Casual) -> if
-        | numOfJeans <= numOfPants / 2 -> Jeans
-        | otherwise -> Leggings
+        | numOfLeggings <= numOfPants / 2 && wantsLeggings -> Leggings
+        | otherwise -> Jeans
       (SpringSummer, Office) -> if
         | numOfDressTrousers <= numOfPants / 2 -> DressTrousers 
         | otherwise -> SocialShorts
@@ -342,9 +345,11 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   in capsule {wardrobe = addToWardrobe newPants wardrobe}
     where
       numOfPants = fromIntegral . length . pants $ wardrobe
-      numOfJeansShorts = fromIntegral . countOccurrences JeansShorts $ pants wardrobe
+      numOfLeggings = fromIntegral . countOccurrences Leggings $ pants wardrobe
       numOfJeans = fromIntegral . countOccurrences Jeans $ pants wardrobe
       numOfDressTrousers = fromIntegral . countOccurrences DressTrousers $ pants wardrobe
+      clothesPreferences = preferences capsule
+      wantsLeggings = LeggingsPants `elem` clothesPreferences
 
 addAccessories :: CapsuleWardrobe -> CapsuleWardrobe
 addAccessories capsule
@@ -361,22 +366,19 @@ addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newShoes = case (season, style) of
       (SpringSummer, Casual) -> if
-        | numOfSandals <= numOfShoes / 5 -> Sandals
-        | numOfFlats <= numOfShoes / 5 -> Flats 
-        | numOfSneakers <= numOfShoes / 5 -> Sneakers 
-        | numOfWedges <= numOfShoes / 5 -> Wedges 
-        | otherwise -> Loafers
-      (AutumnWinter, Casual) -> if
-        | numOfBoots <= numOfShoes / 5 -> Boots 
-        | numOfFlats <= numOfShoes / 5 -> Flats 
-        | numOfSneakers <= numOfShoes / 5 -> Sneakers 
-        | numOfAnkleBoots <= numOfShoes / 5 -> AnkleBoots 
-        | otherwise -> Loafers
-      (SpringSummer, Office) -> if
         | numOfSandals <= numOfShoes / 4 -> Sandals
         | numOfFlats <= numOfShoes / 4 -> Flats 
-        | numOfHeels <= numOfShoes / 4 && wantsHeels -> Heels 
-        | otherwise -> Loafers
+        | numOfSneakers <= numOfShoes / 4 -> Sneakers 
+        | otherwise -> Wedges
+      (AutumnWinter, Casual) -> if
+        | numOfBoots <= numOfShoes / 4 -> Boots 
+        | numOfFlats <= numOfShoes / 4 -> Flats 
+        | numOfSneakers <= numOfShoes / 4 -> Sneakers 
+        | otherwise -> AnkleBoots
+      (SpringSummer, Office) -> if
+        | numOfSandals <= numOfShoes / 3 -> Sandals
+        | numOfHeels <= numOfShoes / 3 && wantsHeels -> Heels 
+        | otherwise -> Flats
       (AutumnWinter, Office) -> if
         | numOfBoots <= numOfShoes / 4 -> Boots 
         | numOfHeels <= numOfShoes / 4 && wantsHeels -> Heels 

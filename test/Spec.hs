@@ -84,6 +84,9 @@ main = hspec $ do
       toRange From101to110 `shouldBe` (101,110)
       toRange From111to120 `shouldBe` (111,120)
       toRange From121to130 `shouldBe` (121,130)
+      toRange From131to140 `shouldBe` (131,140)
+      toRange From141to150 `shouldBe` (141,150)
+      toRange From151to160 `shouldBe` (151,160)
 
   describe "inRange" $ do
     it "returns True or False whether the number is within the range" $ do
@@ -298,7 +301,7 @@ main = hspec $ do
       wardrobe cw `shouldBe` 
             Wardrobe
               { tops = [ShortSleeveShirt,ShortSleeveShirt,ShortSleeveShirt,ShortSleeveBlouse,ShortSleeveBlouse,TankTop,TankTop]
-              , pants = [Jeans,JeansShorts,Leggings]
+              , pants = [Jeans,JeansShorts,JeansShorts]
               , skirts = []
               , dresses = [ShortSleeveDress,NoSleeveDress]
               , overalls = [Cardigan,Jacket,Vest]
@@ -328,7 +331,7 @@ main = hspec $ do
               , skirts = []
               , dresses = [ShortSleeveDress,ShortSleeveDress,ShortSleeveDress,ShortSleeveDress,ShortSleeveDress,ShortSleeveDress,NoSleeveDress,NoSleeveDress,NoSleeveDress,NoSleeveDress,NoSleeveDress,NoSleeveDress]
               , overalls = [Cardigan,Cardigan,Vest,Blazer,Blazer,TrenchCoat,TrenchCoat]
-              , shoes = [Sandals,Flats,Heels,Loafers]
+              , shoes = [Sandals,Sandals,Flats,Heels]
               , purses = [StructuredBag,StructuredBag,StructuredBag]
               }
       countOutfits (wardrobe cw) `shouldBe` 84
