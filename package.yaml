@@ -38,7 +38,10 @@ executables:
     - -Wall
     dependencies:
     - personal-stylist
-
+    - scotty
+    - http-types
+    - transformers
+    
 tests:
   personal-stylist-test:
     main:                Spec.hs

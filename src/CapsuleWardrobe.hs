@@ -79,7 +79,7 @@ instance Clothing Pants where
   addToWardrobe newPants wardrobe = wardrobe { pants = pants wardrobe ++ [newPants] }
   takeColors cs = take (length cs)
 
-data Skirt = Skirt
+data Skirt = BusinessSkirt | DaySkirt
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Skirt where
   addToWardrobe newSkirt wardrobe = wardrobe { skirts = skirts wardrobe ++ [newSkirt] }
@@ -286,10 +286,10 @@ addSkirt :: CapsuleWardrobe -> CapsuleWardrobe
 addSkirt capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newSkirt = case (season, style) of
-      (SpringSummer, Casual) -> Skirt
-      (AutumnWinter, Casual) -> Skirt
-      (SpringSummer, Office) -> Skirt
-      (AutumnWinter, Office) -> Skirt
+      (SpringSummer, Casual) -> DaySkirt
+      (AutumnWinter, Casual) -> DaySkirt
+      (SpringSummer, Office) -> BusinessSkirt
+      (AutumnWinter, Office) -> BusinessSkirt
   in capsule {wardrobe = addToWardrobe newSkirt wardrobe}
 
 addPants :: CapsuleWardrobe -> CapsuleWardrobe
