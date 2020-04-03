@@ -41,6 +41,9 @@ executables:
     - scotty
     - http-types
     - transformers
+    - base64-bytestring
+    - text
+    - utf8-string
     
 tests:
   personal-stylist-test:
