@@ -32,7 +32,7 @@ instance FromJSON CapsuleWardrobe where
             , pants = []
             , skirts = []      
             , dresses = []     
-            , overalls = []    
+            , coats = []    
             , shoes = []       
             , purses = []      
             }
@@ -43,7 +43,7 @@ data Wardrobe =
   , pants       :: [Pants]
   , skirts      :: [Skirt]
   , dresses     :: [Dress]
-  , overalls    :: [Coat]
+  , coats       :: [Coat]
   , shoes       :: [Shoes]
   , purses      :: [Purse]
   } deriving (Show, Generic, Eq, ToJSON, FromJSON)
@@ -96,7 +96,7 @@ instance Clothing Dress where
 data Coat = Sweater | Cardigan | Jacket | Vest | Blazer | Sweatshirt | TrenchCoat | WoolCoat
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Coat where
-  addToWardrobe newCoat wardrobe = wardrobe { overalls = overalls wardrobe ++ [newCoat] }
+  addToWardrobe newCoat wardrobe = wardrobe { coats = coats wardrobe ++ [newCoat] }
   takeColors cs = take (length cs)
 
 data Shoes = Sandals | Flats | Heels | AnkleBoots | Boots | Sneakers | Wedges
@@ -120,7 +120,7 @@ countOutfits wardrobe = (numOfTops * numOfPants * numOfCoats) + (numOfTops * num
     numOfPants = length . pants $ wardrobe
     numOfSkirts = length . skirts $ wardrobe
     numOfDresses = length . dresses $ wardrobe
-    numOfCoats = length . overalls $ wardrobe
+    numOfCoats = length . coats $ wardrobe
 
 toRange :: NumberOfOutfits -> (Int,Int)
 toRange From10to20 = (10,20)
@@ -146,7 +146,7 @@ sortWardrobe wardrobe =
   , pants = sort . pants $ wardrobe
   , skirts = sort . skirts $ wardrobe
   , dresses = sort . dresses $ wardrobe
-  , overalls = sort . overalls $ wardrobe
+  , coats = sort . coats $ wardrobe
   , shoes = sort . shoes $ wardrobe
   , purses = sort . purses $ wardrobe
   }
@@ -162,7 +162,7 @@ fillUpWardrobe capsule
       newCapsule = addAccessories $ addMoreClothes capsule
 
 groupByClothing :: CapsuleWardrobe -> [(String,Int,[Colors])]
-groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, fshoes, fpurses]
+groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, fcoats, fshoes, fpurses]
   where
     f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int,[Colors])]
     f = map (\cs -> (show . head $ cs, length cs, takeColors cs (colors capsule))) . group
@@ -170,7 +170,7 @@ groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, foveralls, f
     fpants = f . pants . wardrobe $ capsule
     fskirts = f . skirts . wardrobe $ capsule
     fdresses = f . dresses . wardrobe $ capsule
-    foveralls = f . overalls . wardrobe $ capsule
+    fcoats = f . coats . wardrobe $ capsule
     fshoes = f . shoes . wardrobe $ capsule
     fpurses = f . purses . wardrobe $ capsule
 
@@ -189,8 +189,8 @@ addMoreClothes capsule
       numBottoms = fromIntegral $ (length . pants $ wardrobe capsule) + (length . skirts $ wardrobe capsule)
       topBottom = fromIntegral (length . tops $ wardrobe capsule) / numBottoms
       dressBottom = fromIntegral (length . dresses $ wardrobe capsule) / numBottoms
-      dressCoat = fromIntegral (length . dresses $ wardrobe capsule) / fromIntegral (length . overalls $ wardrobe capsule)
-      topCoat = fromIntegral (length . tops $ wardrobe capsule) / fromIntegral (length . overalls $ wardrobe capsule)
+      dressCoat = fromIntegral (length . dresses $ wardrobe capsule) / fromIntegral (length . coats $ wardrobe capsule)
+      topCoat = fromIntegral (length . tops $ wardrobe capsule) / fromIntegral (length . coats $ wardrobe capsule)
       dressTop = fromIntegral (length . dresses $ wardrobe capsule) / fromIntegral (length . tops $ wardrobe capsule)
       clothesPreferences = preferences capsule
       wantBottoms = Pants `elem` clothesPreferences || Skirts `elem` clothesPreferences
@@ -258,14 +258,14 @@ addCoat capsule@(CapsuleWardrobe {season, style, wardrobe}) =
         | otherwise -> WoolCoat
   in capsule {wardrobe = addToWardrobe newCoat wardrobe}
     where
-      numOfCoats = fromIntegral . length . overalls $ wardrobe
-      numOfCardigan = fromIntegral . countOccurrences Cardigan $ overalls wardrobe
-      numOfSweatshirt = fromIntegral . countOccurrences Sweatshirt $ overalls wardrobe
-      numOfBlazer = fromIntegral . countOccurrences Blazer $ overalls wardrobe
-      numOfTrenchCoat = fromIntegral . countOccurrences TrenchCoat $ overalls wardrobe
-      numOfJacket = fromIntegral . countOccurrences Jacket $ overalls wardrobe
-      numOfVest = fromIntegral . countOccurrences Vest $ overalls wardrobe
-      numOfSweater = fromIntegral . countOccurrences Sweater $ overalls wardrobe
+      numOfCoats = fromIntegral . length . coats $ wardrobe
+      numOfCardigan = fromIntegral . countOccurrences Cardigan $ coats wardrobe
+      numOfSweatshirt = fromIntegral . countOccurrences Sweatshirt $ coats wardrobe
+      numOfBlazer = fromIntegral . countOccurrences Blazer $ coats wardrobe
+      numOfTrenchCoat = fromIntegral . countOccurrences TrenchCoat $ coats wardrobe
+      numOfJacket = fromIntegral . countOccurrences Jacket $ coats wardrobe
+      numOfVest = fromIntegral . countOccurrences Vest $ coats wardrobe
+      numOfSweater = fromIntegral . countOccurrences Sweater $ coats wardrobe
 
 addBottom :: CapsuleWardrobe -> CapsuleWardrobe
 addBottom capsule

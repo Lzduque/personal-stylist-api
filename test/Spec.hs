@@ -21,7 +21,7 @@ baseCW =
         , pants = []
         , skirts = []
         , dresses = []
-        , overalls = []
+        , coats = []
         , shoes = []
         , purses = []
         }
@@ -30,9 +30,9 @@ baseCW =
 testWardrobe =
   Wardrobe { tops = [Shirt, Shirt, Shirt, Shirt]
                   , pants = [Jeans, Jeans]
-                  , skirts = [Skirt, Skirt]
+                  , skirts = [DaySkirt, DaySkirt]
                   , dresses = [DayDress]
-                  , overalls = [Cardigan, TrenchCoat]
+                  , coats = [Cardigan, TrenchCoat]
                   , shoes = [Boots, Flats]
                   , purses = [RelaxedBag]
                   }
@@ -112,7 +112,7 @@ main = hspec $ do
               , pants = []
               , skirts = []
               , dresses = []
-              , overalls = []
+              , coats = []
               , shoes = []
               , purses = []
               }
@@ -126,7 +126,7 @@ main = hspec $ do
               , pants = []
               , skirts = []
               , dresses = [DayDress]
-              , overalls = []
+              , coats = []
               , shoes = []
               , purses = []
               }
@@ -140,7 +140,7 @@ main = hspec $ do
               , pants = []
               , skirts = []
               , dresses = []
-              , overalls = [Sweater]
+              , coats = [Sweater]
               , shoes = []
               , purses = []
               }
@@ -154,7 +154,7 @@ main = hspec $ do
               , pants = [Jeans]
               , skirts = []
               , dresses = []
-              , overalls = []
+              , coats = []
               , shoes = []
               , purses = []
               }
@@ -166,9 +166,9 @@ main = hspec $ do
             Wardrobe
               { tops = []
               , pants = []
-              , skirts = [Skirt]
+              , skirts = [DaySkirt]
               , dresses = []
-              , overalls = []
+              , coats = []
               , shoes = []
               , purses = []
               }
@@ -182,7 +182,7 @@ main = hspec $ do
               , pants = [Jeans]
               , skirts = []
               , dresses = []
-              , overalls = []
+              , coats = []
               , shoes = []
               , purses = []
               }
@@ -194,10 +194,10 @@ main = hspec $ do
                     [Shirt, Shirt, Shirt, Shirt, Shirt, Shirt, Shirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ Skirt ]
+                , skirts = [ DaySkirt ]
                 , dresses =
                     [DayDress, DayDress]
-                , overalls =
+                , coats =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
                     []
@@ -211,10 +211,10 @@ main = hspec $ do
                     [Shirt, Shirt, Shirt, Shirt, Shirt, Shirt, Shirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ Skirt ]
+                , skirts = [ DaySkirt ]
                 , dresses =
                     [DayDress, DayDress]
-                , overalls =
+                , coats =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
                     [Boots]
@@ -229,10 +229,10 @@ main = hspec $ do
                     [Shirt, Shirt, Shirt, Shirt, Shirt, Shirt, Shirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ Skirt ]
+                , skirts = [ DaySkirt ]
                 , dresses =
                     [DayDress, DayDress]
-                , overalls =
+                , coats =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
                     []
@@ -246,10 +246,10 @@ main = hspec $ do
                     [Shirt, Shirt, Shirt, Shirt, Shirt, Shirt, Shirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ Skirt ]
+                , skirts = [ DaySkirt ]
                 , dresses =
                     [DayDress, DayDress]
-                , overalls =
+                , coats =
                     [Sweater, Cardigan, TrenchCoat]
                 , shoes =
                     [Boots]
@@ -264,10 +264,10 @@ main = hspec $ do
                     [Shirt, Shirt, Shirt, Shirt, Shirt, Shirt, Shirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ Skirt ]
+                , skirts = [ DaySkirt ]
                 , dresses =
                     [DayDress, DayDress, DayDress]
-                , overalls =
+                , coats =
                     [Sweater, Cardigan, Cardigan, TrenchCoat]
                 , shoes =
                     []
@@ -281,10 +281,10 @@ main = hspec $ do
                     [Shirt, Shirt, Shirt, Shirt, Shirt, Shirt, Shirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ Skirt ]
+                , skirts = [ DaySkirt ]
                 , dresses =
                     [DayDress, DayDress, DayDress]
-                , overalls =
+                , coats =
                     [Sweater, Cardigan, Cardigan, TrenchCoat]
                 , shoes =
                     []
@@ -304,7 +304,7 @@ main = hspec $ do
               , pants = [Jeans,JeansShorts,JeansShorts]
               , skirts = []
               , dresses = [DayDress,DayDress]
-              , overalls = [Cardigan,Jacket,Vest]
+              , coats = [Cardigan,Jacket,Vest]
               , shoes = [Sandals,Flats,Sneakers]
               , purses = [RelaxedBag,RelaxedBag]
               }
@@ -315,9 +315,9 @@ main = hspec $ do
             Wardrobe
               { tops = [Shirt,Shirt,Shirt,Shirt,Shirt,Shirt,Shirt]
               , pants = [DressTrousers,DressTrousers,DressTrousers]
-              , skirts = [Skirt]
+              , skirts = [BusinessSkirt]
               , dresses = []
-              , overalls = [Sweater,Cardigan,TrenchCoat]
+              , coats = [Sweater,Cardigan,TrenchCoat]
               , shoes = [Flats,AnkleBoots,AnkleBoots,Boots]
               , purses = [StructuredBag,StructuredBag]
               }
@@ -330,7 +330,7 @@ main = hspec $ do
               , pants = []
               , skirts = []
               , dresses = [BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress]
-              , overalls = [Cardigan,Cardigan,Vest,Blazer,Blazer,TrenchCoat,TrenchCoat]
+              , coats = [Cardigan,Cardigan,Vest,Blazer,Blazer,TrenchCoat,TrenchCoat]
               , shoes = [Sandals,Sandals,Flats,Heels]
               , purses = [StructuredBag,StructuredBag,StructuredBag]
               }
@@ -343,9 +343,9 @@ main = hspec $ do
             Wardrobe
               { tops = [Shirt,Shirt,Shirt,Shirt,Shirt,Shirt,Shirt]
               , pants = [DressTrousers,DressTrousers,DressTrousers]
-              , skirts = [Skirt]
+              , skirts = [BusinessSkirt]
               , dresses = [BusinessDress,BusinessDress]
-              , overalls = [Sweater,Cardigan,TrenchCoat]
+              , coats = [Sweater,Cardigan,TrenchCoat]
               , shoes = [Flats,AnkleBoots,AnkleBoots,Boots]
               , purses = [StructuredBag,StructuredBag]
               }
@@ -357,10 +357,10 @@ main = hspec $ do
                     [Shirt, Shirt, Shirt, Shirt, Shirt, Shirt, Shirt]
                 , pants =
                     [Jeans, Jeans, Leggings]
-                , skirts = [ Skirt ]
+                , skirts = [ DaySkirt ]
                 , dresses =
                     [DayDress, DayDress, DayDress]
-                , overalls =
+                , coats =
                     [Sweater, Cardigan, Cardigan, TrenchCoat]
                 , shoes =
                     []
@@ -372,7 +372,7 @@ main = hspec $ do
           ("Shirt",7,[Navy,OffWhite,LightYellow,Beige,Brown,LightBlue,LightPink])
           ,("Jeans",2,[Navy,OffWhite])
           ,("Leggings",1,[Navy])
-          ,("Skirt",1,[Navy])
+          ,("DaySkirt",1,[Navy])
           ,("DayDress",3,[LightPink,LightPurple,LightGreen])
           ,("Sweater",1,[Navy])
           ,("Cardigan",2,[Navy,OffWhite])
