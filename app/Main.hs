@@ -36,6 +36,7 @@ main = scotty 3000 $ do
         let decodedStr = decode (BS.pack (UTF8.toString capsuleJSON)) :: Maybe CapsuleWardrobe
         case decodedStr of
           Just capsule -> do
+            setHeader "Access-Control-Allow-Origin" "http://localhost:2000"
             json $ groupByClothing $ fillUpWardrobe capsule
           Nothing -> text "nothing"
   delete "/" $ do
