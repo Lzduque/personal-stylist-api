@@ -312,16 +312,24 @@ main = hspec $ do
 -- ------------ MAIN FUNCTIONS
   describe "fillUpWardrobe" $ do
     it "returns a final capsule Wardrobe with a new item(s) of clothing given one Capsule Wardrobe" $ do
-      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, preferences = [Dresses,Pants]}) 
-      wardrobe cw `shouldBe` 
-            Wardrobe
-              { tops = [Shirt,Shirt,Shirt,Shirt,TankTop,TankTop,TankTop]
-              , pants = [Jeans,JeansShorts,JeansShorts]
-              , skirts = []
-              , dresses = [DayDress,DayDress]
-              , coats = [Cardigan,Jacket,Vest]
-              , shoes = [Sandals,Flats,Sneakers]
-              , purses = [RelaxedBag,RelaxedBag]
+      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, colors = [Navy], preferences = [Dresses,Pants]})
+      cw `shouldBe` 
+            Right CapsuleWardrobe
+              {
+                season = SpringSummer, 
+                style = Casual, 
+                numberOfOutfits = From61to70, 
+                colors = [Navy],
+                preferences = [Dresses,Pants],
+                wardrobe = Wardrobe
+                            { tops = [Shirt,Shirt,Shirt,Shirt,TankTop,TankTop,TankTop]
+                            , pants = [Jeans,JeansShorts,JeansShorts]
+                            , skirts = []
+                            , dresses = [DayDress,DayDress]
+                            , coats = [Cardigan,Jacket,Vest]
+                            , shoes = [Sandals,Flats,Sneakers]
+                            , purses = [RelaxedBag,RelaxedBag]
+                            }
               }
       countOutfits (wardrobe cw) `shouldBe` 69
 

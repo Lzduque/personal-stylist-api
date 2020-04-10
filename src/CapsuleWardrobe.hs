@@ -2,7 +2,7 @@ module CapsuleWardrobe where
 
 import Data.Aeson (FromJSON,ToJSON,parseJSON,withObject,(.:),(.:?),(.!=))
 import GHC.Generics (Generic)
-import Data.List
+import Data.List (null, sort, group)
 
 import Lib
 
@@ -151,10 +151,13 @@ sortWardrobe wardrobe =
   , purses = sort . purses $ wardrobe
   }
 
-fillUpWardrobe :: CapsuleWardrobe -> CapsuleWardrobe
+fillUpWardrobe :: CapsuleWardrobe -> Either String CapsuleWardrobe
 fillUpWardrobe capsule
-    | totalOutfits `inRange` rangeOfOutfits = capsule { wardrobe = sortWardrobe $ wardrobe capsule }
-    | totalOutfits > snd rangeOfOutfits = error "Total Outfits larger than the Range of Outfits wished"
+    | totalOutfits `inRange` rangeOfOutfits = Right $ capsule { wardrobe = sortWardrobe $ wardrobe capsule }
+    | totalOutfits > snd rangeOfOutfits = Left "No capsule can be generated within this range, for these parameters. Please, change the number of outfits."
+    | null $ preferences capsule = Left "Please, select at least one preference."
+    | null $ colors capsule = Left "Please, select at least one color."
+    | Skirts `notElem` preferences capsule && Pants `notElem` preferences capsule && Dresses `notElem` preferences capsule = Left "Please, select at least one of these preferences: Skirts, Dresses or Pants."
     | otherwise = fillUpWardrobe newCapsule
     where
       totalOutfits = countOutfits . wardrobe $ capsule
