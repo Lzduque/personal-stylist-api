@@ -155,6 +155,7 @@ fillUpWardrobe :: CapsuleWardrobe -> Either String CapsuleWardrobe
 fillUpWardrobe capsule
     | totalOutfits `inRange` rangeOfOutfits = Right $ capsule { wardrobe = sortWardrobe $ wardrobe capsule }
     | totalOutfits > snd rangeOfOutfits = Left "No capsule can be generated within this range, for these parameters. Please, change the number of outfits."
+    | null (preferences capsule) && null (colors capsule) = Left "Please, select at least one preference and one color."
     | null $ preferences capsule = Left "Please, select at least one preference."
     | null $ colors capsule = Left "Please, select at least one color."
     | Skirts `notElem` preferences capsule && Pants `notElem` preferences capsule && Dresses `notElem` preferences capsule = Left "Please, select at least one of these preferences: Skirts, Dresses or Pants."
