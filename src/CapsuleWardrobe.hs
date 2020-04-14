@@ -63,7 +63,7 @@ data Style = Casual | Office
 data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130 | From131to140 | From141to150 | From151to160
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Colors = White | OffWhite | Beige | Brown | Black | Navy | Blue | LightBlue | DarkGreen | LightGreen | DarkYellow | LightYellow | DarkPink | LightPink | DarkRed | LightRed | DarkOrgange | LightOrange | DarkPurple | LightPurple
+data Colors = White | OffWhite | Beige | Brown | Black | Navy | Blue | LightBlue | DarkGreen | LightGreen | DarkYellow | LightYellow | DarkPink | LightPink | DarkRed | LightRed | DarkOrange | LightOrange | DarkPurple | LightPurple
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 data Preferences = Skirts | Dresses | Pants | HighHeels | LeggingsPants

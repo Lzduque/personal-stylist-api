@@ -348,18 +348,19 @@ main = hspec $ do
 
     it "returns a error message given one Capsule Wardrobe without preferences and colors" $ do
       let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, colors = [], preferences = []})
-      cw `shouldBe` 
-            Left "Please, select at least one preference and one color."
+      cw `shouldBe` Left Error { error = True, message = "Please, select at least one preference and one color."} 
 
     it "returns a error message given one Capsule Wardrobe without preferences" $ do
       let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, colors = [Navy], preferences = []})
-      cw `shouldBe` 
-            Left "Please, select at least one preference."
+      cw `shouldBe` Left Error { error = True, message = "Please, select at least one preference."}
 
     it "returns a error message given one Capsule Wardrobe without colors" $ do
       let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, colors = [], preferences = [Dresses,HighHeels]})
-      cw `shouldBe` 
-            Left "Please, select at least one color."
+      cw `shouldBe` Left Error { error = True, message = "Please, select at least one color."}
+
+    it "returns a error message given one Capsule Wardrobe without any bottom preference" $ do
+      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, colors = [Navy], preferences = [HighHeels]})
+      cw `shouldBe` Left Error { error = True, message = "Please, select at least one of these preferences: Skirts, Dresses or Pants."}
 
     it "returns a error message given one Capsule Wardrobe with more outfits than it was asked for" $ do
       let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, colors = [], preferences = [Dresses,HighHeels], wardrobe = 
@@ -373,8 +374,7 @@ main = hspec $ do
           , purses = [StructuredBag,StructuredBag,StructuredBag]
           }
       })
-      cw `shouldBe` 
-            Left "No capsule can be generated within this range, for these parameters. Please, change the number of outfits."
+      cw `shouldBe` Left Error { error = True, message = "No capsule can be generated within this range, for these parameters. Please, change the number of outfits." }
 
   describe "addMoreClothes" $ do
     it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe" $ do
