@@ -88,6 +88,10 @@ main = hspec $ do
       toRange From131to140 `shouldBe` (131,140)
       toRange From141to150 `shouldBe` (141,150)
       toRange From151to160 `shouldBe` (151,160)
+      toRange From161to170 `shouldBe` (161,170)
+      toRange From171to180 `shouldBe` (171,180)
+      toRange From181to190 `shouldBe` (181,190)
+      toRange From191to200 `shouldBe` (191,200)
 
   describe "inRange" $ do
     it "returns True or False whether the number is within the range" $ do
