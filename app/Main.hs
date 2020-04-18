@@ -8,7 +8,7 @@ import qualified Data.ByteString.Base64.URL as Base64
 import qualified Data.Text.Lazy as T
 import qualified Data.ByteString.UTF8 as UTF8
 import qualified Data.ByteString.Lazy.Char8 as BS
-import System.Environment (getEnv)
+import System.Environment (lookupEnv)
 
 import Lib ()
 import CapsuleWardrobe 
@@ -26,7 +26,11 @@ import CapsuleWardrobe
 
 main :: IO ()
 main = do
-  port <- read <$> getEnv "PORT"
+  mport <- lookupEnv "PORT"
+  let 
+    port = case mport of
+      Just p -> read p :: Int
+      Nothing -> 3000
   scotty port $ do
     get "/capsule/:capsule" $ do                         -- handle GET request on "/" URL
       capsule <- param "capsule"
