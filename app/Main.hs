@@ -3,7 +3,6 @@ module Main where
 import Data.Aeson (decode)
 import Text.Pretty.Simple (pPrint)
 import Web.Scotty
--- import Network.HTTP.Types
 import Control.Monad.IO.Class (liftIO)
 import qualified Data.ByteString.Base64.URL as Base64
 import qualified Data.Text.Lazy as T
@@ -18,6 +17,11 @@ import CapsuleWardrobe
   )
 
 
+
+-- runServer :: IO ()
+-- runServer = do
+--   port <- read <$> getEnv "PORT"
+--   Run port (serve myAPI myServer)
 
 main :: IO ()
 main = scotty 3000 $ do
@@ -51,20 +55,3 @@ main = scotty 3000 $ do
     text "This was a POST request!"
   put "/" $ do
     text "This was a PUT request!"
-
-
-
--- jsonFile :: FilePath
--- jsonFile = "CW-1.json"
-
--- main function that is running everything
--- mainF :: IO ()
--- mainF = do
---   str <- getJSON jsonFile
---   let decodedStr = decode str :: Maybe CapsuleWardrobe
---   case decodedStr of
---     Just capsule -> do
---       pPrint $ fillUpWardrobe capsule
---       let count = countOutfits . wardrobe $ fillUpWardrobe capsule
---       putStrLn $ "Num Of Outfits: " ++ show count
---     Nothing -> print "nothing"
