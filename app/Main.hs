@@ -27,7 +27,7 @@ main = do
       Just p -> read p :: Int
       Nothing -> 3000
     origin = case mport of
-      Just _ -> "https://back-personal-stylist.herokuapp.com/"
+      Just _ -> "https://lzduque.github.io"
       Nothing -> "http://localhost:2000"
   scotty port $ do
     get "/capsule/:capsule" $ do                         -- handle GET request on "/" URL
