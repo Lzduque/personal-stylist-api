@@ -2,7 +2,7 @@ module Main where
 
 import Data.Aeson (decode)
 import Text.Pretty.Simple (pPrint)
-import Web.Scotty
+import Web.Scotty (scotty, get, param, text, setHeader, json, delete, html, post, put)
 import Control.Monad.IO.Class (liftIO)
 import qualified Data.ByteString.Base64.URL as Base64
 import qualified Data.Text.Lazy as T
@@ -19,11 +19,6 @@ import CapsuleWardrobe
 
 
 
--- runServer :: IO ()
--- runServer = do
---   port <- read <$> getEnv "PORT"
---   Run port (serve myAPI myServer)
-
 main :: IO ()
 main = do
   mport <- lookupEnv "PORT"
@@ -31,6 +26,9 @@ main = do
     port = case mport of
       Just p -> read p :: Int
       Nothing -> 3000
+    origin = case mport of
+      Just _ -> "https://back-personal-stylist.herokuapp.com/"
+      Nothing -> "http://localhost:2000"
   scotty port $ do
     get "/capsule/:capsule" $ do                         -- handle GET request on "/" URL
       capsule <- param "capsule"
@@ -46,7 +44,7 @@ main = do
           case decodedStr of
             Just capsule -> do
               liftIO $ putStrLn "capsule inside decodedstr"
-              setHeader "Access-Control-Allow-Origin" "http://localhost:2000"
+              setHeader "Access-Control-Allow-Origin" origin
               case fillUpWardrobe capsule of
                 Left error -> do
                   json $ error
