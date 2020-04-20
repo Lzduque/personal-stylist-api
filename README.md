@@ -67,7 +67,7 @@ If any of these constraints are not obeyed, the server will return an error, lik
 
 ### Response
 
-This API will respond with an Capsule Wardrobe for display purposes as a JSON. All pieces will be grouped into types, thei quantities will be displayed, as well as their suggested colors:
+This API will respond with an Capsule Wardrobe for display purposes as a JSON. All pieces will be grouped into types, their quantities will be displayed, as well as their suggested colors:
 
 ```
 [
