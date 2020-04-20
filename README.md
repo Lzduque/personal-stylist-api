@@ -28,7 +28,7 @@ If you want to use this API, make a request to <https://personal-stylist-api.her
 
 The input should be an JSON object encoded in [base64URL](https://simplycalc.com/base64url-encode.php), like the example:
 
-``
+```
 https://personal-stylist-api.herokuapp.com/capsule/eyJzZWFzb24iOiJBdXR1bW5XaW50ZXIiLCJzdHlsZSI6IkNhc3VhbCIsIm51bWJlck9mT3V0Zml0cyI6IkZyb20xODF0bzE5MCIsImNvbG9ycyI6WyJXaGl0ZSIsIk9mZldoaXRlIiwiR3JheSIsIkJsYWNrIiwiQmVpZ2UiLCJDYW1lbCJdLCJwcmVmZXJlbmNlcyI6WyJTa2lydHMiLCJEcmVzc2VzIiwiUGFudHMiLCJIaWdoSGVlbHMiLCJMZWdnaW5nc1BhbnRzIl19
 ```
 
