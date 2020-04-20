@@ -47,6 +47,15 @@ Colors and Preferences are always lists, even if they contain only one value.
 You must send at least one color and one preference.
 One of the selected references must be Skirts, Dresses or Pants.
 
+If any of these constraints are not obeyed, the server will return an error, like this one:
+
+```
+{ 
+    error = True, 
+    message = "No capsule can be generated within this range, for these parameters. Please, change the number of outfits." 
+}
+```
+
 ### Response
 
 This API will respond with an Capsule Wardrobe for display purposes as a JSON. All pieces will be grouped into types, thei quantities will be displayed, as well as their suggested colors:
