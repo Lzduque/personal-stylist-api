@@ -91,6 +91,12 @@ Every response will be an array of pieces, represented like this:
 - bytestring
 - pretty-simple
 - hspec
+- scotty
+- http-types
+- transformers
+- base64-bytestring
+- text
+- utf8-string
 
 ## Extensions:
 
