@@ -19,11 +19,16 @@ If you want to clone both repos locally and test them, this is the Backend repo,
 
 If you want to use the deployed version of the app, go to <https://lzduque.github.io/personal-stylist/>. 
 
+
 ## How to Use this API
 
 ### Request
 
-This API takes an JSON file with the inputs that are necessary to generate the Capsule Wardrobe. It should have this structure:
+If you want to use this API, make a request to <https://personal-stylist-api.herokuapp.com/capsule/{input}>.
+
+The input should be an JSON object encoded in [base64URL](https://simplycalc.com/base64url-encode.php).
+
+The JSON object with the inputs that are necessary to generate the Capsule Wardrobe. It should have this structure:
 
 ```
 {
