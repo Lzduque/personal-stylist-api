@@ -13,7 +13,7 @@ This project has as objective learning haskell and applying it to the Backend in
 If you want to clone both repos locally and test them, this is the Backend repo, and the Frontend repo is [here](https://github.com/Lzduque/personal-stylist).
 
 1. Install Frontend dependencies using the `yarn install` command.
-2. Install Backend dependencies using the `stack install` command. To run the tests in the back end use the `stack test` command.
+2. Install Backend dependencies using the `stack setup` command. To run the tests in the back end use the `stack test` command.
 3. Start Frontend using the `yarn start` command and `stack build && stack exec personal-stylist-exe\` for the Backend. The app will be served at <http://localhost:3000/> and the client at <http://localhost:3001/>.
 4. Go to <http://localhost:2000/> in your browser.
 
