@@ -49,7 +49,7 @@ One of the selected references must be Skirts, Dresses or Pants.
 
 ### Response
 
-This API will respond with an Capsule Wardrobe for display purposes. All pieces will be grouped into types, thei quantities will be displayed, as well as their suggested colors:
+This API will respond with an Capsule Wardrobe for display purposes as a JSON. All pieces will be grouped into types, thei quantities will be displayed, as well as their suggested colors:
 
 ```
 [
