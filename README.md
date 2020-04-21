@@ -2,7 +2,7 @@
 
 The Personal Stylist website was created to help women that want a personalized capsule wardrobe and don't know where to start!
 
-This project has as objective learning haskell and applying it to the Backend in a format closer to an API as well as practicing React, Hooks and Typescript in te Frontend. Another personal goal achieed witht his project is working with UI styling and functional css, in this case Tachyons.
+This project has as objective learning Haskell and applying it to the Backend in a format closer to an API as well as practicing React, Hooks, and Typescript in the Frontend. Another personal goal achieved with his project is working with UI styling and functional CSS, in this case, Tachyons.
 
 ## Contributors
 
@@ -24,9 +24,9 @@ If you want to use the deployed version of the app, go to <https://lzduque.githu
 
 ### Request
 
-If you want to use this API, make a request to <https://personal-stylist-api.herokuapp.com/capsule/{input}>.
+If you want to use this API, make a request to <https://personal-stylist-API.herokuapp.com/capsule/{input}>.
 
-The input should be an JSON object encoded in [base64URL](https://simplycalc.com/base64url-encode.php), like the example:
+The input should be a JSON object encoded in [base64URL](https://simplycalc.com/base64url-encode.php), as the example:
 
 ```
 https://personal-stylist-api.herokuapp.com/capsule/eyJzZWFzb24iOiJBdXR1bW5XaW50ZXIiLCJzdHlsZSI6IkNhc3VhbCIsIm51bWJlck9mT3V0Zml0cyI6IkZyb20xODF0bzE5MCIsImNvbG9ycyI6WyJXaGl0ZSIsIk9mZldoaXRlIiwiR3JheSIsIkJsYWNrIiwiQmVpZ2UiLCJDYW1lbCJdLCJwcmVmZXJlbmNlcyI6WyJTa2lydHMiLCJEcmVzc2VzIiwiUGFudHMiLCJIaWdoSGVlbHMiLCJMZWdnaW5nc1BhbnRzIl19
@@ -97,15 +97,9 @@ Every response will be an array of pieces, represented like this:
 ## Dependencies
 
 - aeson >= 1.4.6.0
-- bytestring
-- pretty-simple
 - hspec
 - scotty
-- http-types
-- transformers
-- base64-bytestring
-- text
-- utf8-string
+- for a complete list check the "package.yaml" file.
 
 ## Extensions:
 
@@ -128,9 +122,9 @@ Every response will be an array of pieces, represented like this:
 !["Wardrobe Generator"](https://github.com/Lzduque/personal-stylist/blob/master/public/APP_WARDROBE.png?raw=true)
 
 
-## Additonal Features to come
+## Additional Features to come
 
-- UI style theme change when click in a button.
-- Show images that represent possible combination of clothes.
+- UI style theme changes when clicking a button.
+- Show images that represent a possible combination of clothes.
 - Show color palette when colors are selected.
 
