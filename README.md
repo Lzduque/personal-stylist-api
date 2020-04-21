@@ -2,7 +2,7 @@
 
 The Personal Stylist website was created to help women that want a personalized capsule wardrobe and don't know where to start!
 
-This project has as objective learning Haskell and applying it to the Backend in a format closer to an API as well as practicing React, Hooks, and Typescript in the Frontend. Another personal goal achieved with his project is working with UI styling and functional CSS, in this case, Tachyons.
+The objective of this project was to practice Haskell by building an API as well as practicing React, Hooks, and Typescript in the Frontend. Another personal goal achieved with his project is working with UI styling and functional CSS, in this case, Tachyons.
 
 ## Contributors
 
