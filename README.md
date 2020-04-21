@@ -15,7 +15,6 @@ If you want to clone both repos locally and test them, this is the Backend repo,
 1. Install Backend dependencies using the `stack setup` command. To run the tests in the back end use the `stack test` command.
 2. Start Backend using the `stack build && stack exec personal-stylist-exe\`. The API will be served at <http://localhost:3000/>.
 
-If you want to use the deployed version of the app, go to <https://lzduque.github.io/personal-stylist/>. 
 The instructions to use the Frontend are in [here](https://github.com/Lzduque/personal-stylist).
 
 ## How to Use this API
