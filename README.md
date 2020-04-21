@@ -1,4 +1,4 @@
-## PERSONAL STYLIST APP
+## PERSONAL STYLIST API
 
 The Personal Stylist website was created to help women that want a personalized capsule wardrobe and don't know where to start!
 
@@ -12,13 +12,11 @@ The objective of this project was to practice Haskell by building an API as well
 
 If you want to clone both repos locally and test them, this is the Backend repo, and the Frontend repo is [here](https://github.com/Lzduque/personal-stylist).
 
-1. Install Frontend dependencies using the `yarn install` command.
-2. Install Backend dependencies using the `stack setup` command. To run the tests in the back end use the `stack test` command.
-3. Start Frontend using the `yarn start` command and `stack build && stack exec personal-stylist-exe\` for the Backend. The app will be served at <http://localhost:3000/> and the client at <http://localhost:3001/>.
-4. Go to <http://localhost:2000/> in your browser.
+1. Install Backend dependencies using the `stack setup` command. To run the tests in the back end use the `stack test` command.
+2. Start Backend using the `stack build && stack exec personal-stylist-exe\`. The API will be served at <http://localhost:3000/>.
 
 If you want to use the deployed version of the app, go to <https://lzduque.github.io/personal-stylist/>. 
-
+The instructions to use the Fronten are in [here](https://github.com/Lzduque/personal-stylist).
 
 ## How to Use this API
 
