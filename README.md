@@ -99,27 +99,6 @@ Every response will be an array of pieces, represented like this:
 - scotty
 - for a complete list check the "package.yaml" file.
 
-## Extensions:
-
-- OverloadedStrings
-- DeriveGeneric
-- DeriveAnyClass
-- RecordWildCards
-- NamedFieldPuns
-- MultiWayIf
-
-## Final Product Screenshots
-
-### Home page
-!["Home page"](https://github.com/Lzduque/personal-stylist/blob/master/public/APP_HOME_PAGE.png?raw=true)
-
-### Options Selection
-!["Recipe Book Page"](https://github.com/Lzduque/personal-stylist/blob/master/public/APP_SELECTION.png?raw=true)
-
-### Wardrobe Generator
-!["Wardrobe Generator"](https://github.com/Lzduque/personal-stylist/blob/master/public/APP_WARDROBE.png?raw=true)
-
-
 ## Additional Features to come
 
 - UI style theme changes when clicking a button.
