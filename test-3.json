@@ -1,6 +1,10 @@
 {
-  "season": "vfdcesf",
-  "style": "Casual",
-  "colors": [],
-  "bodyType": ""
+    "season": "vfdcesf",
+    "style": "Casual",
+    "colors": {
+        "mains": [],
+        "neutrals": [],
+        "accents": []
+    },
+    "bodyType": ""
 }
