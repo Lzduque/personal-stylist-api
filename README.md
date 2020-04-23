@@ -26,7 +26,7 @@ If you want to use this API, make a request to <https://personal-stylist-API.her
 The input should be a JSON object encoded in [base64URL](https://simplycalc.com/base64url-encode.php), as the example:
 
 ```
-https://personal-stylist-api.herokuapp.com/capsule/eyJzZWFzb24iOiJBdXR1bW5XaW50ZXIiLCJzdHlsZSI6IkNhc3VhbCIsIm51bWJlck9mT3V0Zml0cyI6IkZyb20xODF0bzE5MCIsImNvbG9ycyI6WyJXaGl0ZSIsIk9mZldoaXRlIiwiR3JheSIsIkJsYWNrIiwiQmVpZ2UiLCJDYW1lbCJdLCJwcmVmZXJlbmNlcyI6WyJTa2lydHMiLCJEcmVzc2VzIiwiUGFudHMiLCJIaWdoSGVlbHMiLCJMZWdnaW5nc1BhbnRzIl19
+https://personal-stylist-api.herokuapp.com/capsule/eyJzZWFzb24iOiJBdXR1bW5XaW50ZXIiLCJzdHlsZSI6IkNhc3VhbCIsIm51bWJlck9mT3V0Zml0cyI6IkZyb20xMHRvMjAiLCJjb2xvcnMiOnsibWFpbnMiOlsiTmF2eSIsIk9mZldoaXRlIiwiTGlnaHRCbHVlIl0sIm5ldXRyYWxzIjpbIkJyb3duIiwiQmVpZ2UiXSwiYWNjZW50cyI6WyJDb3JhbCIsIkxpZ2h0WWVsbG93IiwiTGlnaHRHcmVlbiIsIkxpZ2h0UGluayJdfSwicHJlZmVyZW5jZXMiOlsiU2tpcnRzIiwiRHJlc3NlcyIsIlBhbnRzIiwiTGVnZ2luZ3NQYW50cyJdfQ==
 ```
 
 The JSON object with the inputs that are necessary to generate the Capsule Wardrobe. It should have this structure:
@@ -35,9 +35,13 @@ The JSON object with the inputs that are necessary to generate the Capsule Wardr
 {
     "season":"AutumnWinter",
     "style":"Casual",
-    "numberOfOutfits":"From181to190",
-    "colors":["White","OffWhite","Gray","Black","Beige","Camel"],
-    "preferences":["Skirts","Dresses","Pants","HighHeels","LeggingsPants"]
+    "numberOfOutfits":"From10to20",
+    "colors":{
+        "mains":["Navy","OffWhite","LightBlue"],
+        "neutrals":["Brown","Beige"],
+        "accents":["Coral","LightYellow","LightGreen","LightPink"]
+        },
+    "preferences":["Skirts","Dresses","Pants","LeggingsPants"]
 }
 ```
 
