@@ -112,7 +112,7 @@ instance Clothing Coat where
   addToWardrobe newCoat wardrobe = wardrobe { coats = coats wardrobe ++ [newCoat] }
   takeColors cs = take (length cs)
 
-data Shoes = Sandals | Flats | Heels | AnkleBoots | Boots | Sneakers | Wedges
+data Shoes = Sandals | Flats | Heels | Boots | Sneakers | Wedges
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Shoes where
   addToWardrobe newShoes wardrobe = wardrobe { shoes = shoes wardrobe ++ [newShoes] }
@@ -359,19 +359,17 @@ addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
         | numOfSneakers <= numOfShoes / 4 -> Sneakers 
         | otherwise -> Wedges
       (AutumnWinter, Casual) -> if
-        | numOfBoots <= numOfShoes / 4 -> Boots 
-        | numOfFlats <= numOfShoes / 4 -> Flats 
-        | numOfSneakers <= numOfShoes / 4 -> Sneakers 
-        | otherwise -> AnkleBoots
+        | numOfBoots <= numOfShoes / 3 -> Boots 
+        | numOfFlats <= numOfShoes / 3 -> Flats 
+        | otherwise -> Sneakers
       (SpringSummer, Office) -> if
         | numOfSandals <= numOfShoes / 3 -> Sandals
         | numOfHeels <= numOfShoes / 3 && wantsHeels -> Heels 
         | otherwise -> Flats
       (AutumnWinter, Office) -> if
-        | numOfBoots <= numOfShoes / 4 -> Boots 
-        | numOfHeels <= numOfShoes / 4 && wantsHeels -> Heels 
-        | numOfFlats <= numOfShoes / 4 -> Flats 
-        | otherwise -> AnkleBoots
+        | numOfBoots <= numOfShoes / 3 -> Boots 
+        | numOfHeels <= numOfShoes / 3 && wantsHeels -> Heels 
+        | otherwise -> Flats
   in capsule {wardrobe = addToWardrobe newShoes wardrobe}
     where
       numOfShoes = fromIntegral . length . shoes $ wardrobe
@@ -379,7 +377,6 @@ addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
       numOfWedges = fromIntegral . countOccurrences Wedges $ shoes wardrobe
       numOfSandals = fromIntegral . countOccurrences Sandals $ shoes wardrobe
       numOfFlats = fromIntegral . countOccurrences Flats $ shoes wardrobe
-      numOfAnkleBoots = fromIntegral . countOccurrences AnkleBoots $ shoes wardrobe
       numOfBoots = fromIntegral . countOccurrences Boots $ shoes wardrobe
       numOfHeels = fromIntegral . countOccurrences Heels $ shoes wardrobe
       clothesPreferences = preferences capsule

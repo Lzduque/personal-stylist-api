@@ -331,7 +331,7 @@ main = hspec $ do
               , skirts = [BusinessSkirt]
               , dresses = []
               , coats = [Sweater,Cardigan,TrenchCoat]
-              , shoes = [Flats,AnkleBoots,AnkleBoots,Boots]
+              , shoes = [Flats,Flats,Boots,Boots]
               , purses = [StructuredBag,StructuredBag]
               }
       countOutfits (wardrobe capsule) `shouldBe` 84
@@ -395,7 +395,7 @@ main = hspec $ do
               , skirts = [BusinessSkirt]
               , dresses = [BusinessDress,BusinessDress]
               , coats = [Sweater,Cardigan,TrenchCoat]
-              , shoes = [Flats,AnkleBoots,AnkleBoots,Boots]
+              , shoes = [Flats,Flats,Boots,Boots]
               , purses = [StructuredBag,StructuredBag]
               }
 
