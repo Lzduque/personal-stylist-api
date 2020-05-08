@@ -105,8 +105,7 @@ instance Clothing Dress where
   takeColors cs = reverse . take (length cs) . reverse
 
 -- to do: think about transforming cardigans in layer2 and coats in layer3, so you can do a better count of the number of outfits (abstraction to layers)
--- to do: WinterCoat??
-data Coat = Sweater | Cardigan | Jacket | Vest | Blazer | Sweatshirt | TrenchCoat | WoolCoat
+data Coat = Sweater | Jacket | LongCoat | Blazer
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Coat where
   addToWardrobe newCoat wardrobe = wardrobe { coats = coats wardrobe ++ [newCoat] }
@@ -252,42 +251,24 @@ addCoat capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newCoat = case (season, style) of
       (SpringSummer, Casual) -> if
-        | numOfJacket <= numOfCoats / 6 -> Jacket 
-        | numOfVest <= numOfCoats / 6 -> Vest 
-        | numOfCardigan <= numOfCoats / 6 -> Cardigan 
-        | numOfSweatshirt <= numOfCoats / 6 -> Sweatshirt 
-        | numOfBlazer <= numOfCoats / 6 -> Blazer 
-        | otherwise -> TrenchCoat
+        | numOfJacket <= numOfCoats / 2 -> Jacket 
+        | otherwise -> Sweater
       (AutumnWinter, Casual) -> if
-        | numOfSweater <= numOfCoats / 8 -> Sweater 
-        | numOfTrenchCoat <= numOfCoats / 8 -> TrenchCoat 
-        | numOfCardigan <= numOfCoats / 8 -> Cardigan 
-        | numOfJacket <= numOfCoats / 8 -> Jacket 
-        | numOfSweatshirt <= numOfCoats / 8 -> Sweatshirt 
-        | numOfBlazer <= numOfCoats / 8 -> Blazer 
-        | numOfVest <= numOfCoats / 8 -> Vest 
-        | otherwise -> WoolCoat
+        | numOfSweater <= numOfCoats / 3 -> Sweater 
+        | numOfJacket <= numOfCoats / 3 -> Jacket 
+        | otherwise -> LongCoat
       (SpringSummer, Office) -> if
-        | numOfCardigan <= numOfCoats / 4 -> Cardigan 
-        | numOfBlazer <= numOfCoats / 4 -> Blazer 
-        | numOfTrenchCoat <= numOfCoats / 4 -> TrenchCoat 
-        | otherwise -> Vest
+        | numOfSweater <= numOfCoats / 2 -> Sweater 
+        | otherwise -> Blazer
       (AutumnWinter, Office) -> if
-        | numOfCardigan <= numOfCoats / 6 -> Cardigan 
-        | numOfTrenchCoat <= numOfCoats / 6 -> TrenchCoat 
-        | numOfSweater <= numOfCoats / 6 -> Sweater 
-        | numOfBlazer <= numOfCoats / 6 -> Blazer 
-        | numOfVest <= numOfCoats / 6 -> Vest 
-        | otherwise -> WoolCoat
+        | numOfSweater <= numOfCoats / 3 -> Sweater 
+        | numOfLongCoat <= numOfCoats / 3 -> LongCoat 
+        | otherwise -> Blazer
   in capsule {wardrobe = addToWardrobe newCoat wardrobe}
     where
       numOfCoats = fromIntegral . length . coats $ wardrobe
-      numOfCardigan = fromIntegral . countOccurrences Cardigan $ coats wardrobe
-      numOfSweatshirt = fromIntegral . countOccurrences Sweatshirt $ coats wardrobe
-      numOfBlazer = fromIntegral . countOccurrences Blazer $ coats wardrobe
-      numOfTrenchCoat = fromIntegral . countOccurrences TrenchCoat $ coats wardrobe
       numOfJacket = fromIntegral . countOccurrences Jacket $ coats wardrobe
-      numOfVest = fromIntegral . countOccurrences Vest $ coats wardrobe
+      numOfLongCoat = fromIntegral . countOccurrences LongCoat $ coats wardrobe
       numOfSweater = fromIntegral . countOccurrences Sweater $ coats wardrobe
 
 addBottom :: CapsuleWardrobe -> CapsuleWardrobe
