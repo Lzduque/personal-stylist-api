@@ -36,7 +36,7 @@ testWardrobe =
                   , pants = [Jeans, Jeans]
                   , skirts = [DaySkirt, DaySkirt]
                   , dresses = [DayDress]
-                  , coats = [Cardigan, TrenchCoat]
+                  , coats = [LongCoat]
                   , shoes = [Boots, Flats]
                   , purses = [RelaxedBag]
                   }
@@ -72,7 +72,7 @@ main = hspec $ do
 
   describe "countOutfits" $ do
     it "returns the number of possible outfits if given a CapsuleWardrobe" $ do
-      countOutfits testWardrobe `shouldBe` 34
+      countOutfits testWardrobe `shouldBe` 17
 
   describe "toRange" $ do
     it "returns the minimum and the maximum from the range of outfits, given the desired Number Of Outfits" $ do
@@ -106,7 +106,7 @@ main = hspec $ do
   describe "countOccurrences" $ do
     it "counts the number of times the element appears in the list" $ do
       countOccurrences 1 [1,2,3,4,1] `shouldBe` 2
-      countOccurrences Cardigan [Vest, Blazer] `shouldBe` 0
+      countOccurrences Sweater [Blazer] `shouldBe` 0
 
 
 
@@ -206,7 +206,7 @@ main = hspec $ do
                 , dresses =
                     [DayDress, DayDress]
                 , coats =
-                    [Sweater, Cardigan, TrenchCoat]
+                    [Sweater, LongCoat]
                 , shoes =
                     []
                 , purses =
@@ -223,7 +223,7 @@ main = hspec $ do
                 , dresses =
                     [DayDress, DayDress]
                 , coats =
-                    [Sweater, Cardigan, TrenchCoat]
+                    [Sweater, LongCoat]
                 , shoes =
                     [Boots]
                 , purses =
@@ -241,7 +241,7 @@ main = hspec $ do
                 , dresses =
                     [DayDress, DayDress]
                 , coats =
-                    [Sweater, Cardigan, TrenchCoat]
+                    [Sweater, LongCoat]
                 , shoes =
                     []
                 , purses =
@@ -258,7 +258,7 @@ main = hspec $ do
                 , dresses =
                     [DayDress, DayDress]
                 , coats =
-                    [Sweater, Cardigan, TrenchCoat]
+                    [Sweater, LongCoat]
                 , shoes =
                     [Boots]
                 , purses =
@@ -276,7 +276,7 @@ main = hspec $ do
                 , dresses =
                     [DayDress, DayDress, DayDress]
                 , coats =
-                    [Sweater, Cardigan, Cardigan, TrenchCoat]
+                    [Sweater, LongCoat]
                 , shoes =
                     []
                 , purses =
@@ -293,7 +293,7 @@ main = hspec $ do
                 , dresses =
                     [DayDress, DayDress, DayDress]
                 , coats =
-                    [Sweater, Cardigan, Cardigan, TrenchCoat]
+                    [Sweater, LongCoat]
                 , shoes =
                     []
                 , purses =
@@ -314,7 +314,7 @@ main = hspec $ do
               , pants = [Jeans,JeansShorts,JeansShorts]
               , skirts = []
               , dresses = [DayDress,DayDress]
-              , coats = [Cardigan,Jacket,Vest]
+              , coats = [Sweater,Jacket,Jacket]
               , shoes = [Sandals,Flats,Sneakers]
               , purses = [RelaxedBag,RelaxedBag]
               }
@@ -330,7 +330,7 @@ main = hspec $ do
               , pants = [DressTrousers,DressTrousers,DressTrousers]
               , skirts = [BusinessSkirt]
               , dresses = []
-              , coats = [Sweater,Cardigan,TrenchCoat]
+              , coats = [Sweater,LongCoat,Blazer]
               , shoes = [Flats,Flats,Boots,Boots]
               , purses = [StructuredBag,StructuredBag]
               }
@@ -347,7 +347,7 @@ main = hspec $ do
               , pants = []
               , skirts = []
               , dresses = [BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress]
-              , coats = [Cardigan,Cardigan,Vest,Blazer,Blazer,TrenchCoat,TrenchCoat]
+              , coats = [Sweater,Sweater,Sweater,Sweater,Blazer,Blazer,Blazer]
               , shoes = [Sandals,Sandals,Flats,Heels]
               , purses = [StructuredBag,StructuredBag,StructuredBag]
               }
@@ -376,7 +376,7 @@ main = hspec $ do
           , pants = []
           , skirts = []
           , dresses = [BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress,BusinessDress]
-          , coats = [Cardigan,Cardigan,Vest,Blazer,Blazer,TrenchCoat,TrenchCoat]
+          , coats = [Blazer,Blazer,Blazer,Blazer,Blazer,Blazer]
           , shoes = [Sandals,Sandals,Flats,Heels]
           , purses = [StructuredBag,StructuredBag,StructuredBag]
           }
@@ -394,7 +394,7 @@ main = hspec $ do
               , pants = [DressTrousers,DressTrousers,DressTrousers]
               , skirts = [BusinessSkirt]
               , dresses = [BusinessDress,BusinessDress]
-              , coats = [Sweater,Cardigan,TrenchCoat]
+              , coats = [Sweater,LongCoat,Blazer]
               , shoes = [Flats,Flats,Boots,Boots]
               , purses = [StructuredBag,StructuredBag]
               }
@@ -410,7 +410,7 @@ main = hspec $ do
                 , dresses =
                     [DayDress, DayDress, DayDress]
                 , coats =
-                    [Sweater, Cardigan, Cardigan, TrenchCoat]
+                    [Sweater, LongCoat]
                 , shoes =
                     []
                 , purses =
@@ -424,8 +424,7 @@ main = hspec $ do
           ,("DaySkirt",1,[Navy])
           ,("DayDress",3,[Beige,Brown,LightBlue])
           ,("Sweater",1,[Navy])
-          ,("Cardigan",2,[Navy,OffWhite])
-          ,("TrenchCoat",1,[Navy])
+          ,("LongCoat",1,[Navy])
           ]
 
 
