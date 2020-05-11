@@ -7,5 +7,5 @@
         "neutrals": ["LightYellow", "Beige"],
         "accents": ["Brown", "LightBlue"]
     },
-    "preferences": ["Skirts", "Dresses", "Pants", "HighHeels"]
+    "preferences": ["Skirts", "Dresses", "Pants"]
 }

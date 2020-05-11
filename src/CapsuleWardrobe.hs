@@ -73,20 +73,20 @@ data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From5
 data Colors = White | OffWhite | Beige | Camel | Brown | Gray | Black | Navy | Blue | LightBlue | DarkGreen | Green | LightGreen | DarkYellow | Yellow | LightYellow | DarkPink | Pink | LightPink | DarkRed | Red | Coral | DarkOrange | Orange | LightOrange | DarkPurple | Purple | LightPurple
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Preferences = Skirts | Dresses | Pants | HighHeels | LeggingsPants
+data Preferences = Skirts | Dresses | Pants | LeggingsPants
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 class Clothing a where
   addToWardrobe :: a -> Wardrobe -> Wardrobe
   takeColors :: [a] -> [b] -> [b]
 
-data Top = Shirt | TankTop
+data Top = ShirtTop | TShirtTankTop
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Top where
   addToWardrobe newTop wardrobe = wardrobe { tops = tops wardrobe ++ [newTop] }
   takeColors cs = take (length cs)
   
-data Pants = Jeans | JeansShorts | DressTrousers | SocialShorts | Leggings
+data Pants = JeansPants | DressPants | Shorts | SuitShorts | Leggings
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Pants where
   addToWardrobe newPants wardrobe = wardrobe { pants = pants wardrobe ++ [newPants] }
@@ -105,13 +105,13 @@ instance Clothing Dress where
   takeColors cs = reverse . take (length cs) . reverse
 
 -- to do: think about transforming cardigans in layer2 and coats in layer3, so you can do a better count of the number of outfits (abstraction to layers)
-data Coat = Sweater | Jacket | LongCoat | Blazer
+data Coat = Sweater | Jacket | Blazer
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Coat where
   addToWardrobe newCoat wardrobe = wardrobe { coats = coats wardrobe ++ [newCoat] }
   takeColors cs = take (length cs)
 
-data Shoes = Sandals | Flats | Heels | Boots | Sneakers | Wedges
+data Shoes = Shoes
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Shoes where
   addToWardrobe newShoes wardrobe = wardrobe { shoes = shoes wardrobe ++ [newShoes] }
@@ -224,17 +224,17 @@ addTop capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newTop = case (season, style) of
       (SpringSummer, Casual) -> if
-        | numOfShirt <= numOfTops / 2 -> Shirt 
-        | otherwise -> TankTop
-      (AutumnWinter, Casual) -> Shirt
-      (SpringSummer, Office) -> if
-        | numOfShirt <= numOfTops / 2 -> Shirt 
-        | otherwise -> TankTop
-      (AutumnWinter, Office) -> Shirt
+        | numOfShirtTop <= numOfTops / 2 -> ShirtTop 
+        | otherwise -> TShirtTankTop
+      (AutumnWinter, Casual) -> if
+        | numOfShirtTop <= numOfTops / 2 -> ShirtTop 
+        | otherwise -> TShirtTankTop
+      (SpringSummer, Office) -> ShirtTop 
+      (AutumnWinter, Office) -> ShirtTop
   in capsule {wardrobe = addToWardrobe newTop wardrobe}
     where
       numOfTops = fromIntegral . length . tops $ wardrobe
-      numOfShirt = fromIntegral . countOccurrences Shirt $ tops wardrobe
+      numOfShirtTop = fromIntegral . countOccurrences ShirtTop $ tops wardrobe
 
 addDress :: CapsuleWardrobe -> CapsuleWardrobe
 addDress capsule@(CapsuleWardrobe {season, style, wardrobe}) =
@@ -250,25 +250,21 @@ addCoat :: CapsuleWardrobe -> CapsuleWardrobe
 addCoat capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newCoat = case (season, style) of
-      (SpringSummer, Casual) -> if
-        | numOfJacket <= numOfCoats / 2 -> Jacket 
-        | otherwise -> Sweater
+      (SpringSummer, Casual) -> if 
+        | numOfSweater <= numOfCoats / 2 -> Sweater 
+        | otherwise -> Jacket
       (AutumnWinter, Casual) -> if
-        | numOfSweater <= numOfCoats / 3 -> Sweater 
-        | numOfJacket <= numOfCoats / 3 -> Jacket 
-        | otherwise -> LongCoat
+        | numOfSweater <= numOfCoats / 2 -> Sweater 
+        | otherwise -> Jacket
       (SpringSummer, Office) -> if
         | numOfSweater <= numOfCoats / 2 -> Sweater 
         | otherwise -> Blazer
       (AutumnWinter, Office) -> if
-        | numOfSweater <= numOfCoats / 3 -> Sweater 
-        | numOfLongCoat <= numOfCoats / 3 -> LongCoat 
+        | numOfSweater <= numOfCoats / 2 -> Sweater 
         | otherwise -> Blazer
   in capsule {wardrobe = addToWardrobe newCoat wardrobe}
     where
       numOfCoats = fromIntegral . length . coats $ wardrobe
-      numOfJacket = fromIntegral . countOccurrences Jacket $ coats wardrobe
-      numOfLongCoat = fromIntegral . countOccurrences LongCoat $ coats wardrobe
       numOfSweater = fromIntegral . countOccurrences Sweater $ coats wardrobe
 
 addBottom :: CapsuleWardrobe -> CapsuleWardrobe
@@ -301,22 +297,22 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newPants = case (season, style) of
       (SpringSummer, Casual) -> if
-        | numOfJeans <= numOfPants / 3 -> Jeans
+        | numOfJeansPants <= numOfPants / 3 -> JeansPants
         | numOfLeggings <= numOfPants / 3 && wantsLeggings -> Leggings 
-        | otherwise -> JeansShorts
+        | otherwise -> Shorts
       (AutumnWinter, Casual) -> if
         | numOfLeggings <= numOfPants / 2 && wantsLeggings -> Leggings
-        | otherwise -> Jeans
+        | otherwise -> JeansPants
       (SpringSummer, Office) -> if
-        | numOfDressTrousers <= numOfPants / 2 -> DressTrousers 
-        | otherwise -> SocialShorts
-      (AutumnWinter, Office) -> DressTrousers
+        | numOfDressPants <= numOfPants / 2 -> DressPants 
+        | otherwise -> SuitShorts
+      (AutumnWinter, Office) -> DressPants
   in capsule {wardrobe = addToWardrobe newPants wardrobe}
     where
       numOfPants = fromIntegral . length . pants $ wardrobe
       numOfLeggings = fromIntegral . countOccurrences Leggings $ pants wardrobe
-      numOfJeans = fromIntegral . countOccurrences Jeans $ pants wardrobe
-      numOfDressTrousers = fromIntegral . countOccurrences DressTrousers $ pants wardrobe
+      numOfJeansPants = fromIntegral . countOccurrences JeansPants $ pants wardrobe
+      numOfDressPants = fromIntegral . countOccurrences DressPants $ pants wardrobe
       clothesPreferences = preferences capsule
       wantsLeggings = LeggingsPants `elem` clothesPreferences
 
@@ -334,34 +330,11 @@ addShoes :: CapsuleWardrobe -> CapsuleWardrobe
 addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
   let 
     newShoes = case (season, style) of
-      (SpringSummer, Casual) -> if
-        | numOfSandals <= numOfShoes / 4 -> Sandals
-        | numOfFlats <= numOfShoes / 4 -> Flats 
-        | numOfSneakers <= numOfShoes / 4 -> Sneakers 
-        | otherwise -> Wedges
-      (AutumnWinter, Casual) -> if
-        | numOfBoots <= numOfShoes / 3 -> Boots 
-        | numOfFlats <= numOfShoes / 3 -> Flats 
-        | otherwise -> Sneakers
-      (SpringSummer, Office) -> if
-        | numOfSandals <= numOfShoes / 3 -> Sandals
-        | numOfHeels <= numOfShoes / 3 && wantsHeels -> Heels 
-        | otherwise -> Flats
-      (AutumnWinter, Office) -> if
-        | numOfBoots <= numOfShoes / 3 -> Boots 
-        | numOfHeels <= numOfShoes / 3 && wantsHeels -> Heels 
-        | otherwise -> Flats
+      (SpringSummer, Casual) -> Shoes
+      (AutumnWinter, Casual) -> Shoes
+      (SpringSummer, Office) -> Shoes
+      (AutumnWinter, Office) -> Shoes
   in capsule {wardrobe = addToWardrobe newShoes wardrobe}
-    where
-      numOfShoes = fromIntegral . length . shoes $ wardrobe
-      numOfSneakers = fromIntegral . countOccurrences Sneakers $ shoes wardrobe
-      numOfWedges = fromIntegral . countOccurrences Wedges $ shoes wardrobe
-      numOfSandals = fromIntegral . countOccurrences Sandals $ shoes wardrobe
-      numOfFlats = fromIntegral . countOccurrences Flats $ shoes wardrobe
-      numOfBoots = fromIntegral . countOccurrences Boots $ shoes wardrobe
-      numOfHeels = fromIntegral . countOccurrences Heels $ shoes wardrobe
-      clothesPreferences = preferences capsule
-      wantsHeels = HighHeels `elem` clothesPreferences
 
 addPurse :: CapsuleWardrobe -> CapsuleWardrobe
 addPurse capsule@(CapsuleWardrobe {season, style, wardrobe}) =
