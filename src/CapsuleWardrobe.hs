@@ -301,6 +301,7 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
         | numOfLeggings <= numOfPants / 3 && wantsLeggings -> Leggings 
         | otherwise -> Shorts
       (AutumnWinter, Casual) -> if
+        | numOfJeansPants <= numOfPants / 2 -> JeansPants
         | numOfLeggings <= numOfPants / 2 && wantsLeggings -> Leggings
         | otherwise -> JeansPants
       (SpringSummer, Office) -> if
@@ -318,8 +319,8 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
 
 addAccessories :: CapsuleWardrobe -> CapsuleWardrobe
 addAccessories capsule
-  | shoesNumOfOutfits <= 1/25 = addShoes capsule
-  | purseNumOfOutfits <= 1/35 = addPurse capsule
+  | shoesNumOfOutfits <= 1/40 = addShoes capsule
+  | purseNumOfOutfits <= 1/40 = addPurse capsule
   | otherwise = capsule
   where
     numOfOutfits = fromIntegral . countOutfits $ wardrobe capsule
