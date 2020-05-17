@@ -73,7 +73,7 @@ data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From5
 data Colors = White | OffWhite | Beige | Camel | Brown | Gray | Black | Navy | Blue | LightBlue | DarkGreen | Green | LightGreen | DarkYellow | Yellow | LightYellow | DarkPink | Pink | LightPink | DarkRed | Red | Coral | DarkOrange | Orange | LightOrange | DarkPurple | Purple | LightPurple
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data Preferences = Skirts | Dresses | Pants | LeggingsPants
+data Preferences = Skirts | Dresses | Pants | LeggingsPants | ShortsPants
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 class Clothing a where
@@ -299,23 +299,28 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
       (SpringSummer, Casual) -> if
         | numOfJeansPants <= numOfPants / 3 -> JeansPants
         | numOfLeggings <= numOfPants / 3 && wantsLeggings -> Leggings 
-        | otherwise -> Shorts
+        | numOfShorts <= numOfPants / 3 && wantsShorts -> Shorts 
+        | otherwise -> JeansPants
       (AutumnWinter, Casual) -> if
         | numOfJeansPants <= numOfPants / 2 -> JeansPants
         | numOfLeggings <= numOfPants / 2 && wantsLeggings -> Leggings
         | otherwise -> JeansPants
       (SpringSummer, Office) -> if
         | numOfDressPants <= numOfPants / 2 -> DressPants 
-        | otherwise -> SuitShorts
+        | numOfSuitShorts <= numOfPants / 2 && wantsShorts -> SuitShorts 
+        | otherwise -> DressPants
       (AutumnWinter, Office) -> DressPants
   in capsule {wardrobe = addToWardrobe newPants wardrobe}
     where
       numOfPants = fromIntegral . length . pants $ wardrobe
       numOfLeggings = fromIntegral . countOccurrences Leggings $ pants wardrobe
+      numOfShorts = fromIntegral . countOccurrences Shorts $ pants wardrobe
       numOfJeansPants = fromIntegral . countOccurrences JeansPants $ pants wardrobe
       numOfDressPants = fromIntegral . countOccurrences DressPants $ pants wardrobe
+      numOfSuitShorts = fromIntegral . countOccurrences SuitShorts $ pants wardrobe
       clothesPreferences = preferences capsule
       wantsLeggings = LeggingsPants `elem` clothesPreferences
+      wantsShorts = ShortsPants `elem` clothesPreferences
 
 addAccessories :: CapsuleWardrobe -> CapsuleWardrobe
 addAccessories capsule

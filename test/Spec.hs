@@ -306,17 +306,17 @@ main = hspec $ do
 -- ------------ MAIN FUNCTIONS
   describe "fillUpWardrobe" $ do
     it "returns a final capsule Wardrobe with a new item(s) of clothing given one Capsule Wardrobe with dresses and pants as preferences" $ do
-      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, colors = ColorsTypes { mains = [Navy,OffWhite], neutrals = [LightYellow,Beige], accents = [Brown,LightBlue]}, preferences = [Dresses,Pants]})
+      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From61to70, colors = ColorsTypes { mains = [Navy,OffWhite], neutrals = [LightYellow,Beige], accents = [Brown,LightBlue]}, preferences = [Dresses,Pants,ShortsPants]})
       cw `shouldSatisfy` isRight
       let (Right capsule) = cw
       wardrobe capsule `shouldBe` 
             Wardrobe
               { tops = [ShirtTop,ShirtTop,ShirtTop,ShirtTop,TShirtTankTop,TShirtTankTop,TShirtTankTop]
-              , pants = [JeansPants,Shorts,Shorts]
+              , pants = [JeansPants,JeansPants,Shorts]
               , skirts = []
               , dresses = [DayDress,DayDress]
               , coats = [Sweater,Sweater,Jacket]
-              , shoes = [Shoes,Shoes,Shoes]
+              , shoes = [Shoes,Shoes]
               , purses = [RelaxedBag,RelaxedBag]
               }
       countOutfits (wardrobe capsule) `shouldBe` 69
@@ -332,7 +332,7 @@ main = hspec $ do
               , skirts = [BusinessSkirt]
               , dresses = []
               , coats = [Sweater,Sweater,Blazer]
-              , shoes = [Shoes,Shoes,Shoes,Shoes]
+              , shoes = [Shoes,Shoes,Shoes]
               , purses = [StructuredBag,StructuredBag]
               }
       countOutfits (wardrobe capsule) `shouldBe` 84
@@ -379,7 +379,7 @@ main = hspec $ do
               , skirts = [BusinessSkirt]
               , dresses = [BusinessDress,BusinessDress]
               , coats = [Sweater,Sweater,Blazer]
-              , shoes = [Shoes,Shoes,Shoes,Shoes]
+              , shoes = [Shoes,Shoes,Shoes]
               , purses = [StructuredBag,StructuredBag]
               }
 
