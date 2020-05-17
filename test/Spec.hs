@@ -396,9 +396,9 @@ main = hspec $ do
                 , coats =
                     [Sweater]
                 , shoes =
-                    []
+                    [Shoes]
                 , purses =
-                    []
+                    [RelaxedBag]
                 }
             }) `shouldBe` 
         [
@@ -406,9 +406,12 @@ main = hspec $ do
         ,("JeansPants",2,[Navy,OffWhite])
         ,("Leggings",1,[Navy])
         ,("DaySkirt",1,[Navy])
-        ,("DayDress",3,[Beige,Brown,LightBlue])
+        ,("DayDress",3,[Brown,LightBlue,LightYellow])
         ,("Sweater",1,[Navy])
+        ,("Shoes",1,[LightYellow])
+        ,("RelaxedBag",1,[LightYellow])
         ]
+
 
 
 

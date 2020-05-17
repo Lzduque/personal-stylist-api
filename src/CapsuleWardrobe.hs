@@ -102,7 +102,7 @@ data Dress = BusinessDress | DayDress
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Dress where
   addToWardrobe newDress wardrobe = wardrobe { dresses = dresses wardrobe ++ [newDress] }
-  takeColors cs = reverse . take (length cs) . reverse
+  takeColors cs = take (length cs)
 
 -- to do: think about transforming cardigans in layer2 and coats in layer3, so you can do a better count of the number of outfits (abstraction to layers)
 data Coat = Sweater | Jacket | Blazer
@@ -121,7 +121,7 @@ data Purse = RelaxedBag | StructuredBag
   deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 instance Clothing Purse where
   addToWardrobe newPurse wardrobe = wardrobe { purses = purses wardrobe ++ [newPurse] }
-  takeColors cs = reverse . take (length cs) . reverse
+  takeColors cs = take (length cs)
 
 
 
@@ -185,16 +185,18 @@ fillUpWardrobe capsule
 groupByClothing :: CapsuleWardrobe -> [(String,Int,[Colors])]
 groupByClothing capsule = concat [ftops, fpants, fskirts, fdresses, fcoats, fshoes, fpurses]
   where
-    f :: (Clothing a, Eq a, Show a) => [a] -> [(String,Int,[Colors])]
-    f = map (\cs -> (show . head $ cs, length cs, takeColors cs allColors)) . group
-    ftops = f . tops . wardrobe $ capsule
-    fpants = f . pants . wardrobe $ capsule
-    fskirts = f . skirts . wardrobe $ capsule
-    fdresses = f . dresses . wardrobe $ capsule
-    fcoats = f . coats . wardrobe $ capsule
-    fshoes = f . shoes . wardrobe $ capsule
-    fpurses = f . purses . wardrobe $ capsule
+    f :: (Clothing a, Eq a, Show a) => [Colors] -> [a] -> [(String,Int,[Colors])]
+    f colors = map (\cs -> (show . head $ cs, length cs, takeColors cs colors)) . group
+    ftops = f allColors (tops . wardrobe $ capsule)
+    fpants = f allColors . pants . wardrobe $ capsule
+    fskirts = f allColors . skirts . wardrobe $ capsule
+    fdresses = f dressesColors . dresses . wardrobe $ capsule
+    fcoats = f allColors . coats . wardrobe $ capsule
+    fshoes = f accessoriesColors . shoes . wardrobe $ capsule
+    fpurses = f accessoriesColors . purses . wardrobe $ capsule
     allColors = ((mains $ colors capsule) `union` (neutrals $ colors capsule)) `union` (accents $ colors capsule)
+    accessoriesColors = ((neutrals $ colors capsule) `union` (accents $ colors capsule)) `union` (mains $ colors capsule)
+    dressesColors = ((accents $ colors capsule) `union` (neutrals $ colors capsule)) `union` (mains $ colors capsule)
 
 addMoreClothes :: CapsuleWardrobe -> CapsuleWardrobe
 addMoreClothes capsule
