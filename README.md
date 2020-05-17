@@ -26,7 +26,7 @@ If you want to use this API, make a request to <https://personal-stylist-API.her
 The input should be a JSON object encoded in [base64URL](https://simplycalc.com/base64url-encode.php), as the example:
 
 ```
-https://personal-stylist-api.herokuapp.com/capsule/eyJzZWFzb24iOiJBdXR1bW5XaW50ZXIiLCJzdHlsZSI6IkNhc3VhbCIsIm51bWJlck9mT3V0Zml0cyI6IkZyb20xMHRvMjAiLCJjb2xvcnMiOnsibWFpbnMiOlsiTmF2eSIsIk9mZldoaXRlIiwiTGlnaHRCbHVlIl0sIm5ldXRyYWxzIjpbIkJyb3duIiwiQmVpZ2UiXSwiYWNjZW50cyI6WyJDb3JhbCIsIkxpZ2h0WWVsbG93IiwiTGlnaHRHcmVlbiIsIkxpZ2h0UGluayJdfSwicHJlZmVyZW5jZXMiOlsiU2tpcnRzIiwiRHJlc3NlcyIsIlBhbnRzIiwiTGVnZ2luZ3NQYW50cyJdfQ==
+https://personal-stylist-api.herokuapp.com/capsule/eyJzZWFzb24iOiJBdXR1bW5XaW50ZXIiLCJzdHlsZSI6IkNhc3VhbCIsIm51bWJlck9mT3V0Zml0cyI6IkZyb201MXRvNjAiLCJjb2xvcnMiOnsibWFpbnMiOlsiTmF2eSIsIldoaXRlIiwiTGlnaHRCbHVlIl0sIm5ldXRyYWxzIjpbIk9mZldoaXRlIiwiQmVpZ2UiXSwiYWNjZW50cyI6WyJMaWdodEdyZWVuIiwiTGlnaHRQaW5rIiwiUmVkIiwiQ29yYWwiXX0sInByZWZlcmVuY2VzIjpbIlNraXJ0cyIsIkRyZXNzZXMiLCJQYW50cyJdfQ==
 ```
 
 The JSON object with the inputs that are necessary to generate the Capsule Wardrobe. It should have this structure:
@@ -35,13 +35,13 @@ The JSON object with the inputs that are necessary to generate the Capsule Wardr
 {
     "season":"AutumnWinter",
     "style":"Casual",
-    "numberOfOutfits":"From10to20",
+    "numberOfOutfits":"From51to60",
     "colors":{
         "mains":["Navy","OffWhite","LightBlue"],
-        "neutrals":["Brown","Beige"],
-        "accents":["Coral","LightYellow","LightGreen","LightPink"]
+        "neutrals":["OffWhite","Beige"],
+        "accents":["LightGreen","LightPink","Red","Coral"]
         },
-    "preferences":["Skirts","Dresses","Pants","LeggingsPants"]
+    "preferences":["Skirts","Dresses","Pants"]
 }
 ```
 
@@ -51,7 +51,7 @@ Possible values:
 - Style: Casual | Office
 - NumberOfOutfits: From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130 | From131to140 | From141to150 | From151to160 | From161to170 | From171to180 | From181to190 | From191to200
 - Colors: White | OffWhite | Beige | Camel | Brown | Gray | Black | Navy | Blue | LightBlue | DarkGreen | Green | LightGreen | DarkYellow | Yellow | LightYellow | DarkPink | Pink | LightPink | DarkRed | Red | Coral | DarkOrange | Orange | LightOrange | DarkPurple | Purple | LightPurple
-- Preferences: Skirts | Dresses | Pants | HighHeels | LeggingsPants
+- Preferences: Skirts | Dresses | Pants | LeggingsPants | ShortsPants
 
 Colors and Preferences are always lists, even if they contain only one value.
 You must send at least one color and one preference.
@@ -72,20 +72,15 @@ This API will respond with an Capsule Wardrobe for display purposes as a JSON. A
 
 ```
 [
-    ["Shirt",9,["White","OffWhite","Gray","Black","Beige","Camel"]],
-    ["Jeans",1,["White"]],
-    ["Leggings",2,["White","OffWhite"]],
-    ["DaySkirt",2,["White","OffWhite"]],
-    ["DayDress",2,["Beige","Camel"]],
-    ["Sweater",1,["White"]],
-    ["Cardigan",1,["White"]],
-    ["Jacket",1,["White"]],
-    ["TrenchCoat",1,["White"]],
-    ["Flats",2,["White","OffWhite"]],
-    ["AnkleBoots",1,["White"]],
-    ["Boots",2,["White","OffWhite"]],
-    ["Sneakers",2,["White","OffWhite"]],
-    ["RelaxedBag",3,["Black","Beige","Camel"]]
+    ["ShirtTop",3,[Navy","White","LightBlue"]],
+    ["TShirtTankTop",3,[Navy","White","LightBlue"]],
+    ["JeansPants",2,["Navy","White"]],
+    ["DaySkirt",1,["Navy"]],
+    ["DayDress",1,["LightGreen"]],
+    ["Sweater",2,["Navy","White"]],
+    ["Jacket",1,["Navy"]],
+    ["Shoes",2,["OffWhite","Beige"]],
+    ["RelaxedBag",1,["OffWhite"]]
 ]
 ```
 
