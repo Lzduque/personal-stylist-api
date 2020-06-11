@@ -38,7 +38,7 @@ testWardrobe =
       , skirts = []
       , dresses = [DayDress,DayDress]
       , coats = [Sweater,Jacket]
-      , shoes = [Shoes,Shoes]
+      , shoes = [Shoes]
       , purses = [RelaxedBag]
       }
 
@@ -100,6 +100,12 @@ main = hspec $ do
       toRange From211to220 `shouldBe` (211,220)
       toRange From221to230 `shouldBe` (221,230)
       toRange From231to240 `shouldBe` (231,240)
+      toRange From241to250 `shouldBe` (241,250)
+      toRange From251to260 `shouldBe` (251,260)
+      toRange From261to270 `shouldBe` (261,270)
+      toRange From271to280 `shouldBe` (271,280)
+      toRange From281to290 `shouldBe` (281,290)
+      toRange From291to300 `shouldBe` (291,300)
 
   describe "inRange" $ do
     it "returns True or False whether the number is within the range" $ do
@@ -232,7 +238,7 @@ main = hspec $ do
                 , shoes =
                     [Shoes]
                 , purses =
-                    []
+                    [RelaxedBag]
                 }
 
   describe "addShoes" $ do
@@ -320,8 +326,8 @@ main = hspec $ do
               , skirts = []
               , dresses = [DayDress,DayDress]
               , coats = [Sweater,Sweater,Jacket]
-              , shoes = [Shoes,Shoes]
-              , purses = [RelaxedBag,RelaxedBag]
+              , shoes = [Shoes,Shoes,Shoes]
+              , purses = [RelaxedBag,RelaxedBag,RelaxedBag]
               }
       countOutfits (wardrobe capsule) `shouldBe` 69
 
@@ -336,8 +342,8 @@ main = hspec $ do
               , skirts = [BusinessSkirt]
               , dresses = []
               , coats = [Sweater,Sweater,Blazer]
-              , shoes = [Shoes,Shoes,Shoes]
-              , purses = [StructuredBag,StructuredBag]
+              , shoes = [Shoes,Shoes,Shoes,Shoes]
+              , purses = [StructuredBag,StructuredBag,StructuredBag,StructuredBag]
               }
       countOutfits (wardrobe capsule) `shouldBe` 84
 
@@ -372,7 +378,21 @@ main = hspec $ do
       cw `shouldBe` Left Error { error = True, message = "No capsule can be generated within this range, for these parameters. Please, change the number of outfits." }
 
   describe "addMoreClothes" $ do
-    it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe" $ do
+    it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe - From31to40" $ do
+      let cw = fillUpWardrobe (baseCW {season = AutumnWinter, style = Office, numberOfOutfits = From31to40, colors = ColorsTypes { mains = [Navy,OffWhite], neutrals = [LightYellow,Beige], accents = [Brown,LightBlue]}, preferences = [Dresses,Skirts]}) 
+      cw `shouldSatisfy` isRight
+      let (Right capsule) = cw
+      wardrobe capsule `shouldBe` 
+            Wardrobe
+              { tops = [ShirtTop,ShirtTop,ShirtTop,ShirtTop,ShirtTop]
+              , pants = []
+              , skirts = [BusinessSkirt,BusinessSkirt,BusinessSkirt]
+              , dresses = [BusinessDress]
+              , coats = [Sweater,Blazer]
+              , shoes = [Shoes,Shoes]
+              , purses = [StructuredBag,StructuredBag]
+              }
+    it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe - From81to90" $ do
       let cw = fillUpWardrobe (baseCW {season = AutumnWinter, style = Office, numberOfOutfits = From81to90, colors = ColorsTypes { mains = [Navy,OffWhite], neutrals = [LightYellow,Beige], accents = [Brown,LightBlue]}, preferences = [Dresses,Pants,Skirts]}) 
       cw `shouldSatisfy` isRight
       let (Right capsule) = cw
@@ -383,8 +403,50 @@ main = hspec $ do
               , skirts = [BusinessSkirt]
               , dresses = [BusinessDress,BusinessDress]
               , coats = [Sweater,Sweater,Blazer]
-              , shoes = [Shoes,Shoes,Shoes]
-              , purses = [StructuredBag,StructuredBag]
+              , shoes = [Shoes,Shoes,Shoes,Shoes]
+              , purses = [StructuredBag,StructuredBag, StructuredBag,StructuredBag]
+              }
+    it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe - From141to150" $ do
+      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From141to150, colors = ColorsTypes { mains = [Navy,OffWhite], neutrals = [LightYellow,Beige], accents = [Brown,LightBlue]}, preferences = [Dresses,Pants,Skirts,ShortsPants]}) 
+      cw `shouldSatisfy` isRight
+      let (Right capsule) = cw
+      wardrobe capsule `shouldBe` 
+            Wardrobe
+              { tops = [ShirtTop,ShirtTop,ShirtTop,ShirtTop,ShirtTop,TShirtTankTop,TShirtTankTop,TShirtTankTop,TShirtTankTop]
+              , pants = [JeansPants,JeansPants,Shorts]
+              , skirts = [DaySkirt,DaySkirt]
+              , dresses = [DayDress,DayDress]
+              , coats = [Sweater,Sweater,Jacket]
+              , shoes = [Shoes,Shoes,Shoes,Shoes]
+              , purses = [RelaxedBag,RelaxedBag,RelaxedBag,RelaxedBag]
+              }
+    it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe - From181to190" $ do
+      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From181to190, colors = ColorsTypes { mains = [Navy,OffWhite], neutrals = [LightYellow,Beige], accents = [Brown,LightBlue]}, preferences = [Dresses,Pants,Skirts,ShortsPants]}) 
+      cw `shouldSatisfy` isRight
+      let (Right capsule) = cw
+      wardrobe capsule `shouldBe` 
+            Wardrobe
+              { tops = [ShirtTop,ShirtTop,ShirtTop,ShirtTop,ShirtTop,TShirtTankTop,TShirtTankTop,TShirtTankTop,TShirtTankTop]
+              , pants = [JeansPants,JeansPants,Shorts]
+              , skirts = [DaySkirt,DaySkirt]
+              , dresses = [DayDress,DayDress]
+              , coats = [Sweater,Sweater,Jacket,Jacket]
+              , shoes = [Shoes,Shoes,Shoes,Shoes]
+              , purses = [RelaxedBag,RelaxedBag,RelaxedBag,RelaxedBag]
+              }
+    it "returns a capsule Wardrobe with a new item of clothing given one Capsule Wardrobe - From271to280" $ do
+      let cw = fillUpWardrobe (baseCW {season = SpringSummer, style = Casual, numberOfOutfits = From271to280, colors = ColorsTypes { mains = [Navy,OffWhite], neutrals = [LightYellow,Beige], accents = [Brown,LightBlue]}, preferences = [Dresses,Pants,Skirts,ShortsPants]}) 
+      cw `shouldSatisfy` isRight
+      let (Right capsule) = cw
+      wardrobe capsule `shouldBe` 
+            Wardrobe
+              { tops = [ShirtTop,ShirtTop,ShirtTop,ShirtTop,ShirtTop,ShirtTop,TShirtTankTop,TShirtTankTop,TShirtTankTop,TShirtTankTop,TShirtTankTop]
+              , pants = [JeansPants,JeansPants,Shorts,Shorts]
+              , skirts = [DaySkirt,DaySkirt]
+              , dresses = [DayDress,DayDress]
+              , coats = [Sweater,Sweater,Jacket,Jacket]
+              , shoes = [Shoes,Shoes,Shoes,Shoes]
+              , purses = [RelaxedBag,RelaxedBag,RelaxedBag,RelaxedBag]
               }
 
   describe "groupByClothing" $ do

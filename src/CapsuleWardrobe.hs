@@ -67,7 +67,7 @@ data Season = SpringSummer | AutumnWinter
 data Style = Casual | Office
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130 | From131to140 | From141to150 | From151to160 | From161to170 | From171to180 | From181to190 | From191to200 | From201to210 | From211to220 | From221to230 | From231to240
+data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130 | From131to140 | From141to150 | From151to160 | From161to170 | From171to180 | From181to190 | From191to200 | From201to210 | From211to220 | From221to230 | From231to240 | From241to250 | From251to260 | From261to270 | From271to280 | From281to290 | From291to300
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 data Colors = White | OffWhite | Beige | Camel | Brown | Gray | Black | Navy | Blue | LightBlue | DarkGreen | Green | LightGreen | DarkYellow | Yellow | LightYellow | DarkPink | Pink | LightPink | DarkRed | Red | Coral | DarkOrange | Orange | LightOrange | DarkPurple | Purple | LightPurple
@@ -158,6 +158,12 @@ toRange From201to210 = (201,210)
 toRange From211to220 = (211,220)
 toRange From221to230 = (221,230)
 toRange From231to240 = (231,240)
+toRange From241to250 = (241,250)
+toRange From251to260 = (251,260)
+toRange From261to270 = (261,270)
+toRange From271to280 = (271,280)
+toRange From281to290 = (281,290)
+toRange From291to300 = (291,300)
 
 sortWardrobe :: Wardrobe -> Wardrobe
 sortWardrobe wardrobe = 
@@ -330,13 +336,12 @@ addPants capsule@(CapsuleWardrobe {season, style, wardrobe}) =
 
 addAccessories :: CapsuleWardrobe -> CapsuleWardrobe
 addAccessories capsule
-  | shoesNumOfOutfits <= 1/40 = addShoes capsule
-  | purseNumOfOutfits <= 1/40 = addPurse capsule
+  | numOfOutfits <= 100 && shoesNumOfOutfits < 1/25 = addPurse $ addShoes capsule
+  | shoesNumOfOutfits < 1/75 = addPurse $ addShoes capsule
   | otherwise = capsule
   where
     numOfOutfits = fromIntegral . countOutfits $ wardrobe capsule
     shoesNumOfOutfits = fromIntegral (length . shoes $ wardrobe capsule) /  numOfOutfits
-    purseNumOfOutfits = fromIntegral (length . purses $ wardrobe capsule) / numOfOutfits
 
 addShoes :: CapsuleWardrobe -> CapsuleWardrobe
 addShoes capsule@(CapsuleWardrobe {season, style, wardrobe}) =
