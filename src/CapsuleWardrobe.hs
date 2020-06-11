@@ -67,7 +67,7 @@ data Season = SpringSummer | AutumnWinter
 data Style = Casual | Office
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
-data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130 | From131to140 | From141to150 | From151to160 | From161to170 | From171to180 | From181to190 | From191to200
+data NumberOfOutfits = From10to20 | From21to30 | From31to40 | From41to50 | From51to60 | From61to70 | From71to80 | From81to90 | From91to100 | From101to110 | From111to120 | From121to130 | From131to140 | From141to150 | From151to160 | From161to170 | From171to180 | From181to190 | From191to200 | From201to210 | From211to220 | From221to230 | From231to240
   deriving (Show, Eq, Generic, ToJSON, FromJSON)
 
 data Colors = White | OffWhite | Beige | Camel | Brown | Gray | Black | Navy | Blue | LightBlue | DarkGreen | Green | LightGreen | DarkYellow | Yellow | LightYellow | DarkPink | Pink | LightPink | DarkRed | Red | Coral | DarkOrange | Orange | LightOrange | DarkPurple | Purple | LightPurple
@@ -154,6 +154,10 @@ toRange From161to170 = (161,170)
 toRange From171to180 = (171,180)
 toRange From181to190 = (181,190)
 toRange From191to200 = (191,200)
+toRange From201to210 = (201,210)
+toRange From211to220 = (211,220)
+toRange From221to230 = (221,230)
+toRange From231to240 = (231,240)
 
 sortWardrobe :: Wardrobe -> Wardrobe
 sortWardrobe wardrobe = 
